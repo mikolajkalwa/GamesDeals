@@ -48,7 +48,7 @@ setInterval(() => {
             const topics = body.data.children;
             topics.forEach(topic => {
                 const title = topic.data.title.toLowerCase();
-                const url = topic.data.url;
+                let url = topic.data.url;
 
                 const platforms = /gog|humble|steam|origin/;
                 const keywords = /100%|pwyw|free/;
