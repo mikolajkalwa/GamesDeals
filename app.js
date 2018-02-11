@@ -7,7 +7,7 @@ const config = require('./config.js');
 
 const bot = new Eris.CommandClient(config.token, {}, {
     description: 'Super bot co ma brać z reddita info o darmowych gierkach na gogu, humble\'u i steamie, ale nie wiem do końca czy na 100% działa',
-    owner: 'Mikey',
+    owner: 'Mikey#6819',
     prefix: '_'
 });
 
@@ -52,8 +52,9 @@ setInterval(() => {
 
                 const platforms = /gog|humble|steam|origin/;
                 const keywords = /100%|pwyw|free/;
+                const ignore = /gogobundle/;
 
-                if (keywords.test(title) && platforms.test(title)) {
+                if (keywords.test(title) && platforms.test(title) && !ignore.test(title)) {
                     db.get(title, err => {
                         if (err) {
                             console.log('Raczej nie znaleziono w bazie ale dla pewnosci kod bledu:', err);
@@ -61,16 +62,20 @@ setInterval(() => {
                                 if (err) return console.log('Nie udalo sie dodac do bazy!', err);
                             });
                             console.log('Dodano do bazy!', title,':', url);
-                            bot.createMessage(config.channel, url);
+                            if(/free weekend/.test(title))
+                                url = `Free weekend ${url}`;
+
+                            bot.createMessage(config.channelMikis, url);
+                            bot.createMessage(config.channelSGZ, url);
                         }
                     });
                 }
             });
         } else {
             if (error) {
-                bot.createMessage(config.channel, `Nie udało się pobrać danych z reddita :c ${error}`);
+                bot.createMessage(config.channelMikis, `Nie udało się pobrać danych z reddita :c ${error}`);
             } else {
-                bot.createMessage(config.channel, `Nie udało się pobrać danych z reddita :c StatusCode: ${response.statusCode}`);
+                bot.createMessage(config.channelMikis, `Nie udało się pobrać danych z reddita :c StatusCode: ${response.statusCode}`);
             }
         }
     });
