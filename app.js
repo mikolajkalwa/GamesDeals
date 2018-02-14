@@ -80,7 +80,7 @@ setInterval(() => {
                     db.get(title, err => {
                         if (err) {
                             console.log('Raczej nie znaleziono w bazie ale dla pewnosci kod bledu:', err);
-                            db.put(`${topic.data.created_utc}_${title} `, url, err => {
+                            db.put(`${topic.data.created_utc}_${title}`, url, err => {
                                 if (err) return console.log('Nie udalo sie dodac do bazy!', err);
                             });
                             console.log('Dodano do bazy!', title, ':', url);
