@@ -41,17 +41,17 @@ bot.registerCommand('ping', msg => {
 bot.registerCommand('setUsername', (msg, args) => {
     if (msg.author.id !== config.ownerID)
         return 'Brak wystarczjących uprawnień';
-    if (args.length === 0) 
+    if (args.length === 0)
         return 'Błędne argumenty lub brak argumentów';
 
     const newName = args.join(' ');
-    bot.editSelf({username: newName});
+    bot.editSelf({ username: newName });
 });
 
 bot.registerCommand('say', (msg, args) => {
     if (msg.author.id !== config.ownerID)
         return 'Brak wystarczjących uprawnień';
-    if (args.length === 0) 
+    if (args.length === 0)
         return 'Błędne argumenty lub brak argumentów';
 
     const toSay = args.join(' ');
@@ -72,7 +72,7 @@ setInterval(() => {
                 const title = topic.data.title.toLowerCase();
                 let url = topic.data.url;
 
-                const platforms = /gog|humble|steam|origin/;
+                const platforms = /gog|humble|steam|origin|ubisoft|uplay/;
                 const keywords = /100%|pwyw|free/;
                 const ignore = /gogobundle/;
 
@@ -80,18 +80,16 @@ setInterval(() => {
                     db.get(title, err => {
                         if (err) {
                             console.log('Raczej nie znaleziono w bazie ale dla pewnosci kod bledu:', err);
-                            db.put(title, url, err => { 
+                            db.put(`${topic.data.created_utc}_${title} `, url, err => {
                                 if (err) return console.log('Nie udalo sie dodac do bazy!', err);
                             });
-                            console.log('Dodano do bazy!', title,':', url);
-                            if(/free weekend/.test(title))
+                            console.log('Dodano do bazy!', title, ':', url);
+                            if (/free weekend/.test(title))
                                 url = `Free weekend ${url}`;
 
                             config.channels.forEach(channel => {
                                 bot.createMessage(channel, url);
                             });
-                            // bot.createMessage(config.channelMikis, url);
-                            // bot.createMessage(config.channelSGZ, url);
                         }
                     });
                 }
@@ -101,12 +99,10 @@ setInterval(() => {
                 config.channels.forEach(channel => {
                     bot.createMessage(channel, `Nie udało się pobrać danych z reddita :c ${error}`);
                 });
-                // bot.createMessage(config.channelMikis, `Nie udało się pobrać danych z reddita :c ${error}`);
             } else {
                 config.channels.forEach(channel => {
                     bot.createMessage(channel, `Nie udało się pobrać danych z reddita :c StatusCode: ${response.statusCode}`);
                 });
-                // bot.createMessage(config.channelMikis, `Nie udało się pobrać danych z reddita :c StatusCode: ${response.statusCode}`);
             }
         }
     });
