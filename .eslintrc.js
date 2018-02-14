@@ -21,6 +21,17 @@ module.exports = {
             "error",
             "always"
         ],
-        "no-console": 0
+        "no-console": 0,
+        "spaced-comment": ["error", "always", {
+            "line": {
+                "markers": ["/"],
+                "exceptions": ["-", "+"]
+            },
+            "block": {
+                "markers": ["!"],
+                "exceptions": ["*"],
+                "balanced": true
+            }
+        }]
     }
 };

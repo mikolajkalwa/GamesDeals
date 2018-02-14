@@ -17,7 +17,7 @@ bot.on('ready', () => {
     console.log('Ready!');
 });
 
-bot.registerCommand('ping', (msg) => {
+bot.registerCommand('ping', msg => {
     bot.createMessage(msg.channel.id, 'Pong!').then((msg2) => {
         msg2.edit({
             content: 'Pong!',
@@ -38,6 +38,28 @@ bot.registerCommand('ping', (msg) => {
     });
 });
 
+bot.registerCommand('setUsername', (msg, args) => {
+    if (msg.author.id !== config.ownerID)
+        return 'Brak wystarczjących uprawnień';
+    if (args.length === 0) 
+        return 'Błędne argumenty lub brak argumentów';
+
+    const newName = args.join(' ');
+    bot.editSelf({username: newName});
+});
+
+bot.registerCommand('say', (msg, args) => {
+    if (msg.author.id !== config.ownerID)
+        return 'Brak wystarczjących uprawnień';
+    if (args.length === 0) 
+        return 'Błędne argumenty lub brak argumentów';
+
+    const toSay = args.join(' ');
+    config.channels.forEach(channel => {
+        bot.createMessage(channel, toSay);
+    });
+    return 'Wysłano pomyślnie';
+});
 
 setInterval(() => {
     request({
@@ -65,17 +87,26 @@ setInterval(() => {
                             if(/free weekend/.test(title))
                                 url = `Free weekend ${url}`;
 
-                            bot.createMessage(config.channelMikis, url);
-                            bot.createMessage(config.channelSGZ, url);
+                            config.channels.forEach(channel => {
+                                bot.createMessage(channel, url);
+                            });
+                            // bot.createMessage(config.channelMikis, url);
+                            // bot.createMessage(config.channelSGZ, url);
                         }
                     });
                 }
             });
         } else {
             if (error) {
-                bot.createMessage(config.channelMikis, `Nie udało się pobrać danych z reddita :c ${error}`);
+                config.channels.forEach(channel => {
+                    bot.createMessage(channel, `Nie udało się pobrać danych z reddita :c ${error}`);
+                });
+                // bot.createMessage(config.channelMikis, `Nie udało się pobrać danych z reddita :c ${error}`);
             } else {
-                bot.createMessage(config.channelMikis, `Nie udało się pobrać danych z reddita :c StatusCode: ${response.statusCode}`);
+                config.channels.forEach(channel => {
+                    bot.createMessage(channel, `Nie udało się pobrać danych z reddita :c StatusCode: ${response.statusCode}`);
+                });
+                // bot.createMessage(config.channelMikis, `Nie udało się pobrać danych z reddita :c StatusCode: ${response.statusCode}`);
             }
         }
     });
