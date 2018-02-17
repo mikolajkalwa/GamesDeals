@@ -69,6 +69,7 @@ setInterval(() => {
         if (!error && response.statusCode === 200) {
             const topics = body.data.children;
             topics.forEach(topic => {
+                const id = topic.data.id;
                 const title = topic.data.title.toLowerCase();
                 let url = topic.data.url;
 
@@ -77,10 +78,10 @@ setInterval(() => {
                 const ignore = /gogobundle/;
 
                 if (keywords.test(title) && platforms.test(title) && !ignore.test(title)) {
-                    db.get(title, err => {
+                    db.get(id, err => {
                         if (err) {
                             console.log('Raczej nie znaleziono w bazie ale dla pewnosci kod bledu:', err);
-                            db.put(title, url, err => {
+                            db.put(id, url, err => {
                                 if (err) return console.log('Nie udalo sie dodac do bazy!', err);
                             });
                             console.log('Dodano do bazy!', title, ':', url);
