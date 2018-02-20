@@ -40,9 +40,9 @@ bot.registerCommand('ping', msg => {
 
 bot.registerCommand('setUsername', (msg, args) => {
     if (msg.author.id !== config.ownerID)
-        return 'Brak wystarczjących uprawnień';
+        return 'Brak wystarczjących uprawnień.';
     if (args.length === 0)
-        return 'Błędne argumenty lub brak argumentów';
+        return 'Błędne argumenty lub brak argumentów.';
 
     const newName = args.join(' ');
     bot.editSelf({ username: newName }).then(() => {
@@ -54,9 +54,9 @@ bot.registerCommand('setUsername', (msg, args) => {
 
 bot.registerCommand('setAvatar', (msg, args) => {
     if (msg.author.id !== config.ownerID)
-        return 'Brak wystarczjących uprawnień';
+        return 'Brak wystarczjących uprawnień.';
     if (args.length === 0)
-        return 'Błędne argumenty lub brak argumentów';
+        return 'Błędne argumenty lub brak argumentów.';
 
     request({
         method: 'GET',
@@ -76,15 +76,15 @@ bot.registerCommand('setAvatar', (msg, args) => {
 
 bot.registerCommand('say', (msg, args) => {
     if (msg.author.id !== config.ownerID)
-        return 'Brak wystarczjących uprawnień';
+        return 'Brak wystarczjących uprawnień.';
     if (args.length === 0)
-        return 'Błędne argumenty lub brak argumentów';
+        return 'Błędne argumenty lub brak argumentów.';
 
     const toSay = args.join(' ');
     config.channels.forEach(channel => {
         bot.createMessage(channel, toSay);
     });
-    return 'Wysłano pomyślnie';
+    return 'Wysłano pomyślnie.';
 });
 
 setInterval(() => {
@@ -110,7 +110,7 @@ setInterval(() => {
                             db.put(id, url, err => {
                                 if (err) return console.log('Nie udalo sie dodac do bazy!', err);
                             });
-                            console.log('Dodano do bazy!', title, ':', url);
+                            console.log(`Dodano do bazy! ID: ${id}, Tytuł z reddita: ${title}, URL: ${url}`);
                             if (/free weekend/.test(title))
                                 url = `Free weekend ${url}`;
 
@@ -124,11 +124,11 @@ setInterval(() => {
         } else {
             if (error) {
                 config.channels.forEach(channel => {
-                    bot.createMessage(channel, `Nie udało się pobrać danych z reddita :c ${error}`);
+                    bot.createMessage(channel, `Wystąpił błąd: ${error}`);
                 });
             } else {
                 config.channels.forEach(channel => {
-                    bot.createMessage(channel, `Nie udało się pobrać danych z reddita :c StatusCode: ${response.statusCode}`);
+                    bot.createMessage(channel, `Nie udało się pobrać danych z reddita :c Kod odpowiedzi HTTP: ${response.statusCode}`);
                 });
             }
         }
