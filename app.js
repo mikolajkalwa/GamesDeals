@@ -89,7 +89,7 @@ bot.registerCommand('say', (msg, args) => {
 
 setInterval(() => {
     request({
-        url: 'https://www.reddit.com/r/GameDeals/.json?limit=10',
+        url: 'https://www.reddit.com/r/GameDeals/new/.json?limit=10',
         json: true,
     }, (error, response, body) => {
         if (!error && response.statusCode === 200) {
