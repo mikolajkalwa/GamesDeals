@@ -113,7 +113,7 @@ setInterval(() => {
 
                 const platforms = /gog|humble|steam|origin|ubisoft|uplay/;
                 const keywords = /100%|pwyw|free/;
-                const ignore = /gogobundle/;
+                const ignore = /gogobundle|twitch prime/;
 
                 if (keywords.test(title) && platforms.test(title) && !ignore.test(title)) {
                     db.get(id, err => {
