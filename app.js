@@ -1,17 +1,29 @@
+'use strict';
+
 const request = require('request');
 const Eris = require('eris');
 const levelup = require('levelup');
 const leveldown = require('leveldown');
+const path = require('path');
+const winston = require('winston');
 
 const config = require('./config.js');
+
+const logs = path.join(__dirname, 'failedRequests.log');
+
+const db = levelup(leveldown('./deals'));
+
+const logger = winston.createLogger({
+    transports: [
+        new winston.transports.File({ logs })({'timestamp':true})
+    ]
+});
 
 const bot = new Eris.CommandClient(config.token, {}, {
     description: 'Super bot co ma brać z reddita info o darmowych gierkach na gogu, humble\'u i steamie, ale nie wiem do końca czy na 100% działa',
     owner: 'Mikey#6819',
     prefix: '_'
 });
-
-const db = levelup(leveldown('./deals'));
 
 bot.on('ready', () => {
     console.log('Ready!');
@@ -123,13 +135,9 @@ setInterval(() => {
             });
         } else {
             if (error) {
-                config.channels.forEach(channel => {
-                    bot.createMessage(channel, `Wystąpił błąd: ${error}`);
-                });
+                logger.error(`Wystąpił błąd: ${error}`);
             } else {
-                config.channels.forEach(channel => {
-                    bot.createMessage(channel, `Nie udało się pobrać danych z reddita :c Kod odpowiedzi HTTP: ${response.statusCode}`);
-                });
+                logger.warn(`Nie udało się pobrać danych z reddita :c Kod odpowiedzi HTTP: ${response.statusCode}`);
             }
         }
     });

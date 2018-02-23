@@ -12,7 +12,8 @@
     "eris": "^0.8.2",
     "leveldown": "^3.0.0",
     "levelup": "^2.0.1",
-    "request": "^2.83.0"
+    "request": "^2.83.0",
+    "winston": "^2.4.0"
   },
   "devDependencies": {
     "eslint": "^4.14.0"
