@@ -1,12 +1,12 @@
 {
   "name": "salesbot",
   "version": "1.0.0",
-  "description": "",
+  "description": "Simple bot, which provides data about free games",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node app.js"
   },
-  "author": "",
+  "author": "Mikołaj Kalwa",
   "license": "ISC",
   "dependencies": {
     "eris": "^0.8.2",

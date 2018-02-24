@@ -6,26 +6,40 @@ const levelup = require('levelup');
 const leveldown = require('leveldown');
 const winston = require('winston');
 const moment = require('moment');
+const fs = require('fs');
 
 const config = require('./config.js');
 
-const db = levelup(leveldown('./deals'));
+const dir = './logs';
+
+if (!fs.existsSync(dir)){
+    fs.mkdirSync(dir);
+}
+const db = levelup(leveldown('./dealsDB'));
 
 const logger = new (winston.Logger)({
     transports: [   
         new (winston.transports.Console)(),
         new (winston.transports.File)({
             filename: './logs/gamesDeals.log',
+            json: false,
             timestamp: () => {
-                return moment().format('YYYY-MM-DD  HH:mm:ss');
+                return moment().format('YYYY-MM-DD HH:mm:ss');
+            },
+            formatter: options => {
+                return `${options.timestamp()} [${options.level}] ${options.message}`;
             }
         })
     ],
     exceptionHandlers: [
         new (winston.transports.File)({
             filename: './logs/exceptions.log',
+            json: false,
             timestamp: () => {
                 return moment().format('YYYY-MM-DD HH:mm:ss');
+            },
+            formatter: options => {
+                return `${options.timestamp()} [${options.level}] ${options.message}`;
             }
         })
     ]
