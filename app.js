@@ -4,20 +4,20 @@ const request = require('request');
 const Eris = require('eris');
 const levelup = require('levelup');
 const leveldown = require('leveldown');
-const path = require('path');
 const winston = require('winston');
 
 const config = require('./config.js');
-
-const logs = path.join(__dirname, 'failedRequests.log');
 
 const db = levelup(leveldown('./deals'));
 
 const logger = winston.createLogger({
     transports: [
-        new winston.transports.File({ logs })({'timestamp':true})
+        new (winston.transports.Console)(),
+        new winston.transports.File({ filename: './gamesDeals.log' })({'timestamp':true})
     ]
 });
+
+winston.handleExceptions(new winston.transports.File({ filename: './exceptions.log' }));
 
 const bot = new Eris.CommandClient(config.token, {}, {
     description: 'Super bot co ma brać z reddita info o darmowych gierkach na gogu, humble\'u i steamie, ale nie wiem do końca czy na 100% działa',
@@ -26,7 +26,7 @@ const bot = new Eris.CommandClient(config.token, {}, {
 });
 
 bot.on('ready', () => {
-    console.log('Ready!');
+    logger.info('Ready!');
 });
 
 bot.registerCommand('ping', msg => {
@@ -36,7 +36,7 @@ bot.registerCommand('ping', msg => {
             embed: {
                 color: 0x48f442,
                 fields: [{
-                    inline: true,
+                    inline: true,   
                     name: 'API',
                     value: `${msg2.timestamp - msg.timestamp}ms`
                 }, {
@@ -118,11 +118,11 @@ setInterval(() => {
                 if (keywords.test(title) && platforms.test(title) && !ignore.test(title)) {
                     db.get(id, err => {
                         if (err) {
-                            console.log('Raczej nie znaleziono w bazie ale dla pewnosci kod bledu:', err);
+                            logger.info('Raczej nie znaleziono w bazie ale dla pewnosci kod bledu:', err);
                             db.put(id, url, err => {
-                                if (err) return console.log('Nie udalo sie dodac do bazy!', err);
+                                if (err) return logger.error('Nie udalo sie dodac do bazy!', err);
                             });
-                            console.log(`Dodano do bazy! ID: ${id}, Tytuł z reddita: ${title}, URL: ${url}`);
+                            logger.info(`Dodano do bazy! ID: ${id}, Tytuł z reddita: ${title}, URL: ${url}`);
                             if (/free weekend/.test(title))
                                 url = `Free weekend ${url}`;
 
