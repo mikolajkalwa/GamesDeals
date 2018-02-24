@@ -5,19 +5,31 @@ const Eris = require('eris');
 const levelup = require('levelup');
 const leveldown = require('leveldown');
 const winston = require('winston');
+const moment = require('moment');
 
 const config = require('./config.js');
 
 const db = levelup(leveldown('./deals'));
 
-const logger = winston.createLogger({
-    transports: [
+const logger = new (winston.Logger)({
+    transports: [   
         new (winston.transports.Console)(),
-        new winston.transports.File({ filename: './gamesDeals.log' })({'timestamp':true})
+        new (winston.transports.File)({
+            filename: './logs/gamesDeals.log',
+            timestamp: () => {
+                return moment().format('YYYY-MM-DD  HH:mm:ss');
+            }
+        })
+    ],
+    exceptionHandlers: [
+        new (winston.transports.File)({
+            filename: './logs/exceptions.log',
+            timestamp: () => {
+                return moment().format('YYYY-MM-DD HH:mm:ss');
+            }
+        })
     ]
 });
-
-winston.handleExceptions(new winston.transports.File({ filename: './exceptions.log' }));
 
 const bot = new Eris.CommandClient(config.token, {}, {
     description: 'Super bot co ma brać z reddita info o darmowych gierkach na gogu, humble\'u i steamie, ale nie wiem do końca czy na 100% działa',
@@ -142,5 +154,11 @@ setInterval(() => {
         }
     });
 }, 5 * 60 * 1000);
+
+logger.on('error', err => {
+    bot.getDMChannel(config.ownerID)
+        .then((channel) =>
+            bot.createMessage(channel.id, `Wystąpił błąd ${err}`));
+});
 
 bot.connect();
