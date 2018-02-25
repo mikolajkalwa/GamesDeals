@@ -7,7 +7,7 @@ module.exports = (bot => {
     return {
         generator: (msg, args) => {
             if (msg.author.id !== config.ownerID)
-                return 'Brak wystarczjących uprawnień.';
+                return 'Brak wystarczających uprawnień.';
             if (args.length === 0)
                 return 'Błędne argumenty lub brak argumentów.';
 

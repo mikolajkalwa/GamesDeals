@@ -19,7 +19,7 @@ fs.readdir('./commands', (err, files) => {
         try {
             const command = require(`./commands/${file}`)(bot);
             logger.info(`Próba wczytania ${file}`);
-            bot.registerCommand(file.slice(0, -3), command.generator);
+            bot.registerCommand(file.slice(0, -3), command.generator, command.options);
         }
         catch (err) {
             logger.error(`Podczas wczytywania komendy wystąpił błąd ${err}`);
