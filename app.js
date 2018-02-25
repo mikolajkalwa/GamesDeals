@@ -18,7 +18,7 @@ fs.readdir('./commands', (err, files) => {
     files.forEach(file => {
         try {
             const command = require(`./commands/${file}`)(bot);
-            logger.info(`Próba wczytania ${command.name}`);
+            logger.info(`Próba wczytania ${file}`);
             bot.registerCommand(file.slice(0, -3), command.generator);
         }
         catch (err) {
