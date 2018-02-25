@@ -2,7 +2,6 @@
 
 module.exports = (bot => {
     return {
-        name: 'ping',
         generator: msg => {
             bot.createMessage(msg.channel.id, 'Pong!').then((msg2) => {
                 msg2.edit({

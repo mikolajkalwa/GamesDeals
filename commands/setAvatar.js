@@ -5,7 +5,6 @@ const config = require('../config');
 
 module.exports = (bot => {
     return {
-        name: 'setAvatar',
         generator: (msg, args) => {
             if (msg.author.id !== config.ownerID)
                 return 'Brak wystarczjących uprawnień.';
