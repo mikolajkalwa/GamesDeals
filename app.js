@@ -6,8 +6,6 @@ const logger = require('./lib/logger');
 const bot = require('./lib/bot');
 const utils = require('./lib/utils');
 
-const config = require('./config');
-
 bot.on('ready', () => {
     logger.info('Gotów!');
 });
@@ -22,7 +20,7 @@ fs.readdir('./commands', (err, files) => {
             bot.registerCommand(file.slice(0, -3), command.generator, command.options);
         }
         catch (err) {
-            logger.error(`Podczas wczytywania komendy wystąpił błąd ${err}`);
+            logger.error(`Podczas wczytywania komendy ${file.slice(0, -3)} wystąpił błąd ${err}`);
         }
     });
     logger.info('Wczytywanie komend zakończone!');
@@ -31,11 +29,5 @@ fs.readdir('./commands', (err, files) => {
 setInterval(() => {
     utils.searchGames();
 }, 5 * 60 * 1000);
-
-logger.on('error', err => {
-    bot.getDMChannel(config.ownerID)
-        .then((channel) =>
-            bot.createMessage(channel.id, `Wystąpił błąd ${err}`));
-});
 
 bot.connect();
