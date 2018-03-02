@@ -28,6 +28,6 @@ fs.readdir('./commands', (err, files) => {
 
 setInterval(() => {
     utils.searchGames();
-}, 5 * 60 * 1000);
+}, 1 * 60 * 60 * 1000);
 
 bot.connect();
