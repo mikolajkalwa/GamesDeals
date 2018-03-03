@@ -11,10 +11,10 @@ module.exports = (bot => {
                 const text = `Nieautoryzowane użycie eval przez ${msg.author.username}. Próba wykonania ${code}`;
                 bot.getDMChannel(config.ownerID).then((channel) => bot.createMessage(channel.id, text));
                 logger.info(text);
-                return 'Brak wystarczających uprawnień. Próba nadużycia została zgłoszona!';
+                return msg.channel.createMessage('Brak wystarczających uprawnień. Próba nadużycia została zgłoszona!');
             }
             if (args.length === 0)
-                return 'Błędne argumenty lub brak argumentów.';
+                return msg.channel.createMessage('Błędne argumenty lub brak argumentów.');
 
             try {
                 let evalved = eval(code);

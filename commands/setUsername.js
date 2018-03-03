@@ -6,9 +6,9 @@ module.exports = (bot => {
     return {
         generator: (msg, args) => {
             if (msg.author.id !== config.ownerID)
-                return 'Brak wystarczających uprawnień.';
+                return msg.channel.createMessage('Brak wystarczających uprawnień.');
             if (args.length === 0)
-                return 'Błędne argumenty lub brak argumentów.';
+                return msg.channel.createMessage('Błędne argumenty lub brak argumentów.');
 
             const newName = args.join(' ');
             bot.editSelf({ username: newName }).then(() => {
