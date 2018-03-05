@@ -27,7 +27,7 @@ fs.readdir('./commands', (err, files) => {
 });
 
 setInterval(() => {
-    utils.searchGames();
+    utils.searchGamesAxios();
 }, 1 * 60 * 60 * 1000);
 
 bot.connect();

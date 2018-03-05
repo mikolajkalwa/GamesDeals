@@ -1,6 +1,7 @@
 'use strict';
 
-const request = require('request');
+const axios = require('axios');
+
 const config = require('../config');
 
 module.exports = (bot => {
@@ -11,19 +12,16 @@ module.exports = (bot => {
             if (args.length === 0)
                 return msg.channel.createMessage('Błędne argumenty lub brak argumentów.');
 
-            request({
-                method: 'GET',
-                url: args[0],
-                encoding: null
-            }, (err, res, image) => {
-                if (err) msg.channel.createMessage('Nie udało sie pobrać zdjęcia.');
+            axios.get(args[0], {responseType: 'arraybuffer'}).then(response => {
                 bot.editSelf({
-                    avatar: `data:${res.headers['content-type']};base64,${image.toString('base64')}`
+                    avatar: `data:${response.headers['content-type']};base64,${Buffer.from(response.data, 'binary').toString('base64')}`
                 }).then(() => {
                     msg.channel.createMessage('Zmieniono Avatar!');
                 }).catch(() => {
                     msg.channel.createMessage('Podczas zmieniania avatara wystąpił błąd!');
                 });
+            }).catch(e => {
+                msg.channel.createMessage(`Nie udało się pobrać obrazka ${e.message}`);
             });
         }
     };

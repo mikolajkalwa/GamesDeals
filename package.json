@@ -9,11 +9,11 @@
   "author": "Mikołaj Kalwa",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.18.0",
     "eris": "^0.8.2",
     "leveldown": "^3.0.0",
     "levelup": "^2.0.1",
     "moment": "^2.20.1",
-    "request": "^2.83.0",
     "winston": "^2.4.0"
   },
   "devDependencies": {
