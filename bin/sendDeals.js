@@ -1,6 +1,6 @@
 const bot = require('../lib/bot');
 
-const logger = require('./lib/logger');
+const logger = require('../lib/logger');
 
 const config = require('../config');
 
