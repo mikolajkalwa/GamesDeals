@@ -4,12 +4,30 @@ const fs = require('fs');
 
 const logger = require('./lib/logger');
 const bot = require('./lib/bot');
-const utils = require('./lib/utils');
+const db = require('./lib/db');
+const searchGames = require('./bin/searchGames');
 
-bot.on('ready', () => {
-    logger.info('Gotów!');
-});
+// tworzy folder dla logow
+const logDir = './logs';
+if (!fs.existsSync(logDir)) {
+    fs.mkdirSync(logDir);
+}
 
+// inicjuje ilosc deali w bazie (jesli wczesniej nie bylo zadnego dodanego)
+db.get('ilosc')
+    .then(value => logger.info(`Odczytano ilosc znalezionych deali: ${value}`))
+    .catch(err => {
+        if (err.notFound) {
+            db.put('ilosc', 0)
+                .then(() => logger.info('Zainicjowano ilosc znalezionych deali! (0)'))
+                .catch(err => logger.error(`Nie udalo sie dodac do bazy! ${err}`));
+        }
+        else {
+            logger.error(`Problem z odczytem wartosci ile dealow juz znalazl: ${err}`);
+        }
+    });
+
+// Wczytuje komendy
 fs.readdir('./commands', (err, files) => {
     if (err) logger.error(err);
     logger.info(`Próba wczytania ${files.length} komend do pamięci`);
@@ -26,8 +44,13 @@ fs.readdir('./commands', (err, files) => {
     logger.info('Wczytywanie komend zakończone!');
 });
 
+// funkcja co szuka gier xd
 setInterval(() => {
-    utils.searchGames();
+    searchGames();
 }, 1 * 60 * 60 * 1000);
 
-bot.connect();
+bot.on('ready', () => {
+    logger.info('Gotów!');
+});
+
+bot.connect().then(() => bot.editStatus({ name: 'Use _help' }));

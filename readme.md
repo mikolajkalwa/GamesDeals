@@ -1,11 +1,4 @@
-# dealsBot
 
-Bot informuje o darmowych gierkach. Jako swoje źródło traktuje reddita `/r/GameDeals`
+# dealsBot - [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/MikeyWazowsky/dealsBot/blob/master/LICENSE)
 
-## Jak uruchomić?
-
-Pobierasz node.js, uzupełniasz `config.example.js` i zmieniasz jego nazwę na `config.js`
-
-Później w konsoli nawigujesz przy użyciu `cd` do folderu z botem i wpisujesz `node app.js`
-
-MAGIA!
+A cool bot which provides info about free games. As a source it uses `/r/GameDeals`
