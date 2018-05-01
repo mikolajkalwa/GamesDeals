@@ -37,7 +37,7 @@ const searchGames = () => {
                         // Inkrementacja ilosci znaleziony deali (do bazy)
                         db.get('ilosc')
                             .then(value => {
-                                db.put('ilosc', value + 1)
+                                db.put('ilosc', parseInt(value) + 1)
                                     .then(() => logger.info('Zaaktualizowano ilosc znalezionych deali!'))
                                     .catch(err => logger.error(`Nie udalo sie zaktualizowac ilosci deali! ${err}`));
                             })

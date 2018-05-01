@@ -1,6 +1,10 @@
 'use strict';
 
 const fs = require('fs');
+const path = require('path');
+
+// dla bazy:
+global.appRoot = path.resolve(__dirname);
 
 const logger = require('./lib/logger');
 const bot = require('./lib/bot');
