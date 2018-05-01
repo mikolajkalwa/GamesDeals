@@ -25,6 +25,7 @@ module.exports = (bot => {
             });
         },
         options: {
+            deleteCommand: true,
             description: 'Pong!',
             fullDescription: 'Use this command to check if bot is alive or not.',
             cooldown: 5 * 1000,

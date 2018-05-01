@@ -37,9 +37,8 @@ const searchGames = () => {
                         // Inkrementacja ilosci znaleziony deali (do bazy)
                         db.get('ilosc')
                             .then(value => {
-                                const newValue = ++value;
-                                db.put('ilosc', newValue)
-                                    .then(() => logger.info(`Zaaktualizowano ilosc znalezionych deali! (${newValue})`))
+                                db.put('ilosc', value + 1)
+                                    .then(() => logger.info('Zaaktualizowano ilosc znalezionych deali!'))
                                     .catch(err => logger.error(`Nie udalo sie zaktualizowac ilosci deali! ${err}`));
                             })
                             .catch(err => logger.error(`Problem z odczytem wartosci ile dealow juz znalazl: ${err}`));

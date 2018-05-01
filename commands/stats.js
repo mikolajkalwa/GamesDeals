@@ -29,9 +29,9 @@ module.exports = (bot => {
                                 name: 'Users',
                                 value: bot.users.size
                             }, {
-                                inline: true,
+                                inline: false,
                                 name: 'Deals found',
-                                value: amount
+                                value: `${amount}`
                             }],
                             timestamp: new Date(),
                         }
