@@ -26,6 +26,16 @@ const searchGames = () => {
                                         .then(() => {
                                             logger.info(`Dodano do bazy! ID: ${id}, Tytuł z reddita: ${title}, URL: ${url}`);
                                             sendDeals(topic.data.title, url);
+
+                                            // Inkrementacja ilosci znaleziony deali (do bazy)
+                                            db.get('ilosc')
+                                                .then(value => {
+                                                    db.put('ilosc', parseInt(value) + 1)
+                                                        .then(() => logger.info('Zaaktualizowano ilosc znalezionych deali!'))
+                                                        .catch(err => logger.error(`Nie udalo sie zaktualizowac ilosci deali! ${err}`));
+                                                })
+                                                .catch(err => logger.error(`Problem z odczytem wartosci ile dealow juz znalazl: ${err}`));
+
                                         })
                                         .catch(err => logger.error(`Nie udalo sie dodac do bazy! ${err}`));
                                 }
@@ -33,15 +43,6 @@ const searchGames = () => {
                                     logger.info(`Nie mozna odczytac z bazy kod bledu:: ${err}`);
                                 }
                             });
-
-                        // Inkrementacja ilosci znaleziony deali (do bazy)
-                        db.get('ilosc')
-                            .then(value => {
-                                db.put('ilosc', parseInt(value) + 1)
-                                    .then(() => logger.info('Zaaktualizowano ilosc znalezionych deali!'))
-                                    .catch(err => logger.error(`Nie udalo sie zaktualizowac ilosci deali! ${err}`));
-                            })
-                            .catch(err => logger.error(`Problem z odczytem wartosci ile dealow juz znalazl: ${err}`));
                     }
                 });
             } else {
