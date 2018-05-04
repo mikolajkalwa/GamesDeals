@@ -9,7 +9,7 @@ global.appRoot = path.resolve(__dirname);
 const logger = require('./lib/logger');
 const bot = require('./lib/bot');
 const db = require('./lib/db');
-const searchGames = require('./bin/searchGames');
+const searchGames = require('./functions/searchGames');
 
 // tworzy folder dla logow
 const logDir = './logs';

@@ -1,5 +1,3 @@
-'use strict';
-
 const moment = require('moment');
 const db = require('../lib/db');
 const logger = require('../lib/logger');
@@ -45,7 +43,7 @@ module.exports = (bot => {
         options: {
             deleteCommand: true,
             description: 'Uptime, Servers, Users',
-            fullDescription: 'Use this command to get basic statistics about the bot',
+            fullDescription: 'Use this command to get basic statistics about the bot.',
             cooldown: 30 * 1000,
             cooldownMessage: 'You have to wait before using this command again.',
             cooldownExclusions: {
