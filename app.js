@@ -1,14 +1,9 @@
 'use strict';
 
 const fs = require('fs');
-const path = require('path');
-
-// dla bazy:
-global.appRoot = path.resolve(__dirname);
 
 const logger = require('./lib/logger');
 const bot = require('./lib/bot');
-const db = require('./lib/db');
 const searchGames = require('./functions/searchGames');
 
 // tworzy folder dla logow
@@ -16,20 +11,6 @@ const logDir = './logs';
 if (!fs.existsSync(logDir)) {
     fs.mkdirSync(logDir);
 }
-
-// inicjuje ilosc deali w bazie (jesli wczesniej nie bylo zadnego dodanego)
-db.get('ilosc')
-    .then(value => logger.info(`Odczytano ilosc znalezionych deali: ${value}`))
-    .catch(err => {
-        if (err.notFound) {
-            db.put('ilosc', 0)
-                .then(() => logger.info('Zainicjowano ilosc znalezionych deali! (0)'))
-                .catch(err => logger.error(`Nie udalo sie dodac do bazy! ${err}`));
-        }
-        else {
-            logger.error(`Problem z odczytem wartosci ile dealow juz znalazl: ${err}`);
-        }
-    });
 
 // Wczytuje komendy
 fs.readdir('./commands', (err, files) => {
@@ -51,8 +32,7 @@ fs.readdir('./commands', (err, files) => {
 // funkcja co szuka gier xd
 setInterval(() => {
     searchGames();
-}, 1 * 60 * 60 * 1000);
-
+}, 2 * 60 * 60 * 1000);
 bot.on('ready', () => {
     logger.info('Gotów!');
 });

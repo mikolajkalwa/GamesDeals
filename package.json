@@ -1,19 +1,19 @@
 {
-  "name": "salesbot",
+  "name": "deals-bot",
   "version": "1.0.0",
   "description": "Simple bot, which provides data about free games",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "start": "node app.js"
   },
   "author": "Mikołaj Kalwa",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "axios": "^0.18.0",
     "eris": "^0.8.2",
-    "leveldown": "^3.0.0",
-    "levelup": "^2.0.1",
     "moment": "^2.20.1",
+    "mongodb": "^3.0.7",
+    "mongoose": "^5.0.17",
     "winston": "^2.4.0"
   },
   "devDependencies": {

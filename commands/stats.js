@@ -1,5 +1,8 @@
 const moment = require('moment');
-const db = require('../lib/db');
+
+const {mongoose} = require('../lib/db'); // eslint-disable-line
+const {Deal} = require('../models/deal');
+
 const logger = require('../lib/logger');
 
 const config = require('../config');
@@ -8,7 +11,7 @@ module.exports = (bot => {
     return {
         generator: msg => {
             // bierze z bazy ilosc znalezionych gier, i potem sle info o tym + podstawowe statystyki
-            db.get('ilosc')
+            Deal.count({})
                 .then(amount => {
                     bot.createMessage(msg.channel.id, {
                         content: 'Informations:',

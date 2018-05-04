@@ -1,6 +1,8 @@
 const axios = require('axios');
 
-const db = require('../lib/db');
+const {mongoose} = require('../lib/db'); // eslint-disable-line
+const {Deal} = require('../models/deal');
+
 const logger = require('../lib/logger');
 
 const sendDeals = require('./sendDeals');
@@ -15,32 +17,25 @@ const searchGames = () => {
                     const title = topic.data.title.toLowerCase();
                     const url = topic.data.url;
 
-                    if (~title.indexOf('free') || /100%/.test(title)) {
+                    if (~title.indexOf('destiny') || /100%/.test(title)) {
                         // Sprawdza czy deal jest w bazie. Jak nie to go dodaje i wysyla o nim info.
-                        db.get(id)
-                            .catch(err => {
-                                if (err.notFound) {
-                                    db.put(id, url)
+                        Deal.findOne({dealID: id})
+                            .then(result => {
+                                if (!result) {
+                                    const deal = new Deal({
+                                        dealID: id,
+                                        title: topic.data.title,
+                                        url
+                                    });
+                                    deal.save()
                                         .then(() => {
                                             logger.info(`Dodano do bazy! ID: ${id}, Tytuł z reddita: ${title}, URL: ${url}`);
                                             sendDeals(topic.data.title, url);
-
-                                            // Inkrementacja ilosci znaleziony deali (do bazy)
-                                            db.get('ilosc')
-                                                .then(value => {
-                                                    db.put('ilosc', parseInt(value) + 1)
-                                                        .then(() => logger.info('Zaaktualizowano ilosc znalezionych deali!'))
-                                                        .catch(err => logger.error(`Nie udalo sie zaktualizowac ilosci deali! ${err}`));
-                                                })
-                                                .catch(err => logger.error(`Problem z odczytem wartosci ile dealow juz znalazl: ${err}`));
-
                                         })
                                         .catch(err => logger.error(`Nie udalo sie dodac do bazy! ${err}`));
                                 }
-                                else {
-                                    logger.info(`Nie mozna odczytac z bazy kod bledu:: ${err}`);
-                                }
-                            });
+                            })
+                            .catch(err => logger.error(`Blad przy zapytaniu do bazy ${err}`));
                     }
                 });
             } else {
