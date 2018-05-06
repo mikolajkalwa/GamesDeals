@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
 
 const Deal = mongoose.model('Deal', {
-    dealID: {
+    deal_id: {
         type: String,
         required: true,
-        trim: true
+        unique: true
     },
-    title : {
+    title: {
         type: String,
         required: true,
         trim: true
@@ -17,4 +17,4 @@ const Deal = mongoose.model('Deal', {
     }
 });
 
-module.exports = {Deal};
+module.exports = { Deal };

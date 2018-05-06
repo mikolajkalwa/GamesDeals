@@ -17,19 +17,19 @@ const searchGames = () => {
                     const title = topic.data.title.toLowerCase();
                     const url = topic.data.url;
 
-                    if (~title.indexOf('destiny') || /100%/.test(title)) {
+                    if (~title.indexOf('free') || /100%/.test(title)) {
                         // Sprawdza czy deal jest w bazie. Jak nie to go dodaje i wysyla o nim info.
-                        Deal.findOne({dealID: id})
+                        Deal.findOne({deal_id: id})
                             .then(result => {
                                 if (!result) {
                                     const deal = new Deal({
-                                        dealID: id,
+                                        deal_id: id,
                                         title: topic.data.title,
                                         url
                                     });
                                     deal.save()
                                         .then(() => {
-                                            logger.info(`Dodano do bazy! ID: ${id}, Tytuł z reddita: ${title}, URL: ${url}`);
+                                            logger.info(`Dodano do bazy! ID: ${id}, Tytuł z reddita: ${topic.data.title}, URL: ${url}`);
                                             sendDeals(topic.data.title, url);
                                         })
                                         .catch(err => logger.error(`Nie udalo sie dodac do bazy! ${err}`));

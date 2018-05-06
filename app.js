@@ -32,7 +32,8 @@ fs.readdir('./commands', (err, files) => {
 // funkcja co szuka gier xd
 setInterval(() => {
     searchGames();
-}, 2 * 60 * 60 * 1000);
+}, 2 * 60 * 60 * 1000); // raz na dwie godziny
+
 bot.on('ready', () => {
     logger.info('Gotów!');
 });

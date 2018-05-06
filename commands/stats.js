@@ -1,7 +1,7 @@
 const moment = require('moment');
 
-const {mongoose} = require('../lib/db'); // eslint-disable-line
-const {Deal} = require('../models/deal');
+const { mongoose } = require('../lib/db'); // eslint-disable-line
+const { Deal } = require('../models/deal');
 
 const logger = require('../lib/logger');
 
@@ -23,7 +23,7 @@ module.exports = (bot => {
                                 value: moment.duration(bot.uptime).locale('en').humanize()
                             }, {
                                 inline: true,
-                                name: 'Servers',
+                                name: 'Guilds',
                                 value: bot.guilds.size
                             }, {
                                 inline: true,
