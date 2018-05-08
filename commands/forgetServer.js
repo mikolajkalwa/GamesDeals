@@ -10,24 +10,23 @@ module.exports = (bot => {
             Webhook.findOneAndRemove({ guild_id: msg.channel.guild.id })
                 .then(result => {
                     if (!result) {
-                        bot.createMessage(msg.channel.id, 'Couldn\'t find any webhook related to this server');
+                        bot.createMessage(msg.channel.id, ':x: | Couldn\'t find any webhook related to this server');
                     }
                     else {
                         bot.deleteWebhook(result.id, result.token)
-                            .then(() => bot.createMessage(msg.channel.id, 'Webhook zostal usuniety i bot nie bedzie juz tu wysylal wiadomosci'))
+                            .then(() => bot.createMessage(msg.channel.id, ':white_check_mark: | Webhook has been removed and bot won\'t send any messages to this channel anymore.'))
                             .catch(err => {
-                                logger.error(`Blad z komendy forgetServer nie udalo sie usunac webhooka ${err}`);
-                                bot.createMessage(msg.channel.id, 'Bot nie bedzie juz tu wysylal wiadomosci, ale musisz recznie usunac webhooka.');
+                                logger.error(`Failed to delete webhook ${err}`);
+                                bot.createMessage(msg.channel.id, ':warning: | Bot won\'t send any messages to this channel anymore, but you must remove webhook manuallly.');
                             });
                     }
                 })
                 .catch(err => {
-                    bot.createMessage(msg.channel.id, 'An error has occured. Please try again later');
-                    logger.error(`Nie udalo sie usunac webhooka z bazy ${err}`);
+                    bot.createMessage(msg.channel.id, ':exclamation: | An error has occured. Please try again later');
+                    logger.error(`Failed to remove webhook from database ${err}`);
                 });
         },
         options: {
-            deleteCommand: true,
             guildOnly: true,
             description: 'Makes bot forget the server (guild admins only)',
             fullDescription: 'Bot won\'t send any messages about free games anymore',

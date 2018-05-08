@@ -1,7 +1,7 @@
 const axios = require('axios');
 
-const {mongoose} = require('../lib/db'); // eslint-disable-line
-const {Deal} = require('../models/deal');
+const { mongoose } = require('../lib/db'); // eslint-disable-line
+const { Deal } = require('../models/deal');
 
 const logger = require('../lib/logger');
 
@@ -18,8 +18,8 @@ const searchGames = () => {
                     const url = topic.data.url;
 
                     if (~title.indexOf('free') || /100%/.test(title)) {
-                        // Sprawdza czy deal jest w bazie. Jak nie to go dodaje i wysyla o nim info.
-                        Deal.findOne({deal_id: id})
+                        // Checks if topic already exists in db. If not, add it, and send to discord
+                        Deal.findOne({ deal_id: id })
                             .then(result => {
                                 if (!result) {
                                     const deal = new Deal({

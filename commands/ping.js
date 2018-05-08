@@ -3,9 +3,9 @@ const config = require('../config');
 module.exports = (bot => {
     return {
         generator: msg => {
-            bot.createMessage(msg.channel.id, 'Pong!').then((msg2) => {
+            bot.createMessage(msg.channel.id, ':information_source: | Pong!').then((msg2) => {
                 msg2.edit({
-                    content: 'Pong!',
+                    content: ':information_source: | Pong!',
                     embed: {
                         color: 0x48f442,
                         fields: [{
@@ -23,7 +23,6 @@ module.exports = (bot => {
             });
         },
         options: {
-            deleteCommand: true,
             description: 'Pong!',
             fullDescription: 'Use this command to check if bot is alive or not.',
             guildOnly: true,

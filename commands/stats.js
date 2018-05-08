@@ -10,7 +10,6 @@ const config = require('../config');
 module.exports = (bot => {
     return {
         generator: msg => {
-            // bierze z bazy ilosc znalezionych gier, i potem sle info o tym + podstawowe statystyki
             Deal.count({})
                 .then(amount => {
                     bot.createMessage(msg.channel.id, {
@@ -39,12 +38,11 @@ module.exports = (bot => {
                     });
                 })
                 .catch(err => {
-                    logger.error(`Problem z odczytem wartosci ile dealow juz znalazl: ${err}`);
-                    bot.createMessage(msg.channel.id, 'An error has occured');
+                    logger.error(`Failed counting deals ${err}`);
+                    bot.createMessage(msg.channel.id, ':exclamation: | An error has occured, please try again later.');
                 });
         },
         options: {
-            deleteCommand: true,
             description: 'Uptime, Servers, Users',
             fullDescription: 'Use this command to get basic statistics about the bot.',
             cooldown: 30 * 1000,

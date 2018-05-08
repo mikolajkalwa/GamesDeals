@@ -1,8 +1,8 @@
 module.exports = {
     token: 'some token', // bot token
     ownerID: 'some id', // owner user id
-    channels: [
-        'channel id'
-        // optional more channels
-    ]
+    papertrail: { // https://papertrailapp.com/
+        host: 'papertail host',
+        port: 'papertrail port'
+    }
 };

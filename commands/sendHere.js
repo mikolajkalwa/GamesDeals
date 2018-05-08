@@ -13,13 +13,13 @@ module.exports = (bot => {
             Webhook.findOne({ guild_id: msg.channel.guild.id })
                 .then(result => {
                     if (result) {
-                        return bot.createMessage(msg.channel.id, 'A webhook for this server already exists.');
+                        return bot.createMessage(msg.channel.id, ':x: | A webhook for this server already exists.');
                     }
                     else {
                         fs.readFile('../avatar.png', 'base64', (err, image) => {
                             if (err) {
-                                logger.error(`Problem z odczytem obrazka dla webhooka ${err}`);
-                                bot.createMessage(msg.channel.id, 'An error has occured. Please try again later.');
+                                logger.error(`Failed reading avatar file ${err}`);
+                                bot.createMessage(msg.channel.id, ':exclamation: | An error has occured. Please try again later.');
                                 return;
                             }
                             else {
@@ -34,24 +34,23 @@ module.exports = (bot => {
                                             guild_id: createdWebhook.guild_id
                                         });
                                         webhookToAdd.save()
-                                            .then(() => bot.createMessage(msg.channel.id, 'Channel has been set successfully.'))
+                                            .then(() => bot.createMessage(msg.channel.id, ':white_check_mark: | Channel has been set successfully.'))
                                             .catch(err => {
-                                                logger.error(`Nie udalo sie dodac webhooka do bazy ${err}`);
-                                                bot.createMessage(msg.channel.id, 'An error has occured. Please try again later.');
+                                                logger.error(`Failed adding webhook to database ${err}`);
+                                                bot.createMessage(msg.channel.id, ':exclamation: | An error has occured. Please try again later.');
                                             });
                                     })
                                     .catch(err => {
-                                        logger.error(`Nie udało się stworzyć webhooka ${err}`);
-                                        bot.createMessage(msg.channel.id, 'An error has occured. Please try again later. Can\'t create webhook.');
+                                        logger.warn(`Failed creating webhook ${err}`);
+                                        bot.createMessage(msg.channel.id, ':exclamation: | This feature requires permission to manage webhooks. Please grant this permission in server settings for GamesDeals role.');
                                     });
                             }
                         });
                     }
                 })
-                .catch(err => logger.error(`Nie mozna przeszukac webhookow ${err}`));
+                .catch(err => logger.error(`Failed getting webhooks from database ${err}`));
         },
         options: {
-            deleteCommand: true,
             guildOnly: true,
             description: 'Set a channel for the bot (guild admins only)',
             fullDescription: 'Bot will send messages about free games in the channel where you use this command',

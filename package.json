@@ -14,7 +14,8 @@
     "moment": "^2.20.1",
     "mongodb": "^3.0.7",
     "mongoose": "^5.0.17",
-    "winston": "^2.4.0"
+    "winston": "^2.4.0",
+    "winston-papertrail": "^1.0.5"
   },
   "devDependencies": {
     "eslint": "^4.14.0"
