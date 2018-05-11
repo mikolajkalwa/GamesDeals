@@ -12,24 +12,26 @@ const sendDeals = (title, url) => {
                 axios.post(`https://discordapp.com/api/webhooks/${webhook.id}/${webhook.token}`, {
                     content: `${title} ${url}`
                 })
-                    .then(response => {
-                        if (response.status === 404 || response.status === 401) {
-                            Webhook.findOneAndRemove({ guild_id: webhook.guild.id })
+                    .catch(err => {
+                        if (err.response.status === 404 || err.response.status === 401) {
+                            Webhook.findOneAndRemove({ guild_id: webhook.guild_id })
                                 .then(result => {
                                     if (!result) {
-                                        logger.warning(`W bazie nie znaleziono webhooka ktory zwrocil ${response.status}`);
+                                        logger.warning(`Webhook has returned ${err.response.status}, but cant be found in database`);
                                     }
                                     else {
-                                        logger.info('Usunietego nieaktualnego webhooka z bazy');
+                                        logger.info('Removed an outdated webhook from the database');
                                     }
                                 })
-                                .catch(err => logger.error(`Problem przy czyszczeniu niekatulego webhooka ${err}`));
+                                .catch(err => logger.error(`Failed removing outdated webhook. Guild: ${webhook.guild_id} Error: ${err}`));
                         }
-                    })
-                    .catch(err => logger.error(`Problem przy odpalaniu webhooka ${webhook.guild_id}. Blad: ${err}`));
+                        else {
+                            logger.error(`Failed executing webhook. Guild: ${webhook.guild_id}. Error: ${err}`);
+                        }
+                    });
             });
         })
-        .catch(err => logger.error(`Nie udalo sie pobrac webhookow z bazy ${err}`));
+        .catch(err => logger.error(`Failed fetching webhooks from database ${err}`));
 };
 
 module.exports = sendDeals;

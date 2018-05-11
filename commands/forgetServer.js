@@ -14,10 +14,10 @@ module.exports = (bot => {
                     }
                     else {
                         bot.deleteWebhook(result.id, result.token)
-                            .then(() => bot.createMessage(msg.channel.id, ':white_check_mark: | Webhook has been removed and bot won\'t send any messages to this channel anymore.'))
+                            .then(() => bot.createMessage(msg.channel.id, ':white_check_mark: | Webhook has been removed and the bot won\'t send any messages to this channel anymore.'))
                             .catch(err => {
                                 logger.error(`Failed to delete webhook ${err}`);
-                                bot.createMessage(msg.channel.id, ':warning: | Bot won\'t send any messages to this channel anymore, but you must remove webhook manuallly.');
+                                bot.createMessage(msg.channel.id, ':warning: | The bot won\'t send any messages to this channel anymore, but you have to remove the webhook manually.');
                             });
                     }
                 })
@@ -28,7 +28,7 @@ module.exports = (bot => {
         },
         options: {
             guildOnly: true,
-            description: 'Makes bot forget the server (guild admins only)',
+            description: 'Makes the bot forget the server (guild admins only)',
             fullDescription: 'Bot won\'t send any messages about free games anymore',
             cooldown: 60 * 1000,
             cooldownExclusions: {

@@ -29,21 +29,21 @@ const searchGames = () => {
                                     });
                                     deal.save()
                                         .then(() => {
-                                            logger.info(`Dodano do bazy! ID: ${id}, Tytuł z reddita: ${topic.data.title}, URL: ${url}`);
+                                            logger.info(`Added to mongoDB! ID: ${id}, Title: ${topic.data.title}, URL: ${url}`);
                                             sendDeals(topic.data.title, url);
                                         })
-                                        .catch(err => logger.error(`Nie udalo sie dodac do bazy! ${err}`));
+                                        .catch(err => logger.error(`Failed adding do mongoDB ${err}`));
                                 }
                             })
-                            .catch(err => logger.error(`Blad przy zapytaniu do bazy ${err}`));
+                            .catch(err => logger.error(`Failed querying mongoDB ${err}`));
                     }
                 });
             } else {
-                logger.warn(`Nie udało się pobrać danych z reddita :c Kod odpowiedzi HTTP: ${response.status}`);
+                logger.warn(`Error fetching data from reddit: ${response.status}`);
             }
         })
         .catch(e => {
-            logger.error(e.message);
+            logger.error(`Unexpected error: ${e.message}`);
         });
 };
 

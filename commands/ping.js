@@ -24,7 +24,7 @@ module.exports = (bot => {
         },
         options: {
             description: 'Pong!',
-            fullDescription: 'Use this command to check if bot is alive or not.',
+            fullDescription: 'Use this command to check if the bot is still alive or not.',
             guildOnly: true,
             cooldown: 5 * 1000,
             cooldownMessage: 'You have to wait before using this command again.',

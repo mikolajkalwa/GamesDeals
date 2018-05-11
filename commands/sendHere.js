@@ -42,7 +42,7 @@ module.exports = (bot => {
                                     })
                                     .catch(err => {
                                         logger.warn(`Failed creating webhook ${err}`);
-                                        bot.createMessage(msg.channel.id, ':exclamation: | This feature requires permission to manage webhooks. Please grant this permission in server settings for GamesDeals role.');
+                                        bot.createMessage(msg.channel.id, ':exclamation: | This feature requires permission to manage webhooks. Please grant this permission in Server Settings for GamesDeals role.');
                                     });
                             }
                         });
@@ -53,7 +53,7 @@ module.exports = (bot => {
         options: {
             guildOnly: true,
             description: 'Set a channel for the bot (guild admins only)',
-            fullDescription: 'Bot will send messages about free games in the channel where you use this command',
+            fullDescription: 'The bot will send messages about free games in the channel this command was issued.',
             cooldown: 60 * 1000,
             cooldownExclusions: {
                 userIDs: [config.ownerID]
