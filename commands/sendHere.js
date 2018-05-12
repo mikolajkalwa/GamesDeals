@@ -16,7 +16,7 @@ module.exports = (bot => {
                         return bot.createMessage(msg.channel.id, ':x: | A webhook for this server already exists.');
                     }
                     else {
-                        fs.readFile('../avatar.png', 'base64', (err, image) => {
+                        fs.readFile('./avatar.png', 'base64', (err, image) => {
                             if (err) {
                                 logger.error(`Failed reading avatar file ${err}`);
                                 bot.createMessage(msg.channel.id, ':exclamation: | An error has occured. Please try again later.');
