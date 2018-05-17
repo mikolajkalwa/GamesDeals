@@ -1,4 +1,5 @@
 const config = require('../config');
+const logger = require('../lib/logger');
 
 module.exports = (bot => {
     return {
@@ -19,18 +20,20 @@ module.exports = (bot => {
                         }],
                         timestamp: new Date(),
                     }
-                });
-            });
+                })
+                    .catch(e => logger.warn(`Unable to edit a message ${e}`));
+            })
+                .catch(e => logger.warn(`Unable to send a message ${e}`));
         },
         options: {
-            description: 'Pong!',
-            fullDescription: 'Use this command to check if the bot is still alive or not.',
-            guildOnly: true,
             cooldown: 5 * 1000,
-            cooldownMessage: 'You have to wait before using this command again.',
             cooldownExclusions: {
                 userIDs: [config.ownerID]
-            }
+            },
+            cooldownMessage: 'You have to wait before using this command again.',
+            description: 'Pong!',
+            fullDescription: 'Use this command to check if the bot is still alive or not.',
+            guildOnly: true
         }
     };
 });

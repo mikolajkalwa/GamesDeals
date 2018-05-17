@@ -4,7 +4,7 @@ const fs = require('fs');
 
 const logger = require('./lib/logger');
 const bot = require('./lib/bot');
-const searchGames = require('./functions/searchGames');
+const { searchGames } = require('./functions/searchGames');
 
 // creates logs directory
 const logDir = './logs';
@@ -29,13 +29,26 @@ fs.readdir('./commands', (err, files) => {
     logger.info('Commands has been loaded succesfully');
 });
 
+// loads the events
+fs.readdir('./events', (err, files) => {
+    if (err) return logger.error(err);
+    logger.info(`Attempting to load ${files.length} events into memory`);
+    files.forEach(file => {
+        try {
+            const event = require(`./events/${file}`)(bot);
+            logger.info(`Attempting to load ${file}`);
+            bot.on(file.slice(0, -3), event.generator);
+        }
+        catch (err) {
+            logger.error(`An error has occured trying to load ${file.slice(0, -3)}. Error: ${err}`);
+        }
+    });
+    logger.info('Events has been loaded succesfully');
+});
+
 // looks for games
 setInterval(() => {
     searchGames();
 }, 2 * 60 * 60 * 1000); // once per 2 hours
-
-bot.on('ready', () => {
-    logger.info('Ready!');
-});
 
 bot.connect().then(() => bot.editStatus({ name: 'Use _help' }));

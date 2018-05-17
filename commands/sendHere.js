@@ -1,11 +1,10 @@
 const fs = require('fs');
+
 const { mongoose } = require('../lib/db'); // eslint-disable-line
 const { Webhook } = require('../models/webhook');
 
 const logger = require('../lib/logger');
 const config = require('../config');
-
-// TODO: dodać przypadek w error hnadlingu na to że serw już jest w bazie.
 
 module.exports = (bot => {
     return {
@@ -13,14 +12,15 @@ module.exports = (bot => {
             Webhook.findOne({ guild_id: msg.channel.guild.id })
                 .then(result => {
                     if (result) {
-                        return bot.createMessage(msg.channel.id, ':x: | A webhook for this server already exists.');
+                        bot.createMessage(msg.channel.id, ':x: | A webhook for this server already exists.')
+                            .catch(e => logger.warn(`Unable to send a message ${e}`));
                     }
                     else {
                         fs.readFile('./avatar.png', 'base64', (err, image) => {
                             if (err) {
                                 logger.error(`Failed reading avatar file ${err}`);
-                                bot.createMessage(msg.channel.id, ':exclamation: | An error has occured. Please try again later.');
-                                return;
+                                bot.createMessage(msg.channel.id, ':exclamation: | An error has occured. Please try again later.')
+                                    .catch(e => logger.warn(`Unable to send a message ${e}`));
                             }
                             else {
                                 msg.channel.createWebhook({
@@ -34,15 +34,21 @@ module.exports = (bot => {
                                             guild_id: createdWebhook.guild_id
                                         });
                                         webhookToAdd.save()
-                                            .then(() => bot.createMessage(msg.channel.id, ':white_check_mark: | Channel has been set successfully.'))
+                                            .then(() => {
+                                                bot.createMessage(msg.channel.id, ':white_check_mark: | Channel has been set successfully.')
+                                                    .catch(e => logger.warn(`Unable to send a message ${e}`));
+                                            })
                                             .catch(err => {
                                                 logger.error(`Failed adding webhook to database ${err}`);
-                                                bot.createMessage(msg.channel.id, ':exclamation: | An error has occured. Please try again later.');
+                                                bot.createMessage(msg.channel.id, ':exclamation: | An error has occured. Please try again later.')
+                                                    .catch(e => logger.warn(`Unable to send a message ${e}`));
+
                                             });
                                     })
                                     .catch(err => {
                                         logger.warn(`Failed creating webhook ${err}`);
-                                        bot.createMessage(msg.channel.id, ':exclamation: | This feature requires permission to manage webhooks. Please grant this permission in Server Settings for GamesDeals role.');
+                                        bot.createMessage(msg.channel.id, ':exclamation: | This feature requires permission to manage webhooks. Please grant this permission in Server Settings for GamesDeals role.')
+                                            .catch(e => logger.warn(`Unable to send a message ${e}`));
                                     });
                             }
                         });
@@ -51,17 +57,18 @@ module.exports = (bot => {
                 .catch(err => logger.error(`Failed getting webhooks from database ${err}`));
         },
         options: {
-            guildOnly: true,
-            description: 'Set a channel for the bot (guild admins only)',
-            fullDescription: 'The bot will send messages about free games in the channel this command was issued.',
             cooldown: 60 * 1000,
             cooldownExclusions: {
                 userIDs: [config.ownerID]
             },
             cooldownMessage: 'You have to wait before using this command again.',
+            description: 'Set a channel for the bot (guild admins only)',
+            fullDescription: 'The bot will send messages about free games in the channel this command was issued.',
+            guildOnly: true,
+            permissionMessage: 'You do not have sufficient permission to issue this command.',
             requirements: {
                 permissions: {
-                    'administrator': true
+                    'manageWebhooks': true
                 }
             }
         }

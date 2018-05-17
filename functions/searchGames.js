@@ -5,7 +5,7 @@ const { Deal } = require('../models/deal');
 
 const logger = require('../lib/logger');
 
-const sendDeals = require('./sendDeals');
+const { broadcast } = require('./broadcast');
 
 const searchGames = () => {
     axios.get('https://www.reddit.com/r/GameDeals/hot/.json?limit=3')
@@ -30,7 +30,7 @@ const searchGames = () => {
                                     deal.save()
                                         .then(() => {
                                             logger.info(`Added to mongoDB! ID: ${id}, Title: ${topic.data.title}, URL: ${url}`);
-                                            sendDeals(topic.data.title, url);
+                                            broadcast(`${topic.data.title} ${url}`);
                                         })
                                         .catch(err => logger.error(`Failed adding do mongoDB ${err}`));
                                 }
@@ -48,4 +48,4 @@ const searchGames = () => {
 };
 
 
-module.exports = searchGames;
+module.exports = { searchGames };

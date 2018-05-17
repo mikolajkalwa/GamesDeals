@@ -13,7 +13,7 @@ module.exports = (bot => {
             Deal.count({})
                 .then(amount => {
                     bot.createMessage(msg.channel.id, {
-                        content: 'Informations:',
+                        content: ':information_source: Informations:',
                         embed: {
                             color: 0x48f442,
                             fields: [{
@@ -35,21 +35,23 @@ module.exports = (bot => {
                             }],
                             timestamp: new Date(),
                         }
-                    });
+                    })
+                        .catch(e => logger.warn(`Unable to send a message ${e}`));
                 })
                 .catch(err => {
                     logger.error(`Failed counting deals ${err}`);
-                    bot.createMessage(msg.channel.id, ':exclamation: | An error has occured, please try again later.');
+                    bot.createMessage(msg.channel.id, ':exclamation: | An error has occured, please try again later.')
+                        .catch(e => logger.warn(`Unable to send a message ${e}`));
                 });
         },
         options: {
-            description: 'Uptime, Servers, Users',
-            fullDescription: 'Use this command to get basic statistics about the bot.',
             cooldown: 30 * 1000,
-            cooldownMessage: 'You have to wait before using this command again.',
             cooldownExclusions: {
                 userIDs: [config.ownerID]
-            }
+            },
+            cooldownMessage: 'You have to wait before using this command again.',
+            description: 'Uptime, Servers, Users',
+            fullDescription: 'Use this command to get basic statistics about the bot.'
         }
     };
 });

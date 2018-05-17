@@ -5,12 +5,12 @@ const { Webhook } = require('../models/webhook');
 
 const logger = require('../lib/logger');
 
-const sendDeals = (title, url) => {
+const broadcast = (message) => {
     Webhook.find()
         .then(webhooks => {
             webhooks.forEach(webhook => {
                 axios.post(`https://discordapp.com/api/webhooks/${webhook.id}/${webhook.token}`, {
-                    content: `${title} ${url}`
+                    content: message
                 })
                     .catch(err => {
                         if (err.response.status === 404 || err.response.status === 401) {
@@ -34,4 +34,4 @@ const sendDeals = (title, url) => {
         .catch(err => logger.error(`Failed fetching webhooks from database ${err}`));
 };
 
-module.exports = sendDeals;
+module.exports = { broadcast };
