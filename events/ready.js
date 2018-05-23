@@ -1,9 +1,7 @@
 const logger = require('../lib/logger');
 
-module.exports = (() => {
-    return {
-        generator: () => {
-            logger.info('Ready!');
-        }
-    };
-});
+module.exports = (() => ({
+    generator: () => {
+        logger.info('Ready!');
+    },
+}));

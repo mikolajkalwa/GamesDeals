@@ -4,17 +4,17 @@ const Deal = mongoose.model('Deal', {
     deal_id: {
         type: String,
         required: true,
-        unique: true
+        unique: true,
     },
     title: {
         type: String,
         required: true,
-        trim: true
+        trim: true,
     },
     url: {
         type: String,
-        required: true
-    }
+        required: true,
+    },
 });
 
 module.exports = { Deal };

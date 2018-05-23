@@ -3,17 +3,17 @@ const mongoose = require('mongoose');
 const Webhook = mongoose.model('Webhook', {
     id: {
         type: String,
-        required: true
+        required: true,
     },
     token: {
         type: String,
-        required: true
+        required: true,
     },
     guild_id: {
         type: String,
         required: true,
-        unique: true
-    }
+        unique: true,
+    },
 });
 
 module.exports = { Webhook };

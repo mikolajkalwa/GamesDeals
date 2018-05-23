@@ -1,17 +1,15 @@
 const logger = require('../lib/logger');
 
-module.exports = (bot => {
-    return {
-        generator: (guild) => {
-            const msg = `Thank you for adding me into your Discord Server.
+module.exports = (bot => ({
+    generator: (guild) => {
+        const msg = `Thank you for adding me into your Discord Server.
             If you want me to send info about discounted games, you need to show me where I should do it.
             Just use _sendHere command in the channel where you desire me to send messages.
             (It won't work in DMs, run it in a Server Channel.)`.replace(/\s+/g, ' ').trim();
-            bot.getDMChannel(guild.ownerID) // doest it make sense to send this message to server owner?
-                .then(channel => {
-                    bot.createMessage(channel.id, msg).catch(e => logger.warn(`Unable to send a message ${e}`));
-                })
-                .catch(e => logger.error(`Unable to get DM channel ${e}`));
-        }
-    };
-});
+        bot.getDMChannel(guild.ownerID) // doest it make sense to send this message to server owner?
+            .then((channel) => {
+                bot.createMessage(channel.id, msg).catch(e => logger.warn(`Unable to send a message ${e}`));
+            })
+            .catch(e => logger.error(`Unable to get DM channel ${e}`));
+    },
+}));

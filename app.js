@@ -1,5 +1,3 @@
-'use strict';
-
 const fs = require('fs');
 
 const logger = require('./lib/logger');
@@ -16,34 +14,32 @@ if (!fs.existsSync(logDir)) {
 fs.readdir('./commands', (err, files) => {
     if (err) return logger.error(err);
     logger.info(`Attempting to load ${files.length} commands into memory`);
-    files.forEach(file => {
+    files.forEach((file) => {
         try {
-            const command = require(`./commands/${file}`)(bot);
+            const command = require(`./commands/${file}`)(bot); // eslint-disable-line
             logger.info(`Attempting to load ${file}`);
             bot.registerCommand(file.slice(0, -3), command.generator, command.options);
-        }
-        catch (err) {
-            logger.error(`An error has occured trying to load ${file.slice(0, -3)}. Error: ${err}`);
+        } catch (fileErr) {
+            logger.error(`An error has occured trying to load ${file.slice(0, -3)}. Error: ${fileErr}`);
         }
     });
-    logger.info('Commands has been loaded succesfully');
+    return logger.info('Commands has been loaded succesfully');
 });
 
 // loads the events
 fs.readdir('./events', (err, files) => {
     if (err) return logger.error(err);
     logger.info(`Attempting to load ${files.length} events into memory`);
-    files.forEach(file => {
+    files.forEach((file) => {
         try {
-            const event = require(`./events/${file}`)(bot);
+            const event = require(`./events/${file}`)(bot); // eslint-disable-line
             logger.info(`Attempting to load ${file}`);
             bot.on(file.slice(0, -3), event.generator);
-        }
-        catch (err) {
-            logger.error(`An error has occured trying to load ${file.slice(0, -3)}. Error: ${err}`);
+        } catch (fileErr) {
+            logger.error(`An error has occured trying to load ${file.slice(0, -3)}. Error: ${fileErr}`);
         }
     });
-    logger.info('Events has been loaded succesfully');
+    return logger.info('Events has been loaded succesfully');
 });
 
 // looks for games
