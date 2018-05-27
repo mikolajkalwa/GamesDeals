@@ -12,9 +12,11 @@ module.exports = (bot => ({
                 bot.editSelf({
                     avatar: `data:${response.headers['content-type']};base64,${Buffer.from(response.data, 'binary').toString('base64')}`,
                 }).then(() => {
-                    msg.channel.createMessage('Avatar has been changed!!');
+                    msg.channel.createMessage('Avatar has been changed!!')
+                        .catch(e => logger.warn(`Unable to send a message ${e}`));
                 }).catch((editSelfErr) => {
-                    msg.channel.createMessage('There was an error during avatar change.');
+                    msg.channel.createMessage('There was an error during avatar change.')
+                        .catch(e => logger.warn(`Unable to send a message ${e}`));
                     logger.error(`There was an error during avatar change. ${editSelfErr}`);
                 });
             }).catch((e) => {

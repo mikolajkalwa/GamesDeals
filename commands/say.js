@@ -1,14 +1,15 @@
 const { broadcast } = require('../functions/broadcast');
-
+const logger = require('../lib/logger');
 const config = require('../config');
 
-module.exports = (() => ({
+module.exports = (bot => ({
     generator: (msg, args) => {
         if (args.length === 0) {
-            return 'Invalid arguments or no arguments.';
+            bot.createMessage(msg.channel.id, ':x: | Invalid arguments or no arguments.')
+                .catch(e => logger.warn(`Unable to send a message ${e}`));
         }
         const toSay = args.join(' ');
-        return broadcast(toSay);
+        broadcast(toSay);
     },
     options: {
         dmOnly: true,

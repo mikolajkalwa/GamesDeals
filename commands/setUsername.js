@@ -8,9 +8,11 @@ module.exports = (bot => ({
         } else {
             const newName = args.join(' ');
             bot.editSelf({ username: newName }).then(() => {
-                msg.channel.createMessage('Username has been changed!');
+                msg.channel.createMessage('Username has been changed!')
+                    .catch(e => logger.warn(`Unable to send a message ${e}`));
             }).catch((editSelfErr) => {
-                msg.channel.createMessage('There was an error during username change.');
+                msg.channel.createMessage('There was an error during username change.')
+                    .catch(e => logger.warn(`Unable to send a message ${e}`));
                 logger.error(`There was an error during username change. ${editSelfErr}`);
             });
         }
