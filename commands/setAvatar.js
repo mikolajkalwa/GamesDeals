@@ -6,7 +6,8 @@ const config = require('../config');
 module.exports = (bot => ({
     generator: (msg, args) => {
         if (args.length === 0) {
-            msg.channel.createMessage('Invalid arguments or no arguments.');
+            msg.channel.createMessage('Invalid arguments or no arguments.')
+                .catch(e => logger.warn(`Unable to send a message ${e}`));
         } else {
             axios.get(args[0], { responseType: 'arraybuffer' }).then((response) => {
                 bot.editSelf({

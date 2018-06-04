@@ -21,7 +21,7 @@ module.exports = (bot => ({
                             value: moment.duration(bot.uptime).locale('en').humanize(),
                         }, {
                             inline: true,
-                            name: 'Guilds',
+                            name: 'Servers',
                             value: bot.guilds.size,
                         }, {
                             inline: true,

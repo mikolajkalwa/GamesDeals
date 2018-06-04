@@ -4,7 +4,8 @@ const logger = require('../lib/logger');
 module.exports = (bot => ({
     generator: (msg, args) => {
         if (args.length === 0) {
-            msg.channel.createMessage('Invalid arguments or no arguments.');
+            msg.channel.createMessage('Invalid arguments or no arguments.')
+                .catch(e => logger.warn(`Unable to send a message ${e}`));
         } else {
             const newName = args.join(' ');
             bot.editSelf({ username: newName }).then(() => {
