@@ -2,6 +2,8 @@ const fs = require('fs');
 
 const logger = require('./lib/logger');
 const bot = require('./lib/bot');
+// moongoose needs to be required, otherwise it won't open a connection... WHY?
+const { mongoose } = require('./lib/db'); // eslint-disable-line
 const { searchGames } = require('./functions/searchGames');
 
 // creates logs directory
@@ -46,5 +48,4 @@ fs.readdir('./events', (err, files) => {
 setInterval(() => {
     searchGames();
 }, 2 * 60 * 60 * 1000); // once per 2 hours
-
 bot.connect().then(() => bot.editStatus({ name: 'Use _help' }));

@@ -1,6 +1,5 @@
 const fs = require('fs');
 
-const { mongoose } = require('../lib/db'); // eslint-disable-line
 const { Webhook } = require('../models/webhook');
 
 const logger = require('../lib/logger');

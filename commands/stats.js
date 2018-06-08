@@ -1,6 +1,5 @@
 const moment = require('moment');
 
-const { mongoose } = require('../lib/db'); // eslint-disable-line
 const { Deal } = require('../models/deal');
 
 const logger = require('../lib/logger');

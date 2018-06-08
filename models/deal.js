@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const Deal = mongoose.model('Deal', {
-    deal_id: {
+    id: {
         type: String,
         required: true,
         unique: true,
