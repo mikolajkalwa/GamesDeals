@@ -1,7 +1,7 @@
 {
   "name": "deals-bot",
   "version": "1.0.0",
-  "description": "Simple bot, which provides data about free games",
+  "description": "A bot which provides info about free (discounted) games.",
   "main": "app.js",
   "scripts": {
     "start": "node app.js"
