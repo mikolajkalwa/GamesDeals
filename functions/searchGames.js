@@ -22,7 +22,7 @@ const searchGames = () => {
                                     deal.save()
                                         .then(() => {
                                             logger.info(`Added to mongoDB! ID: ${id}, Title: ${title}, URL: ${url}`);
-                                            broadcast(`${title} ${url}`);
+                                            broadcast(title, url);
                                         })
                                         .catch(dbErr => logger.error(`Failed adding do mongoDB ${dbErr}`));
                                 }

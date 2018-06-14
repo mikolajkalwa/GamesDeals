@@ -3,7 +3,7 @@
 
 ## Description
 
-A bot which provides info about free (discounted) games.
+A bot which informs about free (discounted) games.
 Add it to your server, set up a channel with `_sendHere` command and never miss any sale again!
 
 As a source, it uses `/r/GameDeals`.

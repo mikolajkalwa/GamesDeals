@@ -7,6 +7,9 @@ const { mongoose } = require('./lib/db'); // eslint-disable-line
 const { searchGames } = require('./functions/searchGames');
 const { prefix } = require('./config');
 
+const millisecondsInTwoHours = 7200000;
+
+
 // creates logs directory
 const logDir = './logs';
 if (!fs.existsSync(logDir)) {
@@ -45,8 +48,8 @@ fs.readdir('./events', (err, files) => {
     return logger.info('Events has been loaded succesfully');
 });
 
-// search for games
+// search for games once per 2 hours
 setInterval(() => {
     searchGames();
-}, 2 * 60 * 60 * 1000); // once per 2 hours
+}, millisecondsInTwoHours);
 bot.connect().then(() => bot.editStatus({ name: `Use ${prefix}help` }));
