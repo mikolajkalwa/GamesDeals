@@ -1,5 +1,5 @@
 
-# GamesDeals - [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/MikolajKalwa/GamesDeals/blob/master/LICENSE)
+# GamesDeals - [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/MikolajKalwa/GamesDeals/blob/master/LICENSE) [![Discord Bots](https://discordbots.org/api/widget/status/396466836331429889.svg?noavatar=true)](https://discordbots.org/bot/396466836331429889)
 
 ## Description
 

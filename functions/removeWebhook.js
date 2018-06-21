@@ -3,10 +3,10 @@ const { Webhook } = require('../models/webhook');
 const logger = require('../lib/logger');
 
 const removeWebhook = (webhookID) => {
-    Webhook.findOneAndRemove({ id: webhookID })
+    Webhook.findOneAndDelete({ id: webhookID })
         .then((result) => {
             if (!result) {
-                logger.warning('Webhook was selected to remove, but can\'t be found in database');
+                logger.warn('Webhook was selected to remove, but can\'t be found in database');
             } else {
                 logger.info('Removed an outdated webhook from the database');
             }

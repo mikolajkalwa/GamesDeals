@@ -35,10 +35,10 @@ module.exports = (bot => ({
             userIDs: [config.ownerID],
         },
         cooldownMessage: 'You have to wait before using this command again.',
-        description: 'Makes the bot forget the server (guild admins only)',
+        description: 'Makes the bot forget the server (requires permission to manage webhooks)',
         fullDescription: 'Bot won\'t send any messages about free games anymore',
         guildOnly: true,
-        permissionMessage: 'You do not have sufficient permission to issue this command.',
+        permissionMessage: 'You do not have sufficient permission to issue this command. (manage webhooks)',
         requirements: {
             permissions: {
                 manageWebhooks: true,
