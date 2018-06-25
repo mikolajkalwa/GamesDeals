@@ -5,7 +5,7 @@ const config = require('../config');
 
 module.exports = (bot => ({
     generator: (msg) => {
-        Webhook.findOneAndRemove({ guild_id: msg.channel.guild.id })
+        Webhook.findOneAndDelete({ guild_id: msg.channel.guild.id })
             .then((result) => {
                 if (!result) {
                     bot.createMessage(msg.channel.id, ':x: | Couldn\'t find any webhook related to this server')
@@ -17,7 +17,7 @@ module.exports = (bot => ({
                                 .catch(e => logger.warn(`Unable to send a message ${e}`));
                         })
                         .catch((webhookErr) => {
-                            logger.error(`Failed to delete webhook ${webhookErr}`);
+                            logger.warn(`Failed to delete webhook ${webhookErr}`);
                             bot.createMessage(msg.channel.id, ':warning: | The bot won\'t send any messages to this channel anymore, but you have to remove the webhook manually.')
                                 .catch(e => logger.warn(`Unable to send a message ${e}`));
                         });
