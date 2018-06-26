@@ -1,13 +1,14 @@
 const axios = require('axios');
-
-const { Webhook } = require('../models/webhook');
+const _ = require('lodash');
 
 const logger = require('../lib/logger');
+
+const { Webhook } = require('../models/webhook');
 
 const { removeWebhook } = require('./removeWebhook');
 
 const broadcast = (...message) => {
-    const content = message.join(' ');
+    const content = _.unescape(message.join(' '));
     Webhook.find()
         .then((webhooks) => {
             webhooks.forEach((webhook) => {

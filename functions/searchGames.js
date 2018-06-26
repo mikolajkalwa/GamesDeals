@@ -13,7 +13,7 @@ const searchGames = () => {
                 const threads = response.data.data.children;
                 threads.forEach((thread) => {
                     const { data: { id, url, title } } = thread;
-                    if (title.toLowerCase().includes('free') || title.includes('100%')) {
+                    if (/(\b(free)\b)|100%/.test(title.toLowerCase())) {
                         // Checks if thread already in db
                         Deal.findOne({ id })
                             .then((result) => {

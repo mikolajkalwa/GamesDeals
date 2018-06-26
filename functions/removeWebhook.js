@@ -15,4 +15,3 @@ const removeWebhook = (webhookID) => {
 };
 
 module.exports = { removeWebhook };
-

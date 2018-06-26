@@ -11,6 +11,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "eris": "^0.8.6",
+    "lodash": "^4.17.10",
     "moment": "^2.22.2",
     "mongodb": "^3.0.10",
     "mongoose": "^5.1.4",
