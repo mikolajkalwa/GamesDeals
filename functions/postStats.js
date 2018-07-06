@@ -19,6 +19,20 @@ const postStats = (id, serverCount) => {
         })
             .catch(e => logger.warn(`Couldn't post stats to discordbots.org ${e}`));
     }
+
+    if (_.has(config, 'botsdiscordpw')) {
+        axios({
+            method: 'post',
+            url: `https://bots.discord.pw/api/bots/${id}/stats`,
+            headers: {
+                Authorization: config.botsdiscordpw,
+            },
+            data: {
+                server_count: serverCount,
+            },
+        })
+            .catch(e => logger.warn(`Couldn't post stats to bots.discord.pw ${e}`));
+    }
 };
 
 module.exports = { postStats };

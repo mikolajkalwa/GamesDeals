@@ -8,10 +8,10 @@ const config = require('../config');
 
 module.exports = (bot => ({
     generator: (msg) => {
-        Deal.count({})
+        Deal.countDocuments({})
             .then((amount) => {
                 bot.createMessage(msg.channel.id, {
-                    content: ':information_source: Informations:',
+                    content: ':information_source: Statistics:',
                     embed: {
                         color: 0x48f442,
                         fields: [{

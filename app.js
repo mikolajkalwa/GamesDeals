@@ -48,7 +48,7 @@ fs.readdir('./events', (err, files) => {
     return logger.info('Events has been loaded succesfully');
 });
 
-// search for games and post stats, once per 2 hours
+// search for games once per 2 hours
 setInterval(() => {
     searchGames();
 }, millisecondsInTwoHours);
