@@ -17,32 +17,37 @@ let interval = 0;
 const gatewayErrorHandler = (webhook, content) => {
     if (failed < 10) {
         logger.info('Cant execute webhook. Trying again...');
+
         if (interval < milisecondsInTenMinutes) {
             interval += milisecondsInTenMinutes;
         }
+
         retry(webhook, content); // eslint-disable-line
     } else {
         logger.warn(`Tried ${failed} times, failed`);
     }
 };
 
+const executeWebhook = (webhook, content) => {
+    axios.post(`https://discordapp.com/api/webhooks/${webhook.id}/${webhook.token}`, {
+        content,
+    })
+        .catch((webhookExecuteErr) => {
+            const { response: { status } } = webhookExecuteErr;
+            if (status === 404 || status === 401) {
+                removeWebhook(webhook.id);
+            } else if (status === 502) {
+                failed += 1;
+                gatewayErrorHandler(webhook, content);
+            } else {
+                logger.error(`Failed executing webhook. Guild: ${webhook.guild_id}. Error: ${webhookExecuteErr}`);
+            }
+        });
+};
 
 const retry = (webhook, content) => {
     setTimeout(() => {
-        axios.post(`https://discordapp.com/api/webhooks/${webhook.id}/${webhook.token}`, {
-            content,
-        })
-            .catch((webhookExecuteErr) => {
-                const { response: { status } } = webhookExecuteErr;
-                if (status === 404 || status === 401) {
-                    removeWebhook(webhook.id);
-                } else if (status === 502) {
-                    failed += 1;
-                    gatewayErrorHandler(webhook, content);
-                } else {
-                    logger.error(`Failed executing webhook. Guild: ${webhook.guild_id}. Error: ${webhookExecuteErr}`);
-                }
-            });
+        executeWebhook(webhook, content);
     }, interval);
 };
 
@@ -51,20 +56,7 @@ const broadcast = (...message) => {
     Webhook.find()
         .then((webhooks) => {
             webhooks.forEach((webhook) => {
-                axios.post(`https://discordapp.com/api/webhooks/${webhook.id}/${webhook.token}`, {
-                    content,
-                })
-                    .catch((webhookExecuteErr) => {
-                        const { response: { status } } = webhookExecuteErr;
-                        if (status === 404 || status === 401) {
-                            removeWebhook(webhook.id);
-                        } else if (status === 502) {
-                            failed += 1;
-                            gatewayErrorHandler(webhook, content);
-                        } else {
-                            logger.error(`Failed executing webhook. Guild: ${webhook.guild_id}. Error: ${webhookExecuteErr}`);
-                        }
-                    });
+                executeWebhook(webhook, content);
             });
         })
         .catch(err => logger.error(`Failed fetching webhooks from database ${err}`));
