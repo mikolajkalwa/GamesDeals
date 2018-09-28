@@ -20,9 +20,9 @@ module.exports = (bot => ({
                     timestamp: new Date(),
                 },
             })
-                .catch(e => logger.warn(`Unable to edit a message ${e}`));
+                .catch(e => logger.warning(`Unable to edit a message ${e}`));
         })
-            .catch(e => logger.warn(`Unable to send a message ${e}`));
+            .catch(e => logger.warning(`Unable to send a message ${e}`));
     },
     options: {
         cooldown: 5 * 1000,

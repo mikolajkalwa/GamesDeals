@@ -24,7 +24,7 @@ const gatewayErrorHandler = (webhook, content) => {
 
         retry(webhook, content); // eslint-disable-line
     } else {
-        logger.warn(`Tried ${failed} times, failed`);
+        logger.warning(`Tried ${failed} times, failed`);
     }
 };
 

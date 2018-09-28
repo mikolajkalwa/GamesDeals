@@ -31,7 +31,7 @@ const searchGames = () => {
                     }
                 });
             } else {
-                logger.warn(`Error fetching data from reddit: ${response.status}`);
+                logger.warning(`Error fetching data from reddit: ${response.status}`);
             }
         })
         .catch((e) => {

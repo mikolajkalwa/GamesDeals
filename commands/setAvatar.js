@@ -7,17 +7,17 @@ module.exports = (bot => ({
     generator: (msg, args) => {
         if (args.length === 0) {
             msg.channel.createMessage('Invalid arguments or no arguments.')
-                .catch(e => logger.warn(`Unable to send a message ${e}`));
+                .catch(e => logger.warning(`Unable to send a message ${e}`));
         } else {
             axios.get(args[0], { responseType: 'arraybuffer' }).then((response) => {
                 bot.editSelf({
                     avatar: `data:${response.headers['content-type']};base64,${Buffer.from(response.data, 'binary').toString('base64')}`,
                 }).then(() => {
                     msg.channel.createMessage('Avatar has been changed!!')
-                        .catch(e => logger.warn(`Unable to send a message ${e}`));
+                        .catch(e => logger.warning(`Unable to send a message ${e}`));
                 }).catch((editSelfErr) => {
                     msg.channel.createMessage('There was an error during avatar change.')
-                        .catch(e => logger.warn(`Unable to send a message ${e}`));
+                        .catch(e => logger.warning(`Unable to send a message ${e}`));
                     logger.error(`There was an error during avatar change. ${editSelfErr}`);
                 });
             }).catch((e) => {

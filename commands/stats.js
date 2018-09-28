@@ -41,17 +41,17 @@ module.exports = (bot => ({
                                 timestamp: new Date(),
                             },
                         })
-                            .catch(e => logger.warn(`Unable to send a message ${e}`));
+                            .catch(e => logger.warning(`Unable to send a message ${e}`));
                     })
                     .catch((dbErr) => {
                         logger.error(`Failed counting deals ${dbErr}`);
                         bot.createMessage(msg.channel.id, ':exclamation: | An error has occured, please try again later.')
-                            .catch(e => logger.warn(`Unable to send a message ${e}`));
+                            .catch(e => logger.warning(`Unable to send a message ${e}`));
                     });
             }).catch((dbErr) => {
                 logger.error(`Failed counting deals ${dbErr}`);
                 bot.createMessage(msg.channel.id, ':exclamation: | An error has occured, please try again later.')
-                    .catch(e => logger.warn(`Unable to send a message ${e}`));
+                    .catch(e => logger.warning(`Unable to send a message ${e}`));
             });
     },
     options: {

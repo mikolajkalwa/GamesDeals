@@ -11,13 +11,13 @@ module.exports = (bot => ({
             .then((result) => {
                 if (result) {
                     bot.createMessage(msg.channel.id, ':x: | A webhook for this server already exists.')
-                        .catch(e => logger.warn(`Unable to send a message ${e}`));
+                        .catch(e => logger.warning(`Unable to send a message ${e}`));
                 } else {
                     fs.readFile('./avatar.png', 'base64', (err, image) => {
                         if (err) {
                             logger.error(`Failed reading avatar file ${err}`);
                             bot.createMessage(msg.channel.id, ':exclamation: | An error has occured. Please try again later.')
-                                .catch(e => logger.warn(`Unable to send a message ${e}`));
+                                .catch(e => logger.warning(`Unable to send a message ${e}`));
                         } else {
                             msg.channel.createWebhook({
                                 name: 'Games Deals',
@@ -32,18 +32,18 @@ module.exports = (bot => ({
                                     webhookToAdd.save()
                                         .then(() => {
                                             bot.createMessage(msg.channel.id, ':white_check_mark: | Channel has been set successfully.')
-                                                .catch(e => logger.warn(`Unable to send a message ${e}`));
+                                                .catch(e => logger.warning(`Unable to send a message ${e}`));
                                         })
                                         .catch((dbErr) => {
                                             logger.error(`Failed adding webhook to database ${dbErr}`);
                                             bot.createMessage(msg.channel.id, ':exclamation: | An error has occured. Please try again later.')
-                                                .catch(e => logger.warn(`Unable to send a message ${e}`));
+                                                .catch(e => logger.warning(`Unable to send a message ${e}`));
                                         });
                                 })
                                 .catch((webhookErr) => {
-                                    logger.warn(`Failed creating webhook ${webhookErr}`);
+                                    logger.warning(`Failed creating webhook ${webhookErr}`);
                                     bot.createMessage(msg.channel.id, ':exclamation: | This feature requires permission to manage webhooks. Please grant this permission in Server Settings for GamesDeals role.')
-                                        .catch(e => logger.warn(`Unable to send a message ${e}`));
+                                        .catch(e => logger.warning(`Unable to send a message ${e}`));
                                 });
                         }
                     });

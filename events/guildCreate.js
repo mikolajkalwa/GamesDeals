@@ -9,7 +9,7 @@ module.exports = (bot => ({
             (It won't work in DMs, run it in a Server Channel.)`.replace(/\s+/g, ' ').trim();
         bot.getDMChannel(guild.ownerID) // doest it make sense to send this message to server owner?
             .then((channel) => {
-                bot.createMessage(channel.id, msg).catch(e => logger.warn(`Unable to send a message ${e}`));
+                bot.createMessage(channel.id, msg).catch(e => logger.warning(`Unable to send a message ${e}`));
             })
             .catch(e => logger.error(`Unable to get DM channel ${e}`));
         postStats(bot.user.id, bot.guilds.size);
