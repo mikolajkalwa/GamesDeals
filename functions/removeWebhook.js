@@ -6,7 +6,7 @@ const removeWebhook = (webhookID) => {
     Webhook.findOneAndDelete({ id: webhookID })
         .then((result) => {
             if (!result) {
-                logger.warn('Webhook was selected to remove, but can\'t be found in database');
+                logger.warning('Webhook was selected to remove, but can\'t be found in database');
             } else {
                 logger.info('Removed an outdated webhook from the database');
             }

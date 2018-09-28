@@ -17,7 +17,7 @@ const postStats = (id, serverCount) => {
                 server_count: serverCount,
             },
         })
-            .catch(e => logger.warn(`Couldn't post stats to discordbots.org ${e}`));
+            .catch(e => logger.warning(`Couldn't post stats to discordbots.org ${e}`));
     }
 
     if (_.has(config, 'botsdiscordpw')) {
@@ -31,7 +31,7 @@ const postStats = (id, serverCount) => {
                 server_count: serverCount,
             },
         })
-            .catch(e => logger.warn(`Couldn't post stats to bots.discord.pw ${e}`));
+            .catch(e => logger.warning(`Couldn't post stats to bots.discord.pw ${e}`));
     }
 };
 

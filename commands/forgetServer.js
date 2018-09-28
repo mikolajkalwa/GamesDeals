@@ -9,23 +9,23 @@ module.exports = (bot => ({
             .then((result) => {
                 if (!result) {
                     bot.createMessage(msg.channel.id, ':x: | Couldn\'t find any webhook related to this server')
-                        .catch(e => logger.warn(`Unable to send a message ${e}`));
+                        .catch(e => logger.warning(`Unable to send a message ${e}`));
                 } else {
                     bot.deleteWebhook(result.id, result.token)
                         .then(() => {
                             bot.createMessage(msg.channel.id, ':white_check_mark: | Webhook has been removed and the bot won\'t send any messages to this channel anymore.')
-                                .catch(e => logger.warn(`Unable to send a message ${e}`));
+                                .catch(e => logger.warning(`Unable to send a message ${e}`));
                         })
                         .catch((webhookErr) => {
-                            logger.warn(`Failed to delete webhook ${webhookErr}`);
+                            logger.warning(`Failed to delete webhook ${webhookErr}`);
                             bot.createMessage(msg.channel.id, ':warning: | The bot won\'t send any messages to this channel anymore, but you have to remove the webhook manually.')
-                                .catch(e => logger.warn(`Unable to send a message ${e}`));
+                                .catch(e => logger.warning(`Unable to send a message ${e}`));
                         });
                 }
             })
             .catch((dbErr) => {
                 bot.createMessage(msg.channel.id, ':exclamation: | An error has occured. Please try again later')
-                    .catch(e => logger.warn(`Unable to send a message ${e}`));
+                    .catch(e => logger.warning(`Unable to send a message ${e}`));
                 logger.error(`Failed to remove webhook from database ${dbErr}`);
             });
     },
