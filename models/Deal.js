@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const isURL = require('validator/lib/isURL');
 
 const Deal = mongoose.model('Deal', {
   id: {
@@ -14,10 +15,11 @@ const Deal = mongoose.model('Deal', {
   url: {
     type: String,
     required: true,
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now,
+    validate(value) {
+      if (!isURL(value)) {
+        throw new Error('URL is invalid');
+      }
+    },
   },
 });
 
