@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const Webhook = mongoose.model('Webhook', {
-  id: {
+  webhook_id: {
     type: String,
     required: true,
   },
@@ -13,6 +13,11 @@ const Webhook = mongoose.model('Webhook', {
     type: String,
     required: true,
     unique: true,
+  },
+}, {
+  timestamps: {
+    createdAt: 'created_at',
+    updatedAt: 'updated_at',
   },
 });
 

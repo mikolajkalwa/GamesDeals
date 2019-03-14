@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const isURL = require('validator/lib/isURL');
 
 const Deal = mongoose.model('Deal', {
-  id: {
+  thread_id: {
     type: String,
     required: true,
     unique: true,
@@ -20,6 +20,11 @@ const Deal = mongoose.model('Deal', {
         throw new Error('URL is invalid');
       }
     },
+  },
+}, {
+  timestamps: {
+    createdAt: 'created_at',
+    updatedAt: 'updated_at',
   },
 });
 
