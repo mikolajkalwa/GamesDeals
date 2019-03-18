@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');
+const { Schema, model } = require('mongoose');
 
-const Webhook = mongoose.model('Webhook', {
+const webhookSchema = new Schema({
   webhook_id: {
     type: String,
     required: true,
@@ -14,11 +14,17 @@ const Webhook = mongoose.model('Webhook', {
     required: true,
     unique: true,
   },
+  role_to_mention: {
+    type: String,
+    required: false,
+  },
 }, {
   timestamps: {
     createdAt: 'created_at',
     updatedAt: 'updated_at',
   },
 });
+
+const Webhook = model('Webhook', webhookSchema);
 
 module.exports = Webhook;

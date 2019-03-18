@@ -1,7 +1,7 @@
-const mongoose = require('mongoose');
+const { Schema, model } = require('mongoose');
 const isURL = require('validator/lib/isURL');
 
-const Deal = mongoose.model('Deal', {
+const dealSchema = new Schema({
   thread_id: {
     type: String,
     required: true,
@@ -27,5 +27,7 @@ const Deal = mongoose.model('Deal', {
     updatedAt: 'updated_at',
   },
 });
+
+const Deal = model('Deal', dealSchema);
 
 module.exports = Deal;
