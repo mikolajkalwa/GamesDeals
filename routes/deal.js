@@ -8,7 +8,16 @@ router.get('/deals', async (req, res) => {
     const deals = await Deal.find({});
     res.status(200).send(deals);
   } catch (e) {
-    res.status(500).send();
+    res.status(500).send(e);
+  }
+});
+
+router.get('/deals/lastDeal', async (req, res) => {
+  try {
+    const deal = await Deal.findOne().sort({ _id: -1 });
+    res.status(200).send(deal);
+  } catch (e) {
+    res.status(500).send(e);
   }
 });
 
@@ -22,7 +31,7 @@ router.get('/deals/:id', async (req, res) => {
       res.status(200).send(thread);
     }
   } catch (e) {
-    res.status(500).send();
+    res.status(500).send(e);
   }
 });
 
