@@ -4,8 +4,9 @@ const webhookSchema = new Schema({
   webhook_id: {
     type: String,
     required: true,
+    unique: true,
   },
-  token: {
+  webhook_token: {
     type: String,
     required: true,
   },

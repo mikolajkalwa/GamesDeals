@@ -48,9 +48,9 @@ router.patch('/webhooks/:id', async (req, res) => {
     try {
       const webhook = await Webhook.findOneAndUpdate({
         webhook_id: webhookID,
-      }, {
-        role_to_mention: req.body.role_to_mention,
-      }, {
+      },
+      req.body,
+      {
         new: true,
         runValidators: true,
       });
