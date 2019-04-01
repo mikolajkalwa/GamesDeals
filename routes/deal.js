@@ -35,7 +35,7 @@ router.get('/deals/:id', async (req, res) => {
   try {
     const thread = await Deal.findOne({ thread_id: threadID });
     if (!thread) {
-      res.status(404).send();
+      res.status(204).send();
     } else {
       res.status(200).send(thread);
     }
@@ -60,7 +60,7 @@ router.delete('/deals:id', async (req, res) => {
   try {
     const thread = await Deal.findOneAndDelete({ thread_id: threadID });
     if (!thread) {
-      res.status(404).send();
+      res.status(204).send();
     } else {
       res.status(200).send(thread);
     }
