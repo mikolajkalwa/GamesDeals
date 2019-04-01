@@ -21,6 +21,15 @@ router.get('/deals/lastDeal', async (req, res) => {
   }
 });
 
+router.get('/deals/amount', async (req, res) => {
+  try {
+    const foundDeals = await Deal.countDocuments({});
+    res.status(200).send({ foundDeals });
+  } catch (e) {
+    res.status(500).send(e);
+  }
+});
+
 router.get('/deals/:id', async (req, res) => {
   const threadID = req.params.id;
   try {
