@@ -16,12 +16,12 @@
     "express-pino-logger": "^4.0.0",
     "mongoose": "^5.4.21",
     "pino-multi-stream": "^4.0.2",
+    "pino-pretty": "^2.6.0",
     "validator": "^10.11.0"
   },
   "devDependencies": {
     "eslint": "^5.16.0",
     "eslint-config-airbnb-base": "^13.1.0",
-    "eslint-plugin-import": "^2.16.0",
-    "pino-pretty": "^2.6.0"
+    "eslint-plugin-import": "^2.16.0"
   }
 }
