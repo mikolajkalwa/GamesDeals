@@ -14,7 +14,7 @@
     "dotenv": "^6.2.0",
     "express": "^4.16.4",
     "express-pino-logger": "^4.0.0",
-    "mongoose": "^5.4.20",
+    "mongoose": "^5.4.21",
     "pino-multi-stream": "^4.0.2",
     "validator": "^10.11.0"
   },
