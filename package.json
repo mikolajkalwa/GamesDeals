@@ -1,7 +1,6 @@
 {
   "name": "gamesdeals_api",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "start-pretty": "node index.js | ./node_modules/pino-pretty/bin.js -t",
@@ -9,7 +8,7 @@
     "start": "node index.js"
   },
   "author": "Mikołaj Kalwa",
-  "license": "MIT",
+  "license": "GPL-3.0-or-later",
   "dependencies": {
     "axios": "^0.18.0",
     "dotenv": "^6.2.0",
