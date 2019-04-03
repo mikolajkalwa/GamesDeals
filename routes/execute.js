@@ -6,14 +6,15 @@ const router = new Router();
 
 router.post('/execute', async (req, res) => {
   try {
-    let { message } = req.body;
+    const { message } = req.body;
     const webhooks = await Webhook.find({});
     const promiseArray = webhooks.map((webhook) => {
+      let content = message;
       if (Object.prototype.hasOwnProperty.call(webhook.toObject(), 'role_to_mention')) {
-        message = `${webhook.role_to_mention} ${message}`;
+        content = `${webhook.role_to_mention} ${message}`;
       }
       return axios.post(`https://discordapp.com/api/webhooks/${webhook.webhook_id}/${webhook.webhook_token}`, {
-        content: message,
+        content,
       });
     });
     const responses = await Promise.all(promiseArray.map(p => p.catch(e => e)));
