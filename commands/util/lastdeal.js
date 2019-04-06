@@ -13,7 +13,7 @@ module.exports = class LastDealCommand extends Command {
       aliases: ['ld'],
       group: 'util',
       memberName: 'lastdeal',
-      description: 'Use this command to get information about last found game.',
+      description: 'Sends information about last found game.',
       throttling: {
         usages: 1,
         duration: 60,

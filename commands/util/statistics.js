@@ -13,7 +13,7 @@ module.exports = class StatisticsCommand extends Command {
       aliases: ['stats', 'stat'],
       group: 'util',
       memberName: 'statistics',
-      description: 'Sends basic statistics about the  .',
+      description: 'Sends basic statistics about the bot.',
       throttling: {
         usages: 1,
         duration: 60,
