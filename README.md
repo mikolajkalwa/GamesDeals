@@ -8,7 +8,18 @@ GamesDeals is Discord bot build with discord.js. GamesDeals informs about games 
 
 ## Command list 
 
-Command list can be accessed via help command. Mention bot user to get the prefix.
+|                 | Command       | Aliases     | Description                                                                                                      | Required permissions |
+| --------------- | ------------- | ----------- | ---------------------------------------------------------------------------------------------------------------- | -------------------- |
+| Set-up commands |               |             |                                                                                                                  |                      |
+|                 | sendhere      | sh          | Bot will send notifications about free games in the channel this command was issued.                             | Manage Webhooks      |
+|                 | forgetserver  | fs          | Makes bot forget the server. Removes related webhook. Bot won't send any notifications about free games anymore. | Manage Webhooks      |
+|                 | setmention    | sm          | Set (update) role to mention when new game is found.                                                             | Manage Webhooks      |
+|                 | removemention | rm          | Makes bot stop mentioning a role when a new game is found.                                                       | Manage Webhooks      |
+| Utility         |               |             |                                                                                                                  |                      |
+|                 | invite        | inv         | Sends bot invitation URL.                                                                                        |                      |
+|                 | lastdeal      | ld          | Sends information about last found game.                                                                         |                      |
+|                 | statistics    | stat, stats | Sends basic statistics about the bot.                                                                            |                      |
+|                 | support       | supp        | Sends support server invitation URL.                                                                             |                      |
 
 ## How to run own instance of the bot
 
