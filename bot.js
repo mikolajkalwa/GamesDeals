@@ -31,7 +31,8 @@ bot.on('rateLimit', rateLimitInfo => logger.warn(rateLimitInfo));
 bot.on('guildCreate', async () => {
   try {
     if (process.env.DISCORD_BOTS_ORG || process.env.DISCORD_BOTS_GG) {
-      const guilds = await this.client.shard.fetchClientValues('guilds.size');
+      const guilds = await bot.shard.fetchClientValues('guilds.size');
+      const shardAmount = guilds.length;
       const guildAmount = guilds.reduce((acc, cur) => acc + cur);
       if (process.env.DISCORD_BOTS_ORG) {
         await axios({
@@ -42,18 +43,20 @@ bot.on('guildCreate', async () => {
           },
           data: {
             server_count: guildAmount,
+            shard_count: shardAmount,
           },
         });
       }
       if (process.env.DISCORD_BOTS_GG) {
         axios({
           method: 'post',
-          url: `https://bots.discord.pw/api/bots/${bot.user.id}/stats`,
+          url: `https://discord.bots.gg/api/v1/bots/${bot.user.id}/stats`,
           headers: {
             Authorization: process.env.DISCORD_BOTS_GG,
           },
           data: {
-            server_count: guildAmount,
+            guildCount: guildAmount,
+            shardCount: shardAmount,
           },
         });
       }
