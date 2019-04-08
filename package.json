@@ -1,0 +1,20 @@
+{
+  "name": "games-deals-notifier",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "check-syntax": "eslint \"**/*.js\"",
+    "start": "node index.js"
+  },
+  "author": "Mikołaj Kalwa",
+  "license": "GPL-3.0-or-later",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "pino": "^5.12.2"
+  },
+  "devDependencies": {
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.16.0"
+  }
+}
