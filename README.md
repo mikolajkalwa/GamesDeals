@@ -1,7 +1,5 @@
 # GamesDeals Bot
 
-Discord bot which informs about free games.
-
 ## Description
 
 GamesDeals is Discord bot build with discord.js. GamesDeals informs about games which price was reduced to 0. It uses https://www.reddit.com/r/GameDeals as a source.
@@ -21,6 +19,8 @@ GamesDeals is Discord bot build with discord.js. GamesDeals informs about games 
 |                 | statistics    | stat, stats | Sends basic statistics about the bot.                                                                            |                      |
 |                 | support       | supp        | Sends support server invitation URL.                                                                             |                      |
 
+Command list can be accessed via `help` command.
+
 ## How to run own instance of the bot
 
 1. Configure [GamesDealsAPI](https://github.com/mikolajkalwa/GamesDealsAPI).
@@ -30,12 +30,12 @@ GamesDeals is Discord bot build with discord.js. GamesDeals informs about games 
 5. Run `npm run start-pretty`.
 6. If you want to get notifications about free games, configure [GamesDealsNotifier](https://github.com/mikolajkalwa/GamesDealsNotifier).
 
-### Required enverioment variables
+### Required environment variables
 
 1. `BOT_TOKEN` generated on https://discordapp.com/developers/applications
 2. `API_URL` for example http://localhost:8080
 
-### Optional enverioment variables
+### Optional environment variables
 
 1. `COMMAND_PREXIF`
 2. `LOG_LEVEL`
