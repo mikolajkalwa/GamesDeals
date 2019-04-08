@@ -1,5 +1,9 @@
 # GamesDeals Bot
 
+![GitHub](https://img.shields.io/github/license/mikolajkalwa/GamesDealsBot.svg)
+[![Discord Bots](https://discordbots.org/api/widget/status/396466836331429889.svg?noavatar=true)](https://discordbots.org/bot/396466836331429889)
+[![Discord Bots](https://discordbots.org/api/widget/servers/396466836331429889.svg?noavatar=true)](https://discordbots.org/bot/396466836331429889)
+
 ## Description
 
 GamesDeals is Discord bot build with discord.js. GamesDeals informs about games which price was reduced to 0. It uses https://www.reddit.com/r/GameDeals as a source.
