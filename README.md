@@ -13,7 +13,7 @@ This repository is responsible for managing and executing Webhooks.
 3. Run npm install.
 4. Configure the required environment variables (`.env` file can be used).
 
-### Enverioment variables
+### Environment variables
   1. PORT - specifies on which port API should be running.
   2. MONGO_DB_URL - [MongoDB Connection URI](https://docs.mongodb.com/manual/reference/connection-string/)
 
