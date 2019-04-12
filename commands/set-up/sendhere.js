@@ -1,6 +1,6 @@
 const { Command } = require('discord.js-commando');
 const axios = require('axios');
-const fs = require('fs').promises;
+const fs = require('fs');
 const path = require('path');
 const logger = require('../../lib/logger.js');
 
@@ -37,7 +37,7 @@ module.exports = class SendHereCommand extends Command {
       const response = await axios.get(`${apiUrl}/webhooks/byguild/${msg.guild.id}`);
 
       if (response.status === 204) {
-        const image = await fs.readFile(path.resolve(__dirname, '..', '..', 'assets', 'avatar.png'), 'base64');
+        const image = fs.readFileSync(path.resolve(__dirname, '..', '..', 'assets', 'avatar.png'), 'base64');
         const webhook = await msg.channel.createWebhook('Games Deals', `data:image/png;base64,${image}`);
         await axios.post(`${apiUrl}/webhooks/`, {
           webhook_id: webhook.id,
