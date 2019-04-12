@@ -8,4 +8,4 @@ const manager = new ShardingManager('./bot.js', { token: process.env.BOT_TOKEN }
 manager.spawn();
 
 manager.on('launch', shard => logger.info(`Launched shard ${shard.id}`));
-manager.on('message', (shard, message) => logger.info(`Shard[${shard.id}] : ${util.inspect(message)}`));
+manager.on('message', (shard, message) => logger.debug(`Shard[${shard.id}] : ${util.inspect(message)}`));
