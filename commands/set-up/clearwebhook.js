@@ -4,14 +4,14 @@ const logger = require('../../lib/logger.js');
 
 const apiUrl = process.env.API_URL;
 
-module.exports = class ForgetServerCommand extends Command {
+module.exports = class ClearWebhookCommand extends Command {
   constructor(client) {
     super(client, {
-      name: 'forgetserver',
-      aliases: ['fs'],
+      name: 'clearwebhook',
+      aliases: ['fs', 'forgetserver', 'cw'],
       group: 'set-up',
-      memberName: 'forgetserver',
-      description: 'Bot won\'t send any notifications about free games anymore.',
+      memberName: 'clearwebhook',
+      description: 'Removes webhook related with the bot.',
       guildOnly: true,
       clientPermissions: ['MANAGE_WEBHOOKS'],
       userPermissions: ['MANAGE_WEBHOOKS'],
