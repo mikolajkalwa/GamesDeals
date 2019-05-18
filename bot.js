@@ -9,6 +9,13 @@ const bot = new Client({
   owner: '172012484306141184',
   commandPrefix,
   invite: 'https://discord.gg/Tgaag63',
+  disabledEvents: [
+    'TYPING_START',
+    'MESSAGE_REACTION_ADD',
+    'MESSAGE_REACTION_REMOVE',
+    'MESSAGE_REACTION_REMOVE_ALL',
+    'CHANNEL_PINS_UPDATE',
+  ],
 });
 
 function setActivity() {
@@ -22,15 +29,15 @@ bot.on('ready', () => {
   setActivity();
 });
 bot.on('disconnect', () => logger.warn('Disconnected!'));
-bot.on('reconnecting', id => logger.info(`Shard ${id} is reconnecting!`));
+bot.on('reconnecting', () => logger.info('A shard is reconnecting!'));
 bot.on('resume', () => {
   logger.info('Reconnected!');
   setActivity();
 });
 bot.on('rateLimit', rateLimitInfo => logger.warn(rateLimitInfo));
 bot.on('guildCreate', async () => {
-  try {
-    if (process.env.DISCORD_BOTS_ORG || process.env.DISCORD_BOTS_GG) {
+  if (process.env.DISCORD_BOTS_ORG || process.env.DISCORD_BOTS_GG) {
+    try {
       const guilds = await bot.shard.fetchClientValues('guilds.size');
       const shardAmount = guilds.length;
       const guildAmount = guilds.reduce((acc, cur) => acc + cur);
@@ -48,7 +55,7 @@ bot.on('guildCreate', async () => {
         });
       }
       if (process.env.DISCORD_BOTS_GG) {
-        axios({
+        await axios({
           method: 'post',
           url: `https://discord.bots.gg/api/v1/bots/${bot.user.id}/stats`,
           headers: {
@@ -60,9 +67,9 @@ bot.on('guildCreate', async () => {
           },
         });
       }
+    } catch (error) {
+      logger.error(error);
     }
-  } catch (error) {
-    logger.error(error);
   }
 });
 
