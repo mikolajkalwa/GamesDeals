@@ -10,11 +10,11 @@
   "license": "GPL-3.0-or-later",
   "dependencies": {
     "axios": "^0.18.0",
-    "pino": "^5.12.2"
+    "pino": "^5.12.5"
   },
   "devDependencies": {
     "eslint": "^5.16.0",
     "eslint-config-airbnb-base": "^13.1.0",
-    "eslint-plugin-import": "^2.16.0"
+    "eslint-plugin-import": "^2.17.2"
   }
 }
