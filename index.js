@@ -24,7 +24,7 @@ const isFree = require('./lib/isFree.js');
           }
         }
       }
-      logger.info(dealsToBroadcast);
+      logger.debug(dealsToBroadcast);
       if (dealsToBroadcast.length > 0) {
         let message = '';
         dealsToBroadcast.forEach((deal) => {
@@ -33,8 +33,8 @@ const isFree = require('./lib/isFree.js');
         const executeWebhooks = await axios.post(`${apiUrl}/execute`, {
           message,
         });
-        if (executeWebhooks.status === 200) {
-          logger.info(`Completed! Removed webhooks: ${executeWebhooks.data.removedWebhooks.deletedCount}. Rate limited webhooks (didn't execute): ${executeWebhooks.data.rateLimitedWebhooks}. Webhooks which failed to execute: ${executeWebhooks.data.failedWebhooks}.`);
+        if (executeWebhooks.status === 202) {
+          logger.info('ACCEPTED');
         } else {
           logger.warn(`Something went wrong during webhooks execution. Response status ${executeWebhooks.status}`);
         }
