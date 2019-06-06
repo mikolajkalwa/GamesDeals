@@ -1,11 +1,11 @@
 const path = require('path');
-const { Client } = require('discord.js-commando');
+const { CommandoClient } = require('discord.js-commando');
 const axios = require('axios');
 const logger = require('./lib/logger.js');
 
 const commandPrefix = process.env.COMMAND_PREXIF || 'gd:';
 
-const bot = new Client({
+const bot = new CommandoClient({
   owner: '172012484306141184',
   commandPrefix,
   invite: 'https://discord.gg/Tgaag63',
@@ -16,22 +16,24 @@ const bot = new Client({
     'MESSAGE_REACTION_REMOVE_ALL',
     'CHANNEL_PINS_UPDATE',
   ],
+  messageCacheMaxSize: 10,
 });
+
 
 function setActivity() {
   bot.user.setActivity(`Use ${commandPrefix}help`);
 }
 
-bot.on('error', e => logger.error(e));
-bot.on('warn', info => logger.warn(info));
+bot.on('error', e => logger.error(`[Shard ${bot.shard.id}] ${e}`));
+bot.on('warn', info => logger.warn(`[Shard ${bot.shard.id}] ${info}`));
 bot.on('ready', () => {
-  logger.info('Ready!');
+  logger.info(`Shard ${bot.shard.id} is ready!`);
   setActivity();
 });
-bot.on('disconnect', () => logger.warn('Disconnected!'));
-bot.on('reconnecting', () => logger.info('A shard is reconnecting!'));
+bot.on('disconnect', () => logger.warn(`Shard ${bot.shard.id} has disconnected!`));
+bot.on('reconnecting', () => logger.info(`Shard ${bot.shard.id} is reconnecting!`));
 bot.on('resume', () => {
-  logger.info('Reconnected!');
+  logger.info(`Shard ${bot.shard.id} has reconnected!`);
   setActivity();
 });
 bot.on('rateLimit', rateLimitInfo => logger.warn(rateLimitInfo));
@@ -39,8 +41,8 @@ bot.on('guildCreate', async () => {
   if (process.env.DISCORD_BOTS_ORG || process.env.DISCORD_BOTS_GG) {
     try {
       const guilds = await bot.shard.fetchClientValues('guilds.size');
-      const shardAmount = guilds.length;
-      const guildAmount = guilds.reduce((acc, cur) => acc + cur);
+      const shardCount = guilds.length;
+      const guildCount = guilds.reduce((acc, cur) => acc + cur);
       if (process.env.DISCORD_BOTS_ORG) {
         await axios({
           method: 'post',
@@ -49,8 +51,8 @@ bot.on('guildCreate', async () => {
             Authorization: process.env.DISCORD_BOTS_ORG,
           },
           data: {
-            server_count: guildAmount,
-            shard_count: shardAmount,
+            server_count: guildCount,
+            shard_count: shardCount,
           },
         });
       }
@@ -62,8 +64,8 @@ bot.on('guildCreate', async () => {
             Authorization: process.env.DISCORD_BOTS_GG,
           },
           data: {
-            guildCount: guildAmount,
-            shardCount: shardAmount,
+            guildCount,
+            shardCount,
           },
         });
       }
@@ -86,6 +88,13 @@ bot.registry
     ['set-up', 'Bot set-up commands.'],
   ])
   .registerCommandsIn(path.resolve(__dirname, 'commands'));
+
+
+setInterval(() => {
+  const sweptUsersCount = bot.users.sweep(u => u.presence.status === 'offline');
+  logger.info(`[Shard ${bot.shard.id}] Swept ${sweptUsersCount} users.`);
+}, 60 * 60 * 1000);
+
 
 bot.login(process.env.BOT_TOKEN);
 

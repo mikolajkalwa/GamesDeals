@@ -26,12 +26,9 @@ module.exports = class StatisticsCommand extends Command {
       const { data: { createdWebhooks: webhooksCount } } = await axios(`${apiUrl}/webhooks/amount`);
       const { data: { foundDeals: dealsCount } } = await axios(`${apiUrl}/deals/amount`);
       const guilds = await this.client.shard.fetchClientValues('guilds.size');
-      const users = await this.client.shard.broadcastEval('this.guilds.reduce((prev, guild) => prev + guild.memberCount, 0)');
       const guildsCount = guilds.reduce((acc, cur) => acc + cur);
-      const usersCount = users.reduce((prev, memberCount) => prev + memberCount, 0);
       const stats = `:robot: **Uptime:** ${moment.duration(this.client.uptime).locale('en').humanize()},\n`
         + `:desktop: **Servers:** ${guildsCount},\n`
-        + `:family: **Users:** ${usersCount}\n`
         + `:postbox: **Webhooks:** ${webhooksCount},\n`
         + `:video_game: **Found Games:** ${dealsCount}`;
       return msg.reply(`\n${stats}`);
