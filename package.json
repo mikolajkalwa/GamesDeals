@@ -15,12 +15,12 @@
     "discord.js-commando": "^0.10.0",
     "dotenv": "^8.0.0",
     "moment": "^2.24.0",
-    "pino-multi-stream": "^4.0.2",
-    "pino-pretty": "^3.1.0"
+    "pino-multi-stream": "^4.1.0",
+    "pino-pretty": "^3.2.0"
   },
   "devDependencies": {
-    "eslint": "^5.16.0",
-    "eslint-config-airbnb-base": "^13.1.0",
-    "eslint-plugin-import": "^2.17.3"
+    "eslint": "^6.0.1",
+    "eslint-config-airbnb-base": "^13.2.0",
+    "eslint-plugin-import": "^2.18.0"
   }
 }
