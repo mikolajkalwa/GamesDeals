@@ -1,5 +1,7 @@
 const path = require('path');
-const { CommandoClient } = require('discord.js-commando');
+const {
+  CommandoClient,
+} = require('discord.js-commando');
 const axios = require('axios');
 const logger = require('./lib/logger.js');
 
@@ -92,8 +94,8 @@ bot.registry
 
 setInterval(() => {
   const sweptUsersCount = bot.users.sweep(u => u.presence.status === 'offline');
-  logger.info(`[Shard ${bot.shard.id}] Swept ${sweptUsersCount} users.`);
-}, 60 * 60 * 1000);
+  logger.debug(`[Shard ${bot.shard.id}] Swept ${sweptUsersCount} users.`);
+}, 30 * 60 * 1000);
 
 
 bot.login(process.env.BOT_TOKEN);
