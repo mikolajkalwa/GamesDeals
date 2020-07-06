@@ -1,0 +1,24 @@
+import {
+  Body, Controller, Get, Post, Query,
+} from '@nestjs/common';
+import CreateDealDto from './dto/create-deal.dto';
+import { Deal } from './schemas/deal.schema';
+import DealsService from './deals.service';
+
+@Controller('deals')
+export default class DealsController {
+  constructor(private readonly dealsService: DealsService) { }
+
+  @Post()
+  async create(@Body() deal: CreateDealDto): Promise<Deal> {
+    return this.dealsService.create(deal);
+  }
+
+  @Get('latest')
+  async findLatest(@Query('limit') limit?: string): Promise<Deal[] | Deal> {
+    if (!limit) {
+      return this.dealsService.findLatest();
+    }
+    return this.dealsService.findLatests(+limit);
+  }
+}
