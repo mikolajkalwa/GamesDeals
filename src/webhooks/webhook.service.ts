@@ -19,11 +19,8 @@ export default class WebhookService {
     return webhookCount;
   }
 
-  async findMany(limit = 1000, lastId: string = null): Promise<Webhook[]> {
-    if (!lastId) {
-      return this.WebhookModel.find({}).limit(limit);
-    }
-    return this.WebhookModel.find({ _id: { $gt: lastId } }).limit(limit);
+  async findMany(): Promise<Webhook[]> {
+    return this.WebhookModel.find({});
   }
 
   async findByWebhookId(webhookId: string): Promise<Webhook> {

@@ -1,5 +1,5 @@
 import {
-  Body, Controller, Post, Query, Get, Delete, Patch, Param,
+  Body, Controller, Post, Get, Delete, Patch, Param,
 } from '@nestjs/common';
 import CreateWebhookDto from './dto/create-webhook.dto';
 import PatchWebhookDto from './dto/patch-webhook.dto';
@@ -16,11 +16,8 @@ export default class WebhooksController {
   }
 
   @Get()
-  async find(@Query('limit') limit: string, @Query('last_id') lastId: string): Promise<Webhook[]> {
-    if (limit) {
-      return this.webhooksService.findMany(+limit, lastId);
-    }
-    return this.webhooksService.findMany(undefined, lastId);
+  async find(): Promise<Webhook[]> {
+    return this.webhooksService.findMany();
   }
 
   @Get('guild/:guild_id')
