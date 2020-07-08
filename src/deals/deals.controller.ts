@@ -1,5 +1,5 @@
 import {
-  Body, Controller, Get, Post, Query,
+  Body, Controller, Get, Post, Query, Param,
 } from '@nestjs/common';
 import CreateDealDto from './dto/create-deal.dto';
 import { Deal } from './schemas/deal.schema';
@@ -12,6 +12,11 @@ export default class DealsController {
   @Post()
   async create(@Body() deal: CreateDealDto): Promise<Deal> {
     return this.dealsService.create(deal);
+  }
+
+  @Get('reddit/:reddit_id')
+  async find(@Param('reddit_id') redditId: string): Promise<Deal> {
+    return this.dealsService.find(redditId);
   }
 
   @Get('latest')

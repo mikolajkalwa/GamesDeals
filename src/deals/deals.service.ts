@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import CreateDealDto from './dto/create-deal.dto';
@@ -11,6 +11,14 @@ export default class DealsService {
   async create(creatDealDto: CreateDealDto): Promise<Deal> {
     const createdDeal = new this.DealModel(creatDealDto);
     return createdDeal.save();
+  }
+
+  async find(redditId: string): Promise<Deal> {
+    const deal = await this.DealModel.findOne({ redditId });
+    if (!deal) {
+      throw new NotFoundException('No deal found.');
+    }
+    return deal;
   }
 
   async findLatest(): Promise<Deal> {
