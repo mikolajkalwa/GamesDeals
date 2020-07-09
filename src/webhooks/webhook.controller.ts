@@ -1,5 +1,5 @@
 import {
-  Body, Controller, Post, Get, Delete, Patch, Param,
+  Body, Controller, Post, Get, Delete, Patch, Param, HttpCode,
 } from '@nestjs/common';
 import CreateWebhookDto from './dto/create-webhook.dto';
 import PatchWebhookDto from './dto/patch-webhook.dto';
@@ -35,6 +35,7 @@ export default class WebhooksController {
     return this.webhooksService.patch(webhookId, webhook);
   }
 
+  @HttpCode(204)
   @Delete(':webhook_id')
   async delete(@Param('webhook_id') webhookId: string): Promise<null> {
     return this.webhooksService.delete(webhookId);
