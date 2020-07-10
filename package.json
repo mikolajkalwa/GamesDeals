@@ -1,0 +1,20 @@
+{
+  "name": "games-deals-bot",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:mikolajkalwa/GamesDealsBot.git",
+  "author": "Mikolaj Kalwa",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^8.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^14.0.21",
+    "@typescript-eslint/eslint-plugin": "^3.6.0",
+    "@typescript-eslint/parser": "^3.6.0",
+    "eslint": "^7.4.0",
+    "eslint-config-airbnb-typescript": "^8.0.2",
+    "eslint-plugin-import": "^2.22.0",
+    "typescript": "^3.9.6"
+  }
+}
