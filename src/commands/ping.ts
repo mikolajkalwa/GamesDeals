@@ -13,10 +13,10 @@ const pingCommand: { label: string, generator: CommandGenerator, options?: Comma
     );
   },
   options: {
+    aliases: ['pong'],
     description: 'Pong!',
     fullDescription: 'Ping the bot to see if there are latency issues.',
     guildOnly: true,
-    aliases: ['pong'],
   },
 };
 
