@@ -10,5 +10,9 @@ import { loadCommands, loadEvents } from './lib/modulesLoader';
     loadCommands(path.resolve(__dirname, 'commands')),
   ]);
 
-  bot.connect();
+  await bot.connect();
+  bot.editStatus('online', {
+    name: 'Use gd:help',
+    type: 3,
+  });
 })();
