@@ -6,7 +6,7 @@ import logger from '../lib/logger';
 import Time from '../lib/Time';
 
 const lastDealCommand: { label: string, generator: CommandGenerator, options?: CommandOptions } = {
-  label: 'lastdeal',
+  label: 'latestdeal',
   generator: async (msg: Message) => {
     const lastDeal = await gdapi.getLastDeal()
       .catch((e) => {
@@ -24,11 +24,11 @@ const lastDealCommand: { label: string, generator: CommandGenerator, options?: C
     }
   },
   options: {
-    aliases: ['ld'],
+    aliases: ['ld', 'lastdeal'],
     cooldown: 10 * Time.MINUTE,
     cooldownMessage: 'This command can be used once per 10 minutes.',
     cooldownReturns: 1,
-    description: 'Information about last found game.',
+    description: 'Information about latest found game.',
   },
 };
 
