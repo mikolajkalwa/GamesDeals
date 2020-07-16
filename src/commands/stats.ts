@@ -22,7 +22,7 @@ const statsCommand: { label: string, generator: CommandGenerator, options?: Comm
   label: 'stats',
   generator: async (msg: Message) => {
     let content = `:robot: **Uptime:** ${convertMs(bot.uptime)}\n`
-      + `<:memory:731588104837922920> **Memory usage:** ${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)}MB\n`
+      + `:chart_with_upwards_trend: **Memory usage:** ${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)}MB\n`
       + `:family: **Cached users:** ${bot.users.size}\n`
       + `:desktop: **Guilds:** ${bot.guilds.size}\n`;
 
@@ -34,7 +34,7 @@ const statsCommand: { label: string, generator: CommandGenerator, options?: Comm
       });
 
     if (statistics) {
-      content += `:postbox: **Webhooks:** ${statistics.webhooksCount},\n`
+      content += `:envelope: **Webhooks:** ${statistics.webhooksCount},\n`
         + `:video_game: **Found Games:** ${statistics.dealsCount}`;
     } else {
       content += ':exclamation: Unable to fetch more statistics.';
