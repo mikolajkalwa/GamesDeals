@@ -29,7 +29,7 @@ const createWebhookCommand: CommandDefinition = {
         avatar: `data:image/png;base64,${image}`,
       });
 
-      if (args[0] === '@everyone' || args[0] === '@here' || /<@\d+>/.test(args[0])) {
+      if (args[0] === '@everyone' || args[0] === '@here' || /<@&\d+>/.test(args[0])) {
         await gdapi.saveWebhook({
           webhookId: webhook.id,
           guildId: webhook.guild_id,
