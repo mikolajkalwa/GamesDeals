@@ -1,7 +1,9 @@
 # GamesDeals Bot
 
-![GitHub](https://img.shields.io/github/license/mikolajkalwa/GamesDealsBot?style=for-the-badge)
-![Discord](https://img.shields.io/discord/731855809818132480?style=for-the-badge)
+[![GitHub](https://img.shields.io/github/license/mikolajkalwa/GamesDealsBot?style=for-the-badge)](LICENSE)
+[![Discord](https://img.shields.io/discord/731855809818132480?style=for-the-badge)](https://discord.gg/ZkjqCmM)
+[![BotInvite](https://img.shields.io/badge/Discord-Add%20bot%20to%20your%20server!-blue?style=for-the-badge)](https://discordapp.com/oauth2/authorize?client_id=396466836331429889&scope=bot&permissions=536890368)
+
 
 ## Description
 
