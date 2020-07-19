@@ -1,7 +1,6 @@
 import {
   CommandGenerator, CommandOptions,
 } from 'eris';
-import Time from '../lib/Time';
 
 const inviteCommand: { label: string, generator: CommandGenerator, options?: CommandOptions } = {
   label: 'invite',
@@ -13,7 +12,6 @@ const inviteCommand: { label: string, generator: CommandGenerator, options?: Com
   },
   options: {
     aliases: ['inv'],
-    cooldown: Time.MINUTE,
     description: 'Bot invitation URL. This command works only in Direct Messages',
     dmOnly: true,
   },

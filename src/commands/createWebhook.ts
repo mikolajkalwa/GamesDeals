@@ -53,9 +53,9 @@ const createWebhookCommand: CommandDefinition = {
   },
   options: {
     aliases: ['cw', 'sendhere', 'sh'],
-    cooldown: 10 * Time.MINUTE,
-    cooldownMessage: 'This command can be used once per 10 minutes.',
-    cooldownReturns: 1,
+    cooldown: 2 * Time.MINUTE,
+    cooldownMessage: 'This command can be used once per 2 minutes.',
+    cooldownReturns: 10,
     description: 'Creates webhook. Use this if command if you want be notified about free games.',
     fullDescription: 'Bot will send notifications about free games in the channel this command was issued.',
     guildOnly: true,

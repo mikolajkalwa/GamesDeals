@@ -4,6 +4,7 @@ import {
 import bot from '../lib/bot';
 import gdapi from '../lib/APIClient';
 import logger from '../lib/logger';
+import Time from '../lib/Time';
 
 const convertMs = (milliseconds: number) => {
   const totalSeconds = Math.floor(milliseconds / 1000);
@@ -42,7 +43,7 @@ const statsCommand: { label: string, generator: CommandGenerator, options?: Comm
     msgCopy.edit(content);
   },
   options: {
-    cooldown: 30 * 1000,
+    cooldown: 30 * Time.SECOND,
     description: 'Bot statistics.',
     fullDescription: 'Uptime, memory usage, cached users, guilds, webhooks, found games.',
     aliases: ['statistics', 'info'],
