@@ -1,8 +1,7 @@
-import {
-  Message, CommandGenerator, GuildChannel, CommandOptions,
-} from 'eris';
+import { Message, GuildChannel } from 'eris';
+import CommandDefinition from '../lib/CommandDefinition';
 
-const pingCommand: { label: string, generator: CommandGenerator, options?: CommandOptions } = {
+const pingCommand: CommandDefinition = {
   label: 'ping',
   generator: async (msg: Message) => {
     const msg2 = await msg.channel.createMessage('**Pong!** :ping_pong:');

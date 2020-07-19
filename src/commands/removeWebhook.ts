@@ -1,12 +1,11 @@
-import {
-  CommandGenerator, CommandOptions, Message, GuildChannel,
-} from 'eris';
+import { Message, GuildChannel } from 'eris';
 import gdapi from '../lib/APIClient';
 import logger from '../lib/logger';
 import Time from '../lib/Time';
 import bot from '../lib/bot';
+import CommandDefinition from '../lib/CommandDefinition';
 
-const removeWebhook: { label: string, generator: CommandGenerator, options?: CommandOptions } = {
+const removeWebhook: CommandDefinition = {
   label: 'removewebhook',
   generator: async (msg: Message, args: string[]) => {
     if (args.length < 1) {

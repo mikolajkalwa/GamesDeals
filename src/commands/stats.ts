@@ -1,10 +1,9 @@
-import {
-  Message, CommandGenerator, CommandOptions,
-} from 'eris';
+import { Message } from 'eris';
 import bot from '../lib/bot';
 import gdapi from '../lib/APIClient';
 import logger from '../lib/logger';
 import Time from '../lib/Time';
+import CommandDefinition from '../lib/CommandDefinition';
 
 const convertMs = (milliseconds: number) => {
   const totalSeconds = Math.floor(milliseconds / 1000);
@@ -19,7 +18,7 @@ const convertMs = (milliseconds: number) => {
   return `${days} days ${hours} hours ${minutes} minutes ${seconds} seconds`;
 };
 
-const statsCommand: { label: string, generator: CommandGenerator, options?: CommandOptions } = {
+const statsCommand: CommandDefinition = {
   label: 'stats',
   generator: async (msg: Message) => {
     let content = `:robot: **Uptime:** ${convertMs(bot.uptime)}\n`

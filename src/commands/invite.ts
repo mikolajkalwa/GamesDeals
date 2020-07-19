@@ -1,8 +1,6 @@
-import {
-  CommandGenerator, CommandOptions,
-} from 'eris';
+import CommandDefinition from '../lib/CommandDefinition';
 
-const inviteCommand: { label: string, generator: CommandGenerator, options?: CommandOptions } = {
+const inviteCommand: CommandDefinition = {
   label: 'invite',
   generator: () => {
     if (process.env.INVITE_URL) {

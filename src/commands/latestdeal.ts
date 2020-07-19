@@ -1,11 +1,10 @@
-import {
-  Message, CommandGenerator, CommandOptions,
-} from 'eris';
+import { Message } from 'eris';
 import gdapi from '../lib/APIClient';
 import logger from '../lib/logger';
 import Time from '../lib/Time';
+import CommandDefinition from '../lib/CommandDefinition';
 
-const lastDealCommand: { label: string, generator: CommandGenerator, options?: CommandOptions } = {
+const lastDealCommand: CommandDefinition = {
   label: 'latestdeal',
   generator: async (msg: Message) => {
     const lastDeal = await gdapi.getLastDeal()

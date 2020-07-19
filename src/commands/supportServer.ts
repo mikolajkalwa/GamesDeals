@@ -1,8 +1,6 @@
-import {
-  CommandGenerator, CommandOptions,
-} from 'eris';
+import CommandDefinition from '../lib/CommandDefinition';
 
-const supportServer: { label: string, generator: CommandGenerator, options?: CommandOptions } = {
+const supportServer: CommandDefinition = {
   label: 'support',
   generator: () => {
     if (process.env.SUPPORT_SERVER_URL) {
