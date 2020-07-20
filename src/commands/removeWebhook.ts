@@ -2,9 +2,9 @@ import {
   CommandGenerator, CommandOptions, Message, GuildChannel,
 } from 'eris';
 import gdapi from '../lib/APIClient';
-import logger from '../lib/logger';
 import Time from '../lib/Time';
 import bot from '../lib/bot';
+import logger from '../lib/logger';
 
 const removeWebhook: { label: string, generator: CommandGenerator, options?: CommandOptions } = {
   label: 'removewebhook',
@@ -17,14 +17,18 @@ const removeWebhook: { label: string, generator: CommandGenerator, options?: Com
     const webhookID = args[0];
     const webhook = webhooks.filter((w) => w.webhookId === webhookID)[0];
     if (webhook) {
-      try {
-        await gdapi.deleteWebhook(webhook.webhookId);
-        await bot.deleteWebhook(webhook.webhookId, webhook.webhookToken);
-        return 'Webhook removed succesfully';
-      } catch (e) {
-        logger.error({ e, message: `Unable to delete webhook ${webhook}` });
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      const result = await Promise.allSettled([
+        bot.deleteWebhook(webhook.webhookId, webhook.webhookToken),
+        gdapi.deleteWebhook(webhook.webhookId),
+      ]);
+      if (result[0].status === 'rejected' && result[1].status === 'rejected') {
+        logger.error({ err: result[0].reason, message: `Failed to delete webhook from disccord: ${webhook.webhookId}` });
+        logger.error({ err: result[1].reason, message: `Failed to delete webhook from database: ${webhook.webhookId}` });
         return 'Something went wrong!';
       }
+      return 'Bot won\'t send any messages to this channel anymore.';
     }
     return 'Provided webhook doesn\'t exists / is not related to this guild.';
   },
