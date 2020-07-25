@@ -24,7 +24,8 @@ const statsCommand: CommandDefinition = {
     let content = `:robot: **Uptime:** ${convertMs(bot.uptime)}\n`
       + `:chart_with_upwards_trend: **Memory usage:** ${(process.memoryUsage().rss / 1024 / 1024).toFixed(2)}MB\n`
       + `:family: **Cached users:** ${bot.users.size}\n`
-      + `:desktop: **Guilds:** ${bot.guilds.size}\n`;
+      + `:desktop: **Guilds:** ${bot.guilds.size}\n`
+      + `:computer: **Shards:** ${bot.shards.size}\n`;
 
     const msgCopy = await msg.channel.createMessage(`${content}<a:processing:731581283938861085> Fetching more statistics...`);
 

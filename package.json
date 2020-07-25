@@ -6,7 +6,7 @@
   "author": "Mikolaj Kalwa",
   "license": "MIT",
   "scripts": {
-    "start-pretty": "node built/index.js | pino-pretty -t"
+    "start-pretty": "node --max-old-space-size=4096 built/index.js | pino-pretty -t"
   },
   "dependencies": {
     "dotenv": "^8.2.0",
