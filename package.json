@@ -11,14 +11,14 @@
   "license": "MIT",
   "dependencies": {
     "dotenv": "^8.2.0",
-    "got": "^11.5.0",
-    "pino": "^6.3.2"
+    "got": "^11.6.2",
+    "pino": "^6.6.0"
   },
   "devDependencies": {
-    "eslint": "^7.4.0",
+    "eslint": "^7.9.0",
     "eslint-config-airbnb-base": "^14.2.0",
     "eslint-plugin-import": "^2.22.0",
-    "eslint-plugin-jest": "^23.18.0",
+    "eslint-plugin-jest": "^24.0.1",
     "jest": "^26.1.0"
   }
 }
