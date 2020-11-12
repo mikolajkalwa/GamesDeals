@@ -79,7 +79,7 @@ const executeWebhooks = async (webhooks, message) => {
       content = `${webhook.roleToMention} ${message}`;
     }
 
-    const response = await got.post(`https://discordapp.com/api/webhooks/${webhook.webhookId}/${webhook.webhookToken}`, {
+    const response = await got.post(`https://discord.com/api/webhooks/${webhook.webhookId}/${webhook.webhookToken}`, {
       json: {
         content,
       },
@@ -112,7 +112,8 @@ const getWebhooksToExecute = async (deals) => {
     if (webhook.keywords.length === 0) {
       return true;
     }
-    const intersection = webhook.keywords.filter((keyword) => mergedTitles.includes(keyword));
+    // eslint-disable-next-line max-len
+    const intersection = webhook.keywords.filter((keyword) => mergedTitles.includes(keyword.toLowerCase()));
     if (intersection.length) {
       return true;
     }
