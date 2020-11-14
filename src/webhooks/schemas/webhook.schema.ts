@@ -37,6 +37,17 @@ export class Webhook extends Document {
     },
   })
   keywords?: string[];
+
+  @Prop({
+    required: false,
+    unique: false,
+    type: [String],
+    validate: {
+      validator: (val) => val.length <= 5, // allow only to store 5 keywords
+      message: 'array size exceeds the limit of 5',
+    },
+  })
+  blacklist?: string[];
 }
 
 export const WebhookSchema = SchemaFactory.createForClass(Webhook);

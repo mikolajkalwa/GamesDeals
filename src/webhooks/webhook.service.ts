@@ -43,13 +43,19 @@ export default class WebhookService {
   }
 
   async patch(webhookId: string, webhookPatchData: PatchWebhookDto): Promise<Webhook> {
-    if (webhookPatchData.keywords === undefined && webhookPatchData.roleToMention === undefined) {
+    if (
+      webhookPatchData.keywords === undefined
+      && webhookPatchData.blacklist === undefined
+      && webhookPatchData.roleToMention === undefined) {
       throw new BadRequestException('No fields were provided to patch');
     }
     // mongoose will run $unset on fields with undefined value
     const webhookToPatch = await this.findByWebhookId(webhookId);
     if (webhookPatchData.keywords === null || webhookPatchData.keywords) {
       webhookToPatch.keywords = webhookPatchData.keywords || undefined;
+    }
+    if (webhookPatchData.blacklist === null || webhookPatchData.blacklist) {
+      webhookToPatch.blacklist = webhookPatchData.blacklist || undefined;
     }
     if (webhookPatchData.roleToMention === null || webhookPatchData.roleToMention) {
       webhookToPatch.roleToMention = webhookPatchData.roleToMention || undefined;
