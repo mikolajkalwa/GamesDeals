@@ -1,4 +1,4 @@
-function isFree(title) {
+const isFree = (title: string) => {
   title = title.toLowerCase(); // eslint-disable-line
   title = title.replace(/\s{2,}/gi, ' '); // eslint-disable-line
 
@@ -42,6 +42,6 @@ function isFree(title) {
   }
 
   return false;
-}
+};
 
-module.exports = isFree;
+export default isFree;

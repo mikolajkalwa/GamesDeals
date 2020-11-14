@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
-const isFree = require('./isFree');
+import isFree from './isFree';
 
-const cases = [
+const cases: Array<[string, boolean]> = [
   // false positives from the past:
   ['[STEAM | UPLAY] Rainbow Six Siege R6 - FREE WEEKEND (Upto 50% OFF)', false],
   ['[Newegg] The Evil Within 2 - PC/physical copy/free shipping $13 w/code EMCPUEW67', false],
