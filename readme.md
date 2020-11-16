@@ -2,7 +2,7 @@
 
 [![GitHub](https://img.shields.io/github/license/mikolajkalwa/GamesDealsBot?style=for-the-badge)](LICENSE)
 [![Discord](https://img.shields.io/discord/731855809818132480?style=for-the-badge&logo=discord)](https://discord.gg/ZkjqCmM)
-[![BotInvite](https://img.shields.io/badge/Discord-Add%20bot%20to%20your%20server!-blue?style=for-the-badge&logo=discord)](https://discordapp.com/oauth2/authorize?client_id=396466836331429889&scope=bot&permissions=536890368)
+[![BotInvite](https://img.shields.io/badge/Discord-Add%20bot%20to%20your%20server!-blue?style=for-the-badge&logo=discord)](https://discord.com/oauth2/authorize?client_id=396466836331429889&scope=bot&permissions=536890368)
 [![Liberapay](https://img.shields.io/liberapay/goal/hi_im_miki?style=for-the-badge&logo=liberapay)](https://liberapay.com/hi_im_miki/)
 
 ## Description

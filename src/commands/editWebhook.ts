@@ -124,7 +124,7 @@ const editWebhookCommand: CommandDefinition = {
     WebhookID is an unique identifier for a webhook. Webhook id can be found in 2 easy ways:
     • command: gd:webhookinfo will list all webhooks created by gamesdeals bot
     • open channel settings, go to webhooks tabs, and copy webhook url. The url has following structure:
-      \`https://discordapp.com/api/webhooks/webhookId/webhookToken\`
+      \`https://discord.com/api/webhooks/webhookId/webhookToken\`
     `,
   },
 };
