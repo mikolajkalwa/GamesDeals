@@ -1,6 +1,6 @@
 const isFree = (title: string) => {
   title = title.toLowerCase(); // eslint-disable-line
-  title = title.replace(/\s{2,}/gi, ' '); // eslint-disable-line
+  title = title.replace(/\s{2,}/gi, ' ').replace('–', '-'); // eslint-disable-line
 
   if (!(/((?<!-)(\b(free)\b)|100%|\$0|€0|0\$|0€)/gi.test(title))) {
     return false;
