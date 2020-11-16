@@ -3,4 +3,5 @@ export interface Deal {
   url: string;
   title: string;
   author: string;
+  over18: boolean;
 }

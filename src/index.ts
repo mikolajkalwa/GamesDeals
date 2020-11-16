@@ -24,17 +24,21 @@ const fetchRedditThreads = async (): Promise<Deal[]> => {
   return response.data.children.map((element) => {
     const {
       data: {
-        id, url, title, author,
+        id, url, title, author, over_18: over18,
       },
     } = element;
     return {
-      id, url, title, author,
+      id, url, title, author, over18,
     };
   });
 };
 
 const getDealsToAnnounce = async (deals: Deal[]): Promise<Deal[]> => {
   const isNewDeal = async (deal: Deal) => {
+    if (deal.over18) {
+      return false; // ignore all nsfw threads
+    }
+
     if (isFree(deal.title)) {
       const response = await got.get(`${API_URL}/deals/reddit/${deal.id}`, {
         throwHttpErrors: false,
