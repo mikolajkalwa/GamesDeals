@@ -16,14 +16,12 @@ const removeWebhook: CommandDefinition = {
     const webhookID = args[0];
     const webhook = webhooks.filter((w) => w.webhookId === webhookID)[0];
     if (webhook) {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
       const result = await Promise.allSettled([
         bot.deleteWebhook(webhook.webhookId, webhook.webhookToken),
         gdapi.deleteWebhook(webhook.webhookId),
       ]);
       if (result[0].status === 'rejected' && result[1].status === 'rejected') {
-        logger.error({ err: result[0].reason, message: `Failed to delete webhook from disccord: ${webhook.webhookId}` });
+        logger.error({ err: result[0].reason, message: `Failed to delete webhook from discord: ${webhook.webhookId}` });
         logger.error({ err: result[1].reason, message: `Failed to delete webhook from database: ${webhook.webhookId}` });
         return 'Something went wrong!';
       }
