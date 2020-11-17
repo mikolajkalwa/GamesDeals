@@ -32,11 +32,11 @@ GamesDeals is a Discord bot built with [eris](https://github.com/abalabahaha/eri
 ## Examples
 
   - Notify only about games from steam and gog:
-    - gd:createwebhook steam gog
+    - gd:createwebhook --keywords steam gog
   - Mention a role when a game is found:
-    - gd:createwebhook @coolPeople
+    - gd:createwebhook --mention @coolPeople
   - Both:
-    - gd:createwebhook @coolPeople steam gog
+    - gd:createwebhook --mention @coolPeople --keywords steam gog
 
 If you already setup a webhook in the past and would like to modify it, use: `gd:editwebhook`, to learn more use `gd:help editwebhook`
 
