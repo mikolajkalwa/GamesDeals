@@ -1,4 +1,6 @@
 import { Message, GuildChannel } from 'eris';
+import parseArgsStringToArgv from 'string-argv';
+import parseArgs from 'yargs-parser';
 import gdapi from '../lib/APIClient';
 import CommandDefinition from '../lib/CommandDefinition';
 import { printWebhookDetails } from '../helpers/webhookHelpers';
@@ -11,7 +13,14 @@ const webhookInfoCommand: CommandDefinition = {
 
     const webhooks = await gdapi.getWebhooksForGuild((msg.channel as GuildChannel).guild.id);
 
-    const webhookID = args[0];
+    const parsedArgs = parseArgs(parseArgsStringToArgv(args.join(' ')), {
+      alias: {
+        webhook: ['id'],
+      },
+      string: ['webhook'],
+    });
+
+    const webhookID = parsedArgs.webhook;
     if (webhookID) {
       const webhook = webhooks.filter((w) => w.webhookId === webhookID)[0];
       if (webhook) {
