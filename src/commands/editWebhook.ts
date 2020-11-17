@@ -2,7 +2,7 @@ import { Message, GuildChannel } from 'eris';
 import gdapi, { ReadWebhook } from '../lib/APIClient';
 import logger from '../lib/logger';
 import CommandDefinition from '../lib/CommandDefinition';
-import Time from '../lib/Time';
+import Time from '../helpers/Time';
 
 const setMention = (webhookId: string, roleToMention: string | null) => gdapi
   .patchWebhook(webhookId, { roleToMention });

@@ -3,7 +3,7 @@ import path from 'path';
 import got from 'got';
 import bot from './lib/bot';
 import { loadCommands, loadEvents } from './lib/modulesLoader';
-import Time from './lib/Time';
+import Time from './helpers/Time';
 
 (async () => {
   path.resolve(__dirname, 'commands');

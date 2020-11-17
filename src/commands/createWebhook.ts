@@ -4,7 +4,7 @@ import path from 'path';
 import bot from '../lib/bot';
 import gdapi from '../lib/APIClient';
 import logger from '../lib/logger';
-import Time from '../lib/Time';
+import Time from '../helpers/Time';
 import CommandDefinition from '../lib/CommandDefinition';
 
 const image = fs.readFileSync(path.resolve(__dirname, '..', '..', 'avatar.png'), 'base64');

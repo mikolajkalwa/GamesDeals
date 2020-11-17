@@ -1,7 +1,7 @@
 import { Message } from 'eris';
 import gdapi from '../lib/APIClient';
 import logger from '../lib/logger';
-import Time from '../lib/Time';
+import Time from '../helpers/Time';
 import CommandDefinition from '../lib/CommandDefinition';
 
 const lastDealCommand: CommandDefinition = {

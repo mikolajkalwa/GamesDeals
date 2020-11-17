@@ -2,7 +2,7 @@ import { Message } from 'eris';
 import bot from '../lib/bot';
 import gdapi from '../lib/APIClient';
 import logger from '../lib/logger';
-import Time from '../lib/Time';
+import Time from '../helpers/Time';
 import CommandDefinition from '../lib/CommandDefinition';
 
 const convertMs = (milliseconds: number) => {

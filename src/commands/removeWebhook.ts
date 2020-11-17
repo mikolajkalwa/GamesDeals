@@ -1,6 +1,6 @@
 import { Message, GuildChannel } from 'eris';
 import gdapi from '../lib/APIClient';
-import Time from '../lib/Time';
+import Time from '../helpers/Time';
 import bot from '../lib/bot';
 import CommandDefinition from '../lib/CommandDefinition';
 import logger from '../lib/logger';

@@ -1,12 +1,7 @@
 import { Message, GuildChannel } from 'eris';
-import gdapi, { ReadWebhook } from '../lib/APIClient';
+import gdapi from '../lib/APIClient';
 import CommandDefinition from '../lib/CommandDefinition';
-
-const createContent = (webhook: ReadWebhook): string => `Webhook ID: ${webhook.webhookId}\n`
-  + `Created at: ${webhook.createdAt}\n`
-  + `Updated at: ${webhook.updatedAt}\n`
-  + `Keywords: ${webhook.keywords?.length ? `${webhook.keywords}` : 'There are no keywords defined for this webhook.'}\n`
-  + `Role to mention: ${Object.prototype.hasOwnProperty.call(webhook, 'roleToMention') ? `${webhook.roleToMention}` : 'Role to mention is not defined for this webhook.'}\n\n`;
+import { printWebhookDetails } from '../helpers/webhookHelpers';
 
 const webhookInfoCommand: CommandDefinition = {
   label: 'webhookinfo',
@@ -20,16 +15,16 @@ const webhookInfoCommand: CommandDefinition = {
     if (webhookID) {
       const webhook = webhooks.filter((w) => w.webhookId === webhookID)[0];
       if (webhook) {
-        messageChunksToSend.push(createContent(webhook));
+        messageChunksToSend.push(printWebhookDetails(webhook));
       } else {
         msg.channel.createMessage('Provided webhook doesn\'t exists / is not related to this guild.');
         return;
       }
     } else {
       webhooks.forEach((webhook) => {
-        const nextWebhook = createContent(webhook);
+        const nextWebhook = printWebhookDetails(webhook);
         if (content.length + nextWebhook.length <= 2000) {
-          content += createContent(webhook);
+          content += printWebhookDetails(webhook);
         } else {
           messageChunksToSend.push(content);
           content = nextWebhook;

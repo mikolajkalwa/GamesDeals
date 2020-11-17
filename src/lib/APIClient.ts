@@ -19,6 +19,7 @@ interface Webhook {
   guildId: string;
   roleToMention?: string;
   keywords?: string[];
+  blacklist?: string[];
 }
 
 export interface ReadWebhook extends Webhook {
@@ -29,6 +30,7 @@ export interface ReadWebhook extends Webhook {
 interface PatchWebhook {
   roleToMention?: string | null;
   keywords?: string[] | null;
+  blacklist?: string[];
 }
 
 class APIClient {
