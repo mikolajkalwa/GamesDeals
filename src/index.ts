@@ -6,7 +6,6 @@ import { loadCommands, loadEvents } from './lib/modulesLoader';
 import Time from './helpers/Time';
 
 (async () => {
-  path.resolve(__dirname, 'commands');
   await Promise.all([
     loadEvents(path.resolve(__dirname, 'events')),
     loadCommands(path.resolve(__dirname, 'commands')),

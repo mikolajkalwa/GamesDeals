@@ -5,7 +5,7 @@ import logger from './logger';
 
 const getModules = async (directory: string) => {
   const files = fs.readdirSync(directory).filter((name) => name.substr(name.indexOf('.')) === '.js');
-  const modules = Promise.all(
+  const modules = await Promise.all(
     files.map(async (file) => import(path.resolve(directory, file))
       .catch((importErr) => logger.error(`Failed to import ${file} %o`, importErr))),
   );
