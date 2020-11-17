@@ -1,93 +1,60 @@
 import { Message, GuildChannel } from 'eris';
-import gdapi, { ReadWebhook } from '../lib/APIClient';
+import parseArgsStringToArgv from 'string-argv';
+import parseArgs from 'yargs-parser';
+import gdapi from '../lib/APIClient';
 import logger from '../lib/logger';
 import CommandDefinition from '../lib/CommandDefinition';
 import Time from '../helpers/Time';
-
-const setMention = (webhookId: string, roleToMention: string | null) => gdapi
-  .patchWebhook(webhookId, { roleToMention });
-const editKeywords = (webhookID: string, keywords: string[] | null) => gdapi
-  .patchWebhook(webhookID, { keywords });
-const addKeywords = (webhook: ReadWebhook, keywords: string[]) => {
-  if (webhook.keywords?.length) {
-    const newKeywords = webhook.keywords.concat(keywords);
-    return gdapi.patchWebhook(webhook.webhookId, { keywords: newKeywords });
-  }
-  return editKeywords(webhook.webhookId, keywords);
-};
+import { printWebhookDetails } from '../helpers/webhookHelpers';
 
 const editWebhookCommand: CommandDefinition = {
   label: 'editwebhook',
   generator: async (msg: Message, args: string[]) => {
-    if (args.length < 2) {
-      return 'Not enough parameters';
+    const parsedArgs = parseArgs(parseArgsStringToArgv(args.join(' ')), {
+      alias: {
+        webhook: ['id'],
+        removekeywords: ['rk'],
+        removeblacklist: ['rb'],
+        removemention: ['rm'],
+        mention: ['setmention', 'sm'],
+        keywords: ['editkeywords', 'ek'],
+      },
+      string: ['webhook'],
+      array: ['keywords', 'blacklist'],
+    });
+
+    if (!Object.prototype.hasOwnProperty.call(parsedArgs, 'webhook')) {
+      return 'Please provide an identifier of webhook';
     }
 
     const webhooks = await gdapi.getWebhooksForGuild((msg.channel as GuildChannel).guild.id);
-    const webhookID = args[0];
+    const webhookID = parsedArgs.webhook;
     const filteredWebhooks = webhooks.filter((webhook) => webhook.webhookId === webhookID);
     if (filteredWebhooks.length === 1) {
-      switch (args[1]) {
-        case 'setmention':
-        case 'sm':
-          if (args.length !== 3) {
-            return 'Not enough parameters';
-          }
-          return setMention(webhookID, args[2])
-            .then(() => 'Role to mention set successfully!')
-            .catch((e) => {
-              logger.error({ e, message: `Unable to set mention for webhook ${webhookID}, ${args}` });
-              return `Something went wrong! Error message: ${JSON.parse(e.response.body).message}`;
-            });
+      const patch = {
+        keywords: parsedArgs.keywords,
+        blacklist: parsedArgs.blacklist,
+        roleToMention: parsedArgs.mention,
+      };
 
-        case 'removemention':
-        case 'rm':
-          return setMention(webhookID, null)
-            .then(() => 'Role to mention removed successfully!')
-            .catch((e) => {
-              logger.error({ e, message: `Unable to remove mention for webhook ${webhookID}` });
-              return `Something went wrong! Error message: ${JSON.parse(e.response.body).message}`;
-            });
-
-        case 'editkeywords':
-        case 'ek':
-          if (args.length < 3) {
-            return 'Not enough parameters';
-          }
-          return editKeywords(webhookID, args.slice(2))
-            .then(() => 'Keywords set successfully!')
-            .catch((e) => {
-              logger.error({ e, message: `Unable to edit keywords for webhook ${webhookID}, ${args}` });
-              return `Something went wrong! Error message: ${JSON.parse(e.response.body).message}`;
-            });
-
-        case 'removekeywords':
-        case 'rk':
-          return editKeywords(webhookID, null)
-            .then(() => 'Keywords removed successfully!')
-            .catch((e) => {
-              logger.error({ e, message: `Unable to remove keywords for webhook ${webhookID}` });
-              return `Something went wrong! Error message: ${JSON.parse(e.response.body).message}`;
-            });
-
-        case 'addkeywords':
-        case 'ak':
-          if (args.length < 3) {
-            return 'Not enough parameters';
-          }
-          return addKeywords(filteredWebhooks[0], args.slice(2))
-            .then(() => 'Keywords added successfully!')
-            .catch((e) => {
-              logger.error({ e, message: `Unable to add keywords for webhook ${webhookID}, ${args}` });
-              return `Something went wrong! Error message: ${JSON.parse(e.response.body).message}`;
-            });
-
-        default:
-          return `Unknown parameter ${args[1]}`;
+      if (Object.prototype.hasOwnProperty.call(parsedArgs, 'removekeywords')) {
+        patch.keywords = null;
       }
-    } else {
-      return 'Provided webhook doesn\'t exists / is not related to this guild.';
+      if (Object.prototype.hasOwnProperty.call(parsedArgs, 'removeblacklist')) {
+        patch.blacklist = null;
+      }
+      if (Object.prototype.hasOwnProperty.call(parsedArgs, 'removemention')) {
+        patch.roleToMention = null;
+      }
+
+      return gdapi.patchWebhook(webhookID, patch)
+        .then((updatedWebhook) => `**Webhook updated successfully**\n${printWebhookDetails(updatedWebhook)}`)
+        .catch((e) => {
+          logger.error({ e, message: `Unable to set mention for webhook ${webhookID}, ${args}` });
+          return `Something went wrong! Error message: ${JSON.parse(e.response.body).message}`;
+        });
     }
+    return 'Provided webhook doesn\'t exists / is not related to this guild.';
   },
   options: {
     aliases: ['ew'],
@@ -104,27 +71,30 @@ const editWebhookCommand: CommandDefinition = {
       },
     },
     usage: `
-    Set / update role to mention:
-    gd:editwebhook webhookID setmention @coolPeople 
-    (shorthand: gd:ew webhookID sm @evenCoolerPeople)
-    Clear role to mention:
-    gd:editwebhook webhookID removemention
-    (shorthand: gd:ew webhookID rm)
-    Edit keywords (overrides current ones):
-    gd:editwebhook webhookID editkeywords cyberpunk steam gog
-    (shorthand: gd:ew webhookID ek cyberpunk steam gog)
-    Clear keywords:
-    gd:editwebhook webhookID removekeywords
-    (shorthand: gd:ew webhookID rk)
-    Add new keywords to existing ones:
-    gd:editwebhook webhookID addkeywords witcher cdpr
-    (shorthand: gd:ew webhookID ak witcher cdpr)
+    **Set role to mention:**
+    gd:editwebhook --webhook <webhookID> --mention <role> @coolPeople
+    Example: gd:editwebhook --webhook 1234567890 --mention @coolPeople
+    **Clear role to mention:**
+    gd:editwebhook --webhook <webhookID> --removemention
+    Example: gd:editwebhook --webhook 1234567890 --removemention
+    **Edit keywords (overrides current ones):**
+    gd:editwebhook --webhook <webhookID> --keywords <keywords to set (up to 5, if includes spaces, wrap it in quotes)>
+    Example: gd:editwebhook --webhook 1234567890 --keywords cyberpunk steam gog "humble bundle" "euro truck simulator 2"
+    **Clear keywords:**
+    gd:editwebhook --webhook <webhookID> --removekeywords
+    Example: gd:editwebhook --webhook 1234567890 --removekeywords
+    **Edit blacklist:**
+    gd:editwebhook --webhook <webhookID> --blacklist <words to block (up to 5, if includes spaces, wrap it in quotes)>
+    Example: gd:editwebhook --webhook 1234567890 --blacklist itchio indiegala "euro truck simulator 2"
+    **Clear blacklist:**
+    gd:editwebhook --webhook <webhookID> --removeblacklist
+    Example: gd:editwebhook --webhook 1234567890 --removeblacklist
 
-    Okey, why is this that complicated? Why do I need to pass webhookID? And what the hell is webhook id?
-    WebhookID is an unique identifier for a webhook. Webhook id can be found in 2 easy ways:
+    **How to find webhookID:**
+    WebhookID is an unique identifier for a webhook. Webhook id can be found in 2 ways:
     • command: gd:webhookinfo will list all webhooks created by gamesdeals bot
-    • open channel settings, go to webhooks tabs, and copy webhook url. The url has following structure:
-      \`https://discord.com/api/webhooks/webhookId/webhookToken\`
+    • open channel settings => integrations => webhooks, and copy webhook url. The url has following structure:
+      discord.com/api/webhooks/**webhookID**/webhookToken (**DO NOT SHARE WEBHOOK TOKEN!**)\`
     `,
   },
 };

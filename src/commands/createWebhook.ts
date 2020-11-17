@@ -1,11 +1,14 @@
 import { Message, GuildChannel } from 'eris';
 import fs from 'fs';
 import path from 'path';
+import parseArgsStringToArgv from 'string-argv';
+import parseArgs from 'yargs-parser';
 import bot from '../lib/bot';
 import gdapi from '../lib/APIClient';
 import logger from '../lib/logger';
 import Time from '../helpers/Time';
 import CommandDefinition from '../lib/CommandDefinition';
+import { printWebhookDetails } from '../helpers/webhookHelpers';
 
 const image = fs.readFileSync(path.resolve(__dirname, '..', '..', 'avatar.png'), 'base64');
 
@@ -29,23 +32,18 @@ const createWebhookCommand: CommandDefinition = {
         avatar: `data:image/png;base64,${image}`,
       });
 
-      if (args[0] === '@everyone' || args[0] === '@here' || /<@&\d+>/.test(args[0])) {
-        await gdapi.saveWebhook({
-          webhookId: webhook.id,
-          guildId: webhook.guild_id,
-          webhookToken: webhook.token,
-          roleToMention: args[0],
-          keywords: args.slice(1),
-        });
-      } else {
-        await gdapi.saveWebhook({
-          webhookId: webhook.id,
-          guildId: webhook.guild_id,
-          webhookToken: webhook.token,
-          keywords: args,
-        });
-      }
-      return 'Webhook has been set successfully';
+      const parsedArgs = parseArgs(parseArgsStringToArgv(args.join(' ')), { array: ['keywords', 'blacklist'] });
+
+      return gdapi.saveWebhook({
+        webhookId: webhook.id,
+        guildId: webhook.guild_id,
+        webhookToken: webhook.token,
+        roleToMention: parsedArgs.mention,
+        keywords: parsedArgs.keywords,
+        blacklist: parsedArgs.blacklist,
+      })
+        .then((savedWebhook) => `Webhook has been set successfully\n${printWebhookDetails(savedWebhook)}`)
+        .catch((error) => `Something went wrong! Error message: ${JSON.parse(error.response.body).message}`);
     } catch (e) {
       logger.error({ e, message: `Create webhook command failed in guild: ${(msg.channel as GuildChannel).guild.id}` });
       return 'Something went wrong please try again later!';
@@ -66,11 +64,19 @@ const createWebhookCommand: CommandDefinition = {
       },
     },
     usage: `
-    gd:createwebhook @roleToMention keywords separated by space (max 5 keywords)
-    Notify about all games: gd:createwebhook
-    Notification with a role mention: gd:createwebhook @coolPeople
-    With keywords (webhook will be executed only if reddit title includes at least one of the defined keywords) gd:createwebhook steam epic gog
-    Keywords and mention: gd:createwebhook @coolPeople steam epic gog`,
+    Notify about all games:
+    gd:createwebhook
+    Mention role:
+    gd:createwebhook --mention @coolPeople
+    Keywords (webhook will be executed only if reddit title includes at least one of the defined keywords, you can set up to 5 keywords, if they includes spaces, wrap them in quotes):
+    gd:createwebhook --keywords steam epic gog "humble bundle"
+    Keywords and mention:
+    gd:createwebhook --mention @coolPeople steam epic gog
+    Blacklist (webhook won't be executed if reddit title includes any one of the defined words, you can set up to 5 blacklisted words, if they includes spaces, wrap them in quotes):
+    gd:createwebhook --blacklist itchio indiegala
+    
+    Options can be combined together:
+    gd:createwebhook --mention @coolPeople --keywords steam epic cyberpunk`,
   },
 };
 
