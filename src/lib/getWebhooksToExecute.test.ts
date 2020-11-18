@@ -7,6 +7,7 @@ const indiegala: Deal = {
   id: '',
   title: '[IndieGala] Kill \'Em All ( 100% OFF / FREE )',
   url: '',
+  over18: false,
 };
 
 const steam: Deal = {
@@ -14,6 +15,7 @@ const steam: Deal = {
   id: '',
   title: '[Steam] Don\'t Make Love ($0/100%)',
   url: '',
+  over18: false,
 };
 
 const epic: Deal = {
@@ -21,6 +23,7 @@ const epic: Deal = {
   id: '',
   title: '[Epic Games] Costume Quest 2 + Layers of Fear 2 (Free / 100% off) from Oct 22 to Oct 29',
   url: '',
+  over18: false,
 };
 
 const itchio: Deal = {
@@ -28,6 +31,7 @@ const itchio: Deal = {
   id: '',
   title: '[itch.io] Unbridled Dungeon ( 100% OFF / FREE )',
   url: '',
+  over18: false,
 };
 
 const gog: Deal = {
@@ -35,6 +39,7 @@ const gog: Deal = {
   id: '',
   title: '[GOG] Europa Universalis II Giveaway (100% off, 0$)',
   url: '',
+  over18: false,
 };
 
 const webhooks: Webhook[] = [
