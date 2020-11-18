@@ -34,9 +34,9 @@ const fetchRedditThreads = async (): Promise<Deal[]> => {
 };
 
 const getDealsToAnnounce = async (deals: Deal[]): Promise<Deal[]> => {
-  const isNewDeal = async (deal: Deal) => {
+  const dealsArray = await Promise.all(deals.map(async (deal: Deal) => {
     if (deal.over18) {
-      return false; // ignore all nsfw threads
+      return null; // ignore all nsfw threads
     }
 
     if (isFree(deal.title)) {
@@ -45,14 +45,14 @@ const getDealsToAnnounce = async (deals: Deal[]): Promise<Deal[]> => {
       });
 
       if (response.statusCode === 404) {
-        return true;
+        return deal;
       }
-      return false;
+      return null;
     }
-    return false;
-  };
+    return null;
+  }));
 
-  return deals.filter(isNewDeal);
+  return dealsArray.filter(Boolean) as Deal[];
 };
 
 const insertDealsToDB = async ([...deals]: Deal[]) => {

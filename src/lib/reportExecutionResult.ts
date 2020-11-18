@@ -8,12 +8,11 @@ const reportExecutionResult = async (
 ) => {
   if (!webhookUrl) { return; }
 
-  let content = `
+  let content = `**Webhooks execution ${new Date().toISOString()}**
     Webhooks to remove: ${executionResult.webhooksToRemove.length}
     Rate-limited: ${executionResult.rateLimitedWebhooks.length}
     Failed to execute: ${executionResult.failedWebhooks.length}
-    ${executionResult.badRequestWebhooks.length}
-    `;
+    Bad requests: ${executionResult.badRequestWebhooks.length}`;
 
   if (mention && executionResult.rateLimitedWebhooks.length > 0) {
     content += mention;
