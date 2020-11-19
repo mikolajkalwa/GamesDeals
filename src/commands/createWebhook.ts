@@ -42,7 +42,13 @@ const createWebhookCommand: CommandDefinition = {
         keywords: parsedArgs.keywords,
         blacklist: parsedArgs.blacklist,
       })
-        .then((savedWebhook) => `Webhook has been set successfully\n${printWebhookDetails(savedWebhook)}`)
+        .then((savedWebhook) => msg.channel.createMessage({
+          content: `Webhook has been set successfully\n${printWebhookDetails(savedWebhook)}`,
+          allowedMentions: {
+            everyone: false,
+            roles: false,
+          },
+        }))
         .catch((error) => `Something went wrong! Error message: ${JSON.parse(error.response.body).message}`);
     } catch (e) {
       logger.error({ e, message: `Create webhook command failed in guild: ${(msg.channel as GuildChannel).guild.id}` });

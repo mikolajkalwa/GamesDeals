@@ -48,7 +48,13 @@ const editWebhookCommand: CommandDefinition = {
       }
 
       return gdapi.patchWebhook(webhookID, patch)
-        .then((updatedWebhook) => `**Webhook updated successfully**\n${printWebhookDetails(updatedWebhook)}`)
+        .then((updatedWebhook) => msg.channel.createMessage({
+          content: `**Webhook updated successfully**\n${printWebhookDetails(updatedWebhook)}`,
+          allowedMentions: {
+            everyone: false,
+            roles: false,
+          },
+        }))
         .catch((e) => {
           logger.error({ e, message: `Unable to set mention for webhook ${webhookID}, ${args}` });
           return `Something went wrong! Error message: ${JSON.parse(e.response.body).message}`;
