@@ -1,6 +1,6 @@
-import { Deal } from '../models/Deal';
-import { Webhook } from '../models/Webhook';
-import getWebhooksToExecute from './getWebhooksToExecute';
+import { Deal } from '../../src/models/Deal';
+import { Webhook } from '../../src/models/Webhook';
+import getWebhooksToExecute from '../../src/lib/getWebhooksToExecute';
 
 const indiegala: Deal = {
   author: '',
