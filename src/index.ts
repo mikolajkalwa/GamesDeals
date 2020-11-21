@@ -1,141 +1,65 @@
-/* eslint-disable no-await-in-loop */
+import 'reflect-metadata';
 import './lib/env';
 
+import { container } from 'tsyringe';
 import http from 'http';
 import https from 'https';
-import got from 'got';
+import { Logger } from 'pino';
 import logger from './lib/logger';
-import isFree from './lib/isFree';
-import getWebhooksToExecute from './lib/getWebhooksToExecute';
-import { RedditResponse } from './models/RedditResponse';
-import { Deal } from './models/Deal';
-import { Webhook } from './models/Webhook';
-import { ExecutionResult } from './models/ExecutionResult';
-import reportExecutionResult from './lib/reportExecutionResult';
+import { GamesDealsAPIClient, IGamesDealsAPIClient } from './GamesDealsAPIClient';
+import { DiscordClient, IDiscordClient } from './DiscordClient';
+import { IRedditClient, RedditClient } from './RedditClient';
+import { INotifier, Notifier } from './Notifier';
+import sleep from './lib/sleep';
 
-const { API_URL, WEBHOOK_URL, MENTION } = process.env;
-
-// limit concurrent requests
 http.globalAgent.maxSockets = 30;
 https.globalAgent.maxSockets = 30;
 
-const fetchRedditThreads = async (): Promise<Deal[]> => {
-  const response: RedditResponse = await got.get('https://www.reddit.com/r/GameDeals/hot/.json?limit=3').json();
-  return response.data.children.map((element) => {
-    const {
-      data: {
-        id, url, title, author, over_18: over18,
-      },
-    } = element;
-    return {
-      id, url, title, author, over18,
-    };
-  });
-};
-
-const getDealsToAnnounce = async (deals: Deal[]): Promise<Deal[]> => {
-  const dealsArray = await Promise.all(deals.map(async (deal: Deal) => {
-    if (deal.over18) {
-      return null; // ignore all nsfw threads
-    }
-
-    if (isFree(deal.title)) {
-      const response = await got.get(`${API_URL}/deals/reddit/${deal.id}`, {
-        throwHttpErrors: false,
-      });
-
-      if (response.statusCode === 404) {
-        return deal;
-      }
-      return null;
-    }
-    return null;
-  }));
-
-  return dealsArray.filter(Boolean) as Deal[];
-};
-
-const insertDealsToDB = async ([...deals]: Deal[]) => {
-  await Promise.all(deals.map(async (deal) => got.post(`${API_URL}/deals/`, {
-    json: {
-      redditId: deal.id,
-      redditTitle: deal.title,
-      gameUrl: deal.url,
-    },
-    responseType: 'json',
-  })));
-};
-
-const createMessageContent = (deal: Deal) => {
-  let message = '';
-  message += `**${deal.title}**\n`;
-  message += `<${deal.url}>\n`;
-  message += `Posted by: *${deal.author}*\n`;
-  message += `https://reddit.com/${deal.id}\n`;
-
-  return message;
-};
-
-const removeWebhooks = async (webhooks: Webhook[]) => {
-  await Promise.allSettled(webhooks.map(async (webhook) => got.delete(`${API_URL}/webhooks/${webhook.webhookId}`)));
-};
-
-const executeWebhooks = async (webhooks: Webhook[], message: string): Promise<ExecutionResult> => {
-  const webhooksToRemove: Webhook[] = [];
-  const rateLimitedWebhooks: Webhook[] = [];
-  const failedWebhooks: Webhook[] = [];
-  const badRequestWebhooks: Webhook[] = [];
-  await Promise.allSettled(webhooks.map(async (webhook) => {
-    let content = message;
-    if (Object.prototype.hasOwnProperty.call(webhook, 'roleToMention')) {
-      content = `${webhook.roleToMention} ${message}`;
-    }
-
-    const response = await got.post(`https://discord.com/api/webhooks/${webhook.webhookId}/${webhook.webhookToken}`, {
-      json: {
-        content,
-      },
-      throwHttpErrors: false,
-    });
-    if (response.statusCode === 404 || response.statusCode === 401) {
-      webhooksToRemove.push(webhook);
-    } else if (response.statusCode >= 500 && response.statusCode < 600) {
-      failedWebhooks.push(webhook);
-    } else if (response.statusCode === 429) {
-      rateLimitedWebhooks.push(webhook);
-    } else if (response.statusCode === 400) {
-      badRequestWebhooks.push(webhook);
-    }
-    return response;
-  }));
-  return {
-    webhooksToRemove, rateLimitedWebhooks, failedWebhooks, badRequestWebhooks,
-  };
-};
+const resultsWebhook = process.env.WEBHOOK_URL;
 
 (async () => {
+  container.register<Logger>('Logger', {
+    useValue: logger,
+  });
+
+  container.register<IGamesDealsAPIClient>('IGamesDealsAPIClient', {
+    useClass: GamesDealsAPIClient,
+  });
+  container.register<IDiscordClient>('IDiscordClient', {
+    useClass: DiscordClient,
+  });
+  container.register<IRedditClient>('IRedditClient', {
+    useClass: RedditClient,
+  });
+  container.register<INotifier>('INotifier', {
+    useClass: Notifier,
+  });
+
   try {
-    const redditData = await fetchRedditThreads();
-    const dealsToAnnounce = await getDealsToAnnounce(redditData);
-    if (dealsToAnnounce.length === 0) {
-      return;
-    }
+    const notifier = container.resolve(Notifier);
+    const redditClient = container.resolve(RedditClient);
+    const gdApiClient = container.resolve(GamesDealsAPIClient);
 
-    await insertDealsToDB(dealsToAnnounce);
-    const allWebhooks: Webhook[] = await got.get(`${API_URL}/webhooks`).json();
+    const trendingDeals = await redditClient.getTrendingDeals();
+    const allWebhooks = await gdApiClient.getAllWebhooks();
+    const dealsToAnnounce = await notifier.getDealsToAnnounce(trendingDeals);
 
-    // eslint-disable-next-line no-restricted-syntax
-    for (const deal of dealsToAnnounce) {
-      const message = createMessageContent(deal);
-      const webhooksToExecute = getWebhooksToExecute(deal, allWebhooks);
-      const executionResult = await executeWebhooks(webhooksToExecute, message);
-      logger.info(`Webhooks to remove: ${executionResult.webhooksToRemove.length}`);
-      logger.warn(`Rate-limited: ${executionResult.rateLimitedWebhooks.length}`);
-      logger.warn(`Failed to execute: ${executionResult.failedWebhooks.length}`);
-      logger.error(`Bad requests: ${executionResult.badRequestWebhooks.length}`);
-      await removeWebhooks(executionResult.webhooksToRemove);
-      await reportExecutionResult(WEBHOOK_URL, MENTION, executionResult);
-    }
+    await Promise.allSettled(dealsToAnnounce.map(async (deal) => {
+      const executionResult = await notifier.announceDeal(deal, allWebhooks);
+      await notifier.cleanupInvalidWebhooks(executionResult.webhooksToRemove);
+      await notifier.reportExecutionResult(executionResult, resultsWebhook);
+
+      // todo: implement appropriate retry mechanism
+      if (executionResult.failedWebhooks.length > 0) {
+        await sleep(3000);
+        const retryResult = await notifier.announceDeal(deal, executionResult.failedWebhooks);
+        if (executionResult.failedWebhooks.length === retryResult.failedWebhooks.length) {
+          logger.warn('After 3 seconds the same webhooks failed to execute.');
+        }
+        const failedWebhooksIDs = retryResult.failedWebhooks.map((webhook) => webhook.webhookId);
+        logger.warn(`Failed webhooks ids: ${failedWebhooksIDs.join(', ')}`);
+      }
+    }));
   } catch (e) {
     logger.error(e);
   }

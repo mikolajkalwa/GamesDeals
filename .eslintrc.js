@@ -11,7 +11,17 @@ module.exports = {
         project: './tsconfig.json'
     },
     rules: {
-        "linebreak-style": 0,
-        "no-console": 0
+        'linebreak-style': 0,
+        'no-console': 0,
+        '@typescript-eslint/member-delimiter-style': ['error', {
+            'multiline': {
+                'delimiter': 'semi',
+                'requireLast': true
+            },
+            'singleline': {
+                'delimiter': 'semi',
+                'requireLast': true
+            }
+        }]
     }
 };

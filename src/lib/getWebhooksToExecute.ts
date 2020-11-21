@@ -9,12 +9,16 @@ const getWebhooksToExecute = (deal: Deal, webhooks: Webhook[]) => {
       return true;
     }
 
-    const blacklistInterection = webhook.blacklist.filter((keyword) => title.includes(keyword));
+    const blacklistInterection = webhook.blacklist.filter(
+      (keyword) => title.includes(keyword.toLowerCase()),
+    );
     if (blacklistInterection.length) {
       return false;
     }
 
-    const keywordsIntersection = webhook.keywords.filter((keyword) => title.includes(keyword));
+    const keywordsIntersection = webhook.keywords.filter(
+      (keyword) => title.includes(keyword.toLowerCase()),
+    );
     if (keywordsIntersection.length) {
       return true;
     }
