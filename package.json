@@ -30,6 +30,7 @@
     "rxjs": "^6.6.3"
   },
   "scripts": {
+    "build": "tsc",
     "start": "node built/main.js"
   }
 }
