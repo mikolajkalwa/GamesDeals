@@ -58,6 +58,13 @@ const webhooks: Webhook[] = [
     webhookToken: '',
   },
   {
+    blacklist: ['INDIEGALA'],
+    keywords: [],
+    guildId: '',
+    webhookId: '',
+    webhookToken: '',
+  },
+  {
     blacklist: ['indiegala', 'itch.io'],
     keywords: [],
     guildId: '',
@@ -120,6 +127,13 @@ const webhooks: Webhook[] = [
     webhookId: '',
     webhookToken: '',
   },
+  {
+    blacklist: [],
+    keywords: ['STEAM'],
+    guildId: '',
+    webhookId: '',
+    webhookToken: '',
+  },
 ];
 
 test('Get webhooks for steam deal', () => {
@@ -134,6 +148,13 @@ test('Get webhooks for steam deal', () => {
     },
     {
       blacklist: ['indiegala'],
+      keywords: [],
+      guildId: '',
+      webhookId: '',
+      webhookToken: '',
+    },
+    {
+      blacklist: ['INDIEGALA'],
       keywords: [],
       guildId: '',
       webhookId: '',
@@ -188,6 +209,13 @@ test('Get webhooks for steam deal', () => {
       webhookId: '',
       webhookToken: '',
     },
+    {
+      blacklist: [],
+      keywords: ['STEAM'],
+      guildId: '',
+      webhookId: '',
+      webhookToken: '',
+    },
   ]);
 });
 
@@ -216,6 +244,13 @@ test('Get webhooks for epic deal', () => {
     },
     {
       blacklist: ['indiegala'],
+      keywords: [],
+      guildId: '',
+      webhookId: '',
+      webhookToken: '',
+    },
+    {
+      blacklist: ['INDIEGALA'],
       keywords: [],
       guildId: '',
       webhookId: '',
@@ -276,6 +311,13 @@ test('Get webhooks for itchio deal', () => {
       webhookId: '',
       webhookToken: '',
     },
+    {
+      blacklist: ['INDIEGALA'],
+      keywords: [],
+      guildId: '',
+      webhookId: '',
+      webhookToken: '',
+    },
   ]);
 });
 
@@ -291,6 +333,13 @@ test('Get webhooks for gog deal', () => {
     },
     {
       blacklist: ['indiegala'],
+      keywords: [],
+      guildId: '',
+      webhookId: '',
+      webhookToken: '',
+    },
+    {
+      blacklist: ['INDIEGALA'],
       keywords: [],
       guildId: '',
       webhookId: '',
