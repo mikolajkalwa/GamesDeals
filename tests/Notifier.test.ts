@@ -1,6 +1,11 @@
-import { Deal } from '../models/Deal';
-import { Webhook } from '../models/Webhook';
-import getWebhooksToExecute from './getWebhooksToExecute';
+import { Deal } from '../src/types/Deal';
+import { Webhook } from '../src/types/Webhook';
+import { Notifier } from '../src/Notifier';
+import pino from 'pino';
+import { GamesDealsAPIClient } from '../src/GamesDealsAPIClient';
+import { DiscordClient } from '../src/DiscordClient';
+
+const logger = pino();
 
 const indiegala: Deal = {
   author: '',
@@ -101,6 +106,13 @@ const webhooks: Webhook[] = [
   },
   {
     blacklist: [],
+    keywords: ['Steam'],
+    guildId: '',
+    webhookId: '',
+    webhookToken: '',
+  },
+  {
+    blacklist: [],
     keywords: ['epic'],
     guildId: '',
     webhookId: '',
@@ -136,8 +148,10 @@ const webhooks: Webhook[] = [
   },
 ];
 
+const notifier = new Notifier(logger, new GamesDealsAPIClient(''), new DiscordClient(''))
+
 test('Get webhooks for steam deal', () => {
-  const result = getWebhooksToExecute(steam, webhooks);
+  const result = notifier.getWebhooksToExecute(steam, webhooks);
   expect(result).toEqual([
     {
       blacklist: [],
@@ -190,6 +204,13 @@ test('Get webhooks for steam deal', () => {
     },
     {
       blacklist: [],
+      keywords: ['Steam'],
+      guildId: '',
+      webhookId: '',
+      webhookToken: '',
+    },
+    {
+      blacklist: [],
       keywords: ['steam', 'epic'],
       guildId: '',
       webhookId: '',
@@ -220,7 +241,7 @@ test('Get webhooks for steam deal', () => {
 });
 
 test('Get webhooks for indiegala deal', () => {
-  const result = getWebhooksToExecute(indiegala, webhooks);
+  const result = notifier.getWebhooksToExecute(indiegala, webhooks);
   expect(result).toEqual([
     {
       blacklist: [],
@@ -233,7 +254,7 @@ test('Get webhooks for indiegala deal', () => {
 });
 
 test('Get webhooks for epic deal', () => {
-  const result = getWebhooksToExecute(epic, webhooks);
+  const result = notifier.getWebhooksToExecute(epic, webhooks);
   expect(result).toEqual([
     {
       blacklist: [],
@@ -295,7 +316,7 @@ test('Get webhooks for epic deal', () => {
 });
 
 test('Get webhooks for itchio deal', () => {
-  const result = getWebhooksToExecute(itchio, webhooks);
+  const result = notifier.getWebhooksToExecute(itchio, webhooks);
   expect(result).toEqual([
     {
       blacklist: [],
@@ -322,7 +343,7 @@ test('Get webhooks for itchio deal', () => {
 });
 
 test('Get webhooks for gog deal', () => {
-  const result = getWebhooksToExecute(gog, webhooks);
+  const result = notifier.getWebhooksToExecute(gog, webhooks);
   expect(result).toEqual([
     {
       blacklist: [],

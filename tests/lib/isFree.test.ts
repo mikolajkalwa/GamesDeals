@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-import isFree from './isFree';
+import isFree from '../../src/lib/isFree';
 
 const cases: Array<[string, boolean]> = [
   // false positives from the past:
