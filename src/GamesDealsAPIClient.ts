@@ -1,6 +1,7 @@
 import got from 'got';
-import { Deal } from './models/Deal';
-import { Webhook } from './models/Webhook';
+import { inject, injectable } from 'tsyringe';
+import { Deal } from './types/Deal';
+import { Webhook } from './types/Webhook';
 
 export interface IGamesDealsAPIClient {
   isNewDeal(redditThreadIdentifier: string): Promise<boolean>;
@@ -9,8 +10,9 @@ export interface IGamesDealsAPIClient {
   getAllWebhooks(): Promise<Webhook[]>;
 }
 
+@injectable()
 export class GamesDealsAPIClient implements IGamesDealsAPIClient {
-  constructor(private readonly baseUrl: string) { }
+  constructor(@inject('gdApiBaseUrl') private readonly baseUrl: string) { }
 
   public isNewDeal = async (redditThreadIdentifier: string) => {
     const response = await got.get(`${this.baseUrl}/deals/reddit/${redditThreadIdentifier}`, {

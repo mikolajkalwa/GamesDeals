@@ -1,4 +1,5 @@
 import got from 'got';
+import { inject, injectable } from 'tsyringe';
 import { RedditResponse } from './types/Reddit';
 
 export interface RedditDealData {
@@ -13,8 +14,9 @@ export interface IRedditClient {
   getTrendingDeals(): Promise<RedditDealData[]>;
 }
 
+@injectable()
 export class RedditClient implements IRedditClient {
-  constructor(private readonly baseUrl: string) { }
+  constructor(@inject('redditBaseUrl') private readonly baseUrl: string) { }
 
   private fetchReddit = async () => await got.get(`${this.baseUrl}/r/GameDeals/hot/.json?limit=3`).json() as RedditResponse;
 

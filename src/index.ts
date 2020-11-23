@@ -16,12 +16,18 @@ http.globalAgent.maxSockets = 30;
 https.globalAgent.maxSockets = 30;
 
 const resultsWebhook = process.env.WEBHOOK_URL;
+const discordUrl = process.env.DISCORD_URL || 'https://discord.com';
+const gamesDealsApiUrl = process.env.GAMES_DEALS_API_URL || 'http://localhost:3000';
+const redditBaseUrl = process.env.REDDIT_URL || 'https://reddit.com';
 
 (async () => {
+  container.register('discordBaseUrl', { useValue: discordUrl });
+  container.register('gdApiBaseUrl', { useValue: gamesDealsApiUrl });
+  container.register('redditBaseUrl', { useValue: redditBaseUrl });
+
   container.register<Logger>('Logger', {
     useValue: logger,
   });
-
   container.register<IGamesDealsAPIClient>('IGamesDealsAPIClient', {
     useClass: GamesDealsAPIClient,
   });
@@ -45,6 +51,7 @@ const resultsWebhook = process.env.WEBHOOK_URL;
     const dealsToAnnounce = await notifier.getDealsToAnnounce(trendingDeals);
 
     await Promise.allSettled(dealsToAnnounce.map(async (deal) => {
+      await gdApiClient.insertNewDeal(deal);
       const executionResult = await notifier.announceDeal(deal, allWebhooks);
       await notifier.cleanupInvalidWebhooks(executionResult.webhooksToRemove);
       await notifier.reportExecutionResult(executionResult, resultsWebhook);

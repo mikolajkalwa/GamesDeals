@@ -4,8 +4,8 @@ import { inject, injectable } from 'tsyringe';
 import { IDiscordClient } from './DiscordClient';
 import { IGamesDealsAPIClient } from './GamesDealsAPIClient';
 import isFree from './lib/isFree';
-import { Deal } from './models/Deal';
-import { Webhook } from './models/Webhook';
+import { Deal } from './types/Deal';
+import { Webhook } from './types/Webhook';
 
 export interface INotifier {
   getDealsToAnnounce(deals: Deal[]): Promise<Deal[]>;
