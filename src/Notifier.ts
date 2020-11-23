@@ -9,7 +9,7 @@ import { Webhook } from './types/Webhook';
 
 export interface INotifier {
   getDealsToAnnounce(deals: Deal[]): Promise<Deal[]>;
-  getWebhooksToExecute(deal: Deal, allWebhooks: Webhook[]): Promise<Webhook[]>;
+  getWebhooksToExecute(deal: Deal, allWebhooks: Webhook[]): Webhook[];
   announceDeal(deal: Deal, allWebhooks: Webhook[]): Promise<ExecutionResult>;
   reportExecutionResult(
     executionResult: ExecutionResult,
@@ -52,7 +52,7 @@ export class Notifier implements INotifier {
 
   public static createMessageContent = (deal: Deal) => `**${deal.title}**\n<${deal.url}>\nPosted by: *${deal.author}*\nhttps://reddit.com/${deal.id}\n`;
 
-  public getWebhooksToExecute = async (deal: Deal, allWebhooks: Webhook[]) => {
+  public getWebhooksToExecute = (deal: Deal, allWebhooks: Webhook[]) => {
     const title = deal.title.toLowerCase();
 
     const webhooksToExecute = allWebhooks.filter((webhook) => {
@@ -92,7 +92,7 @@ export class Notifier implements INotifier {
     const badRequestWebhooks: Webhook[] = [];
 
     const message = Notifier.createMessageContent(deal);
-    const webhooksToExecute = await this.getWebhooksToExecute(deal, allWebhooks);
+    const webhooksToExecute = this.getWebhooksToExecute(deal, allWebhooks);
     await Promise.allSettled(
       webhooksToExecute.map(async (webhook) => {
         const response = await this.discordClient.executeWebhook(webhook, message);
