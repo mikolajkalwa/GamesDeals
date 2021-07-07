@@ -47,27 +47,28 @@ const editWebhookCommand: CommandDefinition = {
         patch.roleToMention = null;
       }
 
-      return gdapi.patchWebhook(webhookID, patch)
-        .then((updatedWebhook) => msg.channel.createMessage({
+      try {
+        const updatedWebhook = await gdapi.patchWebhook(webhookID, patch);
+        return {
           content: `**Webhook updated successfully**\n${printWebhookDetails(updatedWebhook)}`,
           allowedMentions: {
             everyone: false,
             roles: false,
           },
-        }))
-        .catch((e) => {
-          logger.error({ e, message: `Unable to set mention for webhook ${webhookID}, ${args}` });
-          return `Something went wrong! Error message: ${JSON.parse(e.response.body).message}`;
-        });
+        };
+      } catch (e) {
+        logger.error({ e, message: `Unable to set mention for webhook ${webhookID}, ${args}` });
+        return `Something went wrong! Error message: ${JSON.parse(e.response.body).message}`;
+      }
     }
     return 'Provided webhook doesn\'t exists / is not related to this guild.';
   },
   options: {
     aliases: ['ew'],
     argsRequired: true,
-    cooldown: 2 * Time.MINUTE,
-    cooldownMessage: 'This command can be used once per 2 minutes.',
-    cooldownReturns: 10,
+    cooldown: 15 * Time.SECOND,
+    cooldownMessage: 'This command can be used once per 15 seconds.',
+    cooldownReturns: 3,
     description: 'Edits webhook parameters like role to mention or keywords.',
     guildOnly: true,
     permissionMessage: 'You do not have sufficient permission to issue this command. (Required permission: manage webhooks)',

@@ -34,22 +34,22 @@ const createWebhookCommand: CommandDefinition = {
 
       const parsedArgs = parseArgs(parseArgsStringToArgv(args.join(' ')), { array: ['keywords', 'blacklist'] });
 
-      return gdapi.saveWebhook({
+      const savedWebhook = await gdapi.saveWebhook({
         webhookId: webhook.id,
         guildId: webhook.guild_id,
         webhookToken: webhook.token,
         roleToMention: parsedArgs.mention,
         keywords: parsedArgs.keywords,
         blacklist: parsedArgs.blacklist,
-      })
-        .then((savedWebhook) => msg.channel.createMessage({
-          content: `Webhook has been set successfully\n${printWebhookDetails(savedWebhook)}`,
-          allowedMentions: {
-            everyone: false,
-            roles: false,
-          },
-        }))
-        .catch((error) => `Something went wrong! Error message: ${JSON.parse(error.response.body).message}`);
+      });
+
+      return {
+        content: `Webhook has been set successfully\n${printWebhookDetails(savedWebhook)}`,
+        allowedMentions: {
+          everyone: false,
+          roles: false,
+        },
+      };
     } catch (e) {
       logger.error({ e, message: `Create webhook command failed in guild: ${(msg.channel as GuildChannel).guild.id}` });
       return 'Something went wrong please try again later!';
@@ -57,9 +57,9 @@ const createWebhookCommand: CommandDefinition = {
   },
   options: {
     aliases: ['cw', 'sendhere', 'sh'],
-    cooldown: 2 * Time.MINUTE,
-    cooldownMessage: 'This command can be used once per 2 minutes.',
-    cooldownReturns: 10,
+    cooldown: 15 * Time.SECOND,
+    cooldownMessage: 'This command can be used once per 15 seconds.',
+    cooldownReturns: 3,
     description: 'Creates webhook. Use this if command if you want be notified about free games.',
     fullDescription: 'Bot will send notifications about free games in the channel this command was issued.',
     guildOnly: true,

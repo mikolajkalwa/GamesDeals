@@ -31,9 +31,9 @@ const removeWebhook: CommandDefinition = {
   },
   options: {
     aliases: ['rw'],
-    cooldown: 2 * Time.MINUTE,
-    cooldownMessage: 'This command can be used once per 10 minutes.',
-    cooldownReturns: 10,
+    cooldown: 15 * Time.SECOND,
+    cooldownMessage: 'This command can be used once per 15 seconds.',
+    cooldownReturns: 3,
     description: 'Removes webhook with provided ID',
     guildOnly: true,
     permissionMessage: 'You do not have sufficient permission to issue this command. (Required permission: manage webhooks)',

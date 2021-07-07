@@ -1,16 +1,14 @@
-FROM node:14.15.1 as build
+FROM node:14-alpine as build
 WORKDIR /usr/src/app
-COPY package.json ./
-COPY yarn.lock ./
-RUN yarn install --frozen-lockfile
+COPY package*.json ./
+RUN npm install
 COPY . .
-RUN yarn build
+RUN npm run build
 
-FROM node:14.15.1-alpine
+FROM node:14-alpine
 WORKDIR /usr/src/app
-COPY --from=build /usr/src/app/package.json ./
-COPY --from=build /usr/src/app/yarn.lock ./
+COPY --from=build /usr/src/app/package*.json ./
 COPY --from=build /usr/src/app/avatar.png ./
-RUN yarn install --frozen-lockfile --production
+RUN npm ci --only=production && npm cache clean --force
 COPY --from=build /usr/src/app/built ./built
 CMD ["node", "--max-old-space-size=3072", "./built/index.js"]

@@ -43,7 +43,7 @@ const statsCommand: CommandDefinition = {
     msgCopy.edit(content);
   },
   options: {
-    cooldown: 30 * Time.SECOND,
+    cooldown: 5 * Time.SECOND,
     description: 'Bot statistics.',
     fullDescription: 'Uptime, memory usage, cached users, guilds, webhooks, found games.',
     aliases: ['statistics', 'info'],

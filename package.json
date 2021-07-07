@@ -10,8 +10,8 @@
     "start": "node --max-old-space-size=3072 built/index.js"
   },
   "dependencies": {
-    "dotenv": "^8.2.0",
-    "eris": "^0.14.0",
+    "dotenv": "^10.0.0",
+    "eris": "^0.15.1",
     "got": "^11.8.0",
     "pino": "^6.7.0",
     "string-argv": "^0.3.1",

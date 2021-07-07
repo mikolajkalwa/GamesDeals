@@ -24,9 +24,9 @@ const lastDealCommand: CommandDefinition = {
   },
   options: {
     aliases: ['ld', 'lastdeal'],
-    cooldown: 2 * Time.MINUTE,
-    cooldownMessage: 'This command can be used once per 2 minutes.',
-    cooldownReturns: 10,
+    cooldown: 15 * Time.SECOND,
+    cooldownMessage: 'This command can be used once per 15 seconds.',
+    cooldownReturns: 3,
     description: 'Information about latest found game.',
   },
 };
