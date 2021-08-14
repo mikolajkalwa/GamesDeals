@@ -12,7 +12,7 @@
 1. Install Node.js (I recommend latest LTS version).
 2. Run some MongoDB instance. https://docs.mongodb.com/manual/administration/install-community/ 
 3. Clone this repo.
-4. Install dependencies (I recommend [yarn](https://classic.yarnpkg.com/lang/en/))
+4. Install dependencies `npm ci --only=production`
 5. Configure the required environment variables (`.env` file can be used).
 
 ## Licence 

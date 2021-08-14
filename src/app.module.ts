@@ -6,7 +6,9 @@ import StatisticsModule from './statistics/statistics.module';
 
 @Module({
   imports: [
-    MongooseModule.forRoot(process.env.MONGO_URL),
+    MongooseModule.forRoot(process.env.MONGO_URL, {
+      useCreateIndex: true,
+    }),
     DealsModule,
     WebhookModule,
     StatisticsModule,
