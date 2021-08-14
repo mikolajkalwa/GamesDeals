@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
+import { LoggerModule } from 'nestjs-pino';
 import * as Joi from 'joi';
 import DealsModule from './deals/deals.module';
 import WebhookModule from './webhooks/webhook.module';
@@ -8,6 +9,7 @@ import StatisticsModule from './statistics/statistics.module';
 
 @Module({
   imports: [
+    LoggerModule.forRoot(),
     ConfigModule.forRoot({
       isGlobal: true,
       validationSchema: Joi.object({
