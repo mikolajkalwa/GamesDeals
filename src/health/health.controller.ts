@@ -12,7 +12,7 @@ export default class HealthController {
   @HealthCheck()
   check(): unknown {
     return this.health.check([
-      () => this.db.pingCheck('database'),
+      () => this.db.pingCheck('mongodb'),
     ]);
   }
 }

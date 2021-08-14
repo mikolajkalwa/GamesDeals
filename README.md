@@ -4,7 +4,7 @@
 
 ### Environment variables
   1. PORT - specifies on which port API should run.
-  2. MONGO_URL - [MongoDB Connection URI](https://docs.mongodb.com/manual/reference/connection-string/)
+  2. MONGO_URI - [MongoDB Connection URI](https://docs.mongodb.com/manual/reference/connection-string/)
   3. NODE_ENV - production / development 
 
 ## Installation
