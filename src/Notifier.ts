@@ -93,6 +93,9 @@ export class Notifier implements INotifier {
 
     const message = Notifier.createMessageContent(deal);
     const webhooksToExecute = this.getWebhooksToExecute(deal, allWebhooks);
+
+    this.logger.info(`Webhooks to execute ${webhooksToExecute.length}`);
+
     await Promise.allSettled(
       webhooksToExecute.map(async (webhook) => {
         const response = await this.discordClient.executeWebhook(webhook, message);

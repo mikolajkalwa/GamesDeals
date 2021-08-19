@@ -50,21 +50,27 @@ const redditBaseUrl = process.env.REDDIT_URL || 'https://reddit.com';
     const allWebhooks = await gdApiClient.getAllWebhooks();
     const dealsToAnnounce = await notifier.getDealsToAnnounce(trendingDeals);
 
-    await Promise.allSettled(dealsToAnnounce.map(async (deal) => {
-      await gdApiClient.insertNewDeal(deal);
-      const executionResult = await notifier.announceDeal(deal, allWebhooks);
-      await notifier.cleanupInvalidWebhooks(executionResult.webhooksToRemove);
-      await notifier.reportExecutionResult(executionResult, resultsWebhook);
+    logger.info(`Deals to announce ${JSON.stringify(dealsToAnnounce)}`);
 
-      // todo: implement appropriate retry mechanism
-      if (executionResult.failedWebhooks.length > 0) {
-        await sleep(3000);
-        const retryResult = await notifier.announceDeal(deal, executionResult.failedWebhooks);
-        if (executionResult.failedWebhooks.length === retryResult.failedWebhooks.length) {
-          logger.warn('After 3 seconds the same webhooks failed to execute.');
+    await Promise.allSettled(dealsToAnnounce.map(async (deal) => {
+      try {
+        await gdApiClient.insertNewDeal(deal);
+        const executionResult = await notifier.announceDeal(deal, allWebhooks);
+        await notifier.cleanupInvalidWebhooks(executionResult.webhooksToRemove);
+        await notifier.reportExecutionResult(executionResult, resultsWebhook);
+
+        // todo: implement appropriate retry mechanism
+        if (executionResult.failedWebhooks.length > 0) {
+          await sleep(3000);
+          const retryResult = await notifier.announceDeal(deal, executionResult.failedWebhooks);
+          if (executionResult.failedWebhooks.length === retryResult.failedWebhooks.length) {
+            logger.warn('After 3 seconds the same webhooks failed to execute.');
+          }
+          const failedWebhooksIDs = retryResult.failedWebhooks.map((webhook) => webhook.webhookId);
+          logger.warn(`Failed webhooks ids: ${failedWebhooksIDs.join(', ')}`);
         }
-        const failedWebhooksIDs = retryResult.failedWebhooks.map((webhook) => webhook.webhookId);
-        logger.warn(`Failed webhooks ids: ${failedWebhooksIDs.join(', ')}`);
+      } catch (e) {
+        logger.error(e);
       }
     }));
   } catch (e) {
