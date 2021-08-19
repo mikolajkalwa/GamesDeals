@@ -26,7 +26,7 @@ export class GamesDealsAPIClient implements IGamesDealsAPIClient {
   };
 
   public insertNewDeal = async (deal: Deal) => {
-    const respose = await got.post(`${this.baseUrl}/deals/`, {
+    const respose = await got.post(`${this.baseUrl}/deals`, {
       json: {
         redditId: deal.id,
         redditTitle: deal.title,
