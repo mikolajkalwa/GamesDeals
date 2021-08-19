@@ -5,7 +5,8 @@
   "scripts": {
     "start": "node dist/index.js",
     "test": "jest",
-    "build": "tsc"
+    "build": "tsc",
+    "prepare": "husky install"
   },
   "author": "Mikołaj Kalwa",
   "license": "MIT",
@@ -25,6 +26,7 @@
     "eslint-config-airbnb-typescript": "^12.0.0",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-jest": "^24.1.3",
+    "husky": "^7.0.1",
     "jest": "^27.0.6",
     "ts-jest": "^27.0.3",
     "typescript": "^4.1.2"
