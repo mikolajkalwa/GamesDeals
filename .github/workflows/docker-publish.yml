@@ -7,16 +7,14 @@ name: Docker
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
 
 env:
   REGISTRY: docker.io
   IMAGE_NAME: mikolajkalwa/gamesdealsnotifier
 
-
 jobs:
   build:
-
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -25,6 +23,11 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
+
+      - name: Install modules
+        run: npm install
+      - name: Run tests
+        run: npm test
 
       - name: Log into registry ${{ env.REGISTRY }}
         uses: docker/login-action@28218f9b04b4f3f62068d7b6ce6ca5b26e35336c
