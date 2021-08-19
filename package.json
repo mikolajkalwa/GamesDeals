@@ -10,14 +10,13 @@
   "author": "Mikołaj Kalwa",
   "license": "MIT",
   "dependencies": {
-    "dotenv": "^8.2.0",
+    "dotenv": "^10.0.0",
     "got": "^11.8.0",
     "pino": "^6.7.0",
     "reflect-metadata": "^0.1.13",
     "tsyringe": "^4.4.0"
   },
   "devDependencies": {
-    "@types/jest": "^26.0.15",
     "@types/pino": "^6.3.4",
     "@typescript-eslint/eslint-plugin": "^4.8.1",
     "@typescript-eslint/parser": "^4.8.1",
@@ -26,9 +25,8 @@
     "eslint-config-airbnb-typescript": "^12.0.0",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-jest": "^24.1.3",
-    "jest": "^26.6.3",
-    "pino-pretty": "^4.3.0",
-    "ts-jest": "^26.4.4",
+    "jest": "^27.0.6",
+    "ts-jest": "^27.0.3",
     "typescript": "^4.1.2"
   }
 }
