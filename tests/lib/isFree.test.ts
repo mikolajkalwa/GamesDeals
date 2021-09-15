@@ -75,7 +75,11 @@ const cases: Array<[string, boolean]> = [
   ['[itch.io] Big Fish (Free / -100%)', true],
   ['[itch.io] Rumble in the Midwest (Free / -100%)', true],
   ['[GOG] BUTCHER (FREE / –100%)', true], //  gg, '–' !== '-'
-  ['[Epic Games] Void Bastards and Yooka-Laylee (100% off/Free)', true]
+  ['[Epic Games] Void Bastards and Yooka-Laylee (100% off/Free)', true],
+  ['[Microsoft Store] Battlefield 1 Turning Tides (FREE)', true],
+  ['[Origin] Battlefield 4: Naval Strike (Free)', true],
+  ['[Origin] Battlefield 1: Turning Tides (Free)', true]
+
 ];
 
 test.each(cases)('"%s" expect to be %s', (title, expectedResult) => {

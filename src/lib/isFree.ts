@@ -41,6 +41,12 @@ const isFree = (title: string) => {
     return true;
   }
 
+  if (!priceInTitle && !discountInTitle) {
+    if (/free/gi.test(title)) {
+      return true;
+    }
+  }
+
   return false;
 };
 
