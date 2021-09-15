@@ -69,11 +69,11 @@ const redditBaseUrl = process.env.REDDIT_URL || 'https://reddit.com';
           const failedWebhooksIDs = retryResult.failedWebhooks.map((webhook) => webhook.webhookId);
           logger.warn(`Failed webhooks ids: ${failedWebhooksIDs.join(', ')}`);
         }
-      } catch (e) {
+      } catch (e: any) {
         logger.error(e);
       }
     }));
-  } catch (e) {
+  } catch (e: any) {
     logger.error(e);
   }
 })();
