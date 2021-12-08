@@ -1,15 +1,12 @@
 import './env';
-import path from 'path';
+
 import got from 'got';
 import bot from './lib/bot';
-import { loadCommands, loadEvents } from './lib/modulesLoader';
+import loadEvents from './lib/modulesLoader';
 import Time from './helpers/Time';
 
-(async () => {
-  await Promise.all([
-    loadEvents(path.resolve(__dirname, 'events')),
-    loadCommands(path.resolve(__dirname, 'commands')),
-  ]);
+async function bootstrap() {
+  loadEvents();
 
   await bot.connect();
   bot.editStatus('online', {
@@ -18,8 +15,9 @@ import Time from './helpers/Time';
   });
 
   if (process.env.BOT_ID && process.env.TOPGG_TOKEN) {
+    // eslint-disable-next-line @typescript-eslint/no-misused-promises
     setInterval(async () => {
-      await got.post(`https://top.gg/api/bots/${process.env.BOT_ID}/stats`, {
+      await got.post(`https://top.gg/api/bots/${process.env.BOT_ID as string}/stats`, {
         json: {
           server_count: bot.guilds.size,
         },
@@ -29,4 +27,7 @@ import Time from './helpers/Time';
       });
     }, 30 * Time.MINUTE);
   }
-})();
+}
+
+// eslint-disable-next-line @typescript-eslint/no-floating-promises
+bootstrap();

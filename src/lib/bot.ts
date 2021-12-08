@@ -3,9 +3,10 @@ import { CommandClient } from 'eris';
 const description = `A bot to notify about games which price were reduced by 100%.
 Add it to your server and never miss any sale again!
 If you are interested in game sales, check out <https://www.reddit.com/r/GameDeals/>
-**This bot is still under active development and sometimes may break due to my coding skills.**`;
+This project is supported by a VPS provider - MIKR.US`;
 
 const bot = new CommandClient(process.env.BOT_TOKEN, {
+  intents: [],
   disableEvents: {
     TYPING_START: true,
     GUILD_BAN_ADD: true,
@@ -13,15 +14,14 @@ const bot = new CommandClient(process.env.BOT_TOKEN, {
     VOICE_STATE_UPDATE: true,
     MESSAGE_UPDATE: true,
   },
-  guildSubscriptions: false,
   largeThreshold: 50,
   maxShards: 'auto',
-  messageLimit: 10,
+  messageLimit: 0,
 
 }, {
   name: 'GamesDeals',
   owner: 'Miki',
-  prefix: ['@mention', 'gd:'],
+  // prefix: ['@mention', 'gd:'],
   description,
 });
 

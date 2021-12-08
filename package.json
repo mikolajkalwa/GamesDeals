@@ -1,31 +1,34 @@
 {
   "name": "games-deals-bot",
   "version": "1.0.0",
-  "main": "/built/index.js",
+  "main": "dist/index.js",
   "repository": "git@github.com:mikolajkalwa/GamesDealsBot.git",
   "author": "Mikolaj Kalwa",
   "license": "MIT",
   "scripts": {
     "build": "tsc",
-    "start": "node --max-old-space-size=3072 built/index.js"
+    "start:dev": "concurrently \"tsc --watch\" \"nodemon dist/src/index.js\"",
+    "start:prod": "node --max-old-space-size=3072 dist/index.js"
   },
   "dependencies": {
     "dotenv": "^10.0.0",
-    "eris": "^0.15.1",
-    "got": "^11.8.0",
-    "pino": "^6.7.0",
+    "eris": "^0.16.1",
+    "got": "^11.8.3",
+    "pino": "^7.5.1",
     "string-argv": "^0.3.1",
-    "yargs-parser": "^20.2.4"
+    "yargs-parser": "^21.0.0"
   },
   "devDependencies": {
-    "@types/node": "^14.14.9",
-    "@types/pino": "^6.3.4",
-    "@types/yargs-parser": "^15.0.0",
-    "@typescript-eslint/eslint-plugin": "^4.8.1",
-    "@typescript-eslint/parser": "^4.8.1",
-    "eslint": "^7.14.0",
-    "eslint-config-airbnb-typescript": "^12.0.0",
-    "eslint-plugin-import": "^2.22.1",
-    "typescript": "^4.1.2"
+    "@types/node": "^16.11.12",
+    "@types/pino": "^7.0.4",
+    "@types/yargs-parser": "^20.2.1",
+    "@typescript-eslint/eslint-plugin": "^5.6.0",
+    "@typescript-eslint/parser": "^5.6.0",
+    "concurrently": "^6.4.0",
+    "eslint": "^8.4.1",
+    "eslint-config-airbnb-typescript": "^16.1.0",
+    "eslint-plugin-import": "^2.25.3",
+    "nodemon": "^2.0.15",
+    "typescript": "^4.5.2"
   }
 }
