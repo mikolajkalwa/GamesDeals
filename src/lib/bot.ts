@@ -6,7 +6,8 @@ If you are interested in game sales, check out <https://www.reddit.com/r/GameDea
 This project is supported by a VPS provider - MIKR.US`;
 
 const bot = new CommandClient(process.env.BOT_TOKEN, {
-  intents: [],
+  // restMode: true,
+  intents: ['guilds'],
   disableEvents: {
     TYPING_START: true,
     GUILD_BAN_ADD: true,

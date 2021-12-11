@@ -6,12 +6,9 @@ import commands from './commands';
 // eslint-disable-next-line @typescript-eslint/no-misused-promises
 bot.on('ready', async () => {
   console.log('Ready!');
+  await bot.bulkEditGuildCommands('527065903926345728', Array.from(commands.values()));
   const existingCommands = await bot.getCommands();
   console.log(existingCommands);
-  if (!existingCommands.length) {
-    await bot.bulkEditCommands(Array.from(commands.values()));
-  }
-
   process.exit(0);
 });
 
