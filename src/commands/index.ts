@@ -5,6 +5,6 @@ import createWebhook from './createWebhook';
 const commands = new Map<string, InteractionDefinition>();
 
 commands.set('ping', ping);
-commands.set('cw', createWebhook);
+commands.set('createwebhook', createWebhook);
 
 export default commands;

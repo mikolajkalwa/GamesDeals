@@ -6,3 +6,6 @@ run:
 
 install:
 	npm install
+
+check:
+	npx npm-check-updates -i
