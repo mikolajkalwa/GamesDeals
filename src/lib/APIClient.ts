@@ -30,7 +30,7 @@ export interface ReadWebhook extends Webhook {
 interface PatchWebhook {
   roleToMention?: string | null;
   keywords?: string[] | null;
-  blacklist?: string[];
+  blacklist?: string[] | null;
 }
 
 class APIClient {

@@ -7,5 +7,5 @@ run:
 install:
 	npm install
 
-check:
+update:
 	npx npm-check-updates -i

@@ -9,7 +9,7 @@ import gdapi from '../lib/APIClient';
 
 import DiscordErrorCodes from '../helpers/DiscordErrorCodes';
 import { printWebhookDetails } from '../helpers/webhookHelpers';
-import { CreateWebhookArgs } from '../helpers/types';
+import { CreateWebhookArgs } from '../helpers/commandsTypes';
 
 const image = fs.readFileSync(path.resolve(__dirname, '..', '..', 'avatar.png'), 'base64');
 
@@ -48,7 +48,7 @@ const createWebhook: InteractionDefinition = {
   // eslint-disable-next-line consistent-return
   generator: async (interaction: CommandInteraction): Promise<void> => {
     try {
-      const args: CreateWebhookArgs = Object.fromEntries((interaction.data.options as InteractionDataOptionWithValue[]).map((option) => [option.name, option.value])) as CreateWebhookArgs;
+      const args = Object.fromEntries((interaction.data.options as InteractionDataOptionWithValue[]).map((option) => [option.name, option.value])) as CreateWebhookArgs;
 
       const channelWebhooks = await bot.getChannelWebhooks(args.channel);
       if (channelWebhooks.length === 10) {
