@@ -16,16 +16,13 @@
     "dotenv": "^10.0.0",
     "eris": "github:DonovanDMC/eris#interactions-rewrite",
     "got": "^11.8.3",
-    "pino": "^7.6.1",
-    "string-argv": "^0.3.1",
-    "yargs-parser": "^21.0.0"
+    "pino": "^7.6.1"
   },
   "devDependencies": {
     "@commitlint/cli": "^15.0.0",
     "@commitlint/config-conventional": "^15.0.0",
     "@types/node": "^17.0.4",
     "@types/pino": "^7.0.4",
-    "@types/yargs-parser": "^20.2.1",
     "@typescript-eslint/eslint-plugin": "^5.8.0",
     "@typescript-eslint/parser": "^5.8.0",
     "eslint": "^8.5.0",
