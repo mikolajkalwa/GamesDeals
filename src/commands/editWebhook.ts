@@ -3,9 +3,11 @@ import {
 } from 'eris';
 import InteractionDefinition from '../lib/InteractionDefinition';
 import gdapi from '../lib/APIClient';
+import bot from '../lib/bot';
 import { printWebhookDetails } from '../helpers/webhookHelpers';
 import CommandError from '../errors/command.error';
 import { EditWebhookArgs } from '../helpers/commandsTypes';
+import logger from '../lib/logger';
 
 const editWebhook: InteractionDefinition = {
   name: 'editwebhook',
@@ -74,6 +76,19 @@ const editWebhook: InteractionDefinition = {
         },
       ],
     },
+    {
+      description: 'Delete webhook',
+      name: 'delete',
+      type: Constants.ApplicationCommandOptionTypes.SUB_COMMAND,
+      options: [
+        {
+          name: 'webhook',
+          description: 'ID of webhook to edit',
+          type: Constants.ApplicationCommandOptionTypes.STRING,
+          required: true,
+        },
+      ],
+    },
   ],
   guildOnly: true,
   requieredPermissions: ['manageWebhooks'],
@@ -89,40 +104,49 @@ const editWebhook: InteractionDefinition = {
     args.subcommand = subCommandArgs.name;
 
     const webhooks = await gdapi.getWebhooksForGuild((interaction.guildID as string));
-    const filteredWebhooks = webhooks.filter((webhook) => webhook.webhookId === args.webhook);
+    const [webhook] = webhooks.filter((x) => x.webhookId === args.webhook);
 
-    if (!filteredWebhooks.length) {
+    if (!webhook) {
       return interaction.createMessage('Webhook with provided ID doesn\'t exist.');
     }
 
-    let patchPayload;
-
     switch (args.subcommand) {
       case 'clear': {
-        patchPayload = {
+        const updatedWebhook = await gdapi.patchWebhook(args.webhook, {
           keywords: args.keywords ? null : undefined,
           blacklist: args.blacklist ? null : undefined,
           roleToMention: args.role ? null : undefined,
-        };
+        });
+        await interaction.createMessage(`Webhook updated succesfully\n${printWebhookDetails(updatedWebhook)}`);
         break;
       }
       case 'set': {
-        patchPayload = {
+        const updatedWebhook = await gdapi.patchWebhook(args.webhook, {
           keywords: (args.keywords as string)?.match(/(?:[^\s"]+|"[^"]*")+/g) || undefined,
           blacklist: (args.blacklist as string)?.match(/(?:[^\s"]+|"[^"]*")+/g) || undefined,
           roleToMention: args.role ? `<@&${args.role as string}>` : undefined,
-        };
+        });
+        await interaction.createMessage(`Webhook updated succesfully\n${printWebhookDetails(updatedWebhook)}`);
+        break;
+      }
+      case 'delete': {
+        console.log('deleting webhook');
+        const result = await Promise.allSettled([
+          bot.deleteWebhook(webhook.webhookId, webhook.webhookToken),
+          gdapi.deleteWebhook(webhook.webhookId),
+        ]);
+        if (result.every((x) => x.status === 'rejected')) {
+          logger.error(result, 'Unable to delete webhook from database and discord');
+          return interaction.createMessage('Something went wrong, please try again later');
+        }
+        await interaction.createMessage('Webhook has been deleted');
         break;
       }
       default: {
+        await interaction.createMessage('Unknown subcommand');
         throw new CommandError('Unknown subcommand type', interaction.data);
       }
     }
-
-    const updatedWebhook = await gdapi.patchWebhook(args.webhook, patchPayload);
-    await interaction.createMessage(`Webhook updated succesfully\n${printWebhookDetails(updatedWebhook)}`);
-
-    return interaction.createMessage('Received');
   },
 };
 

@@ -11,6 +11,7 @@ export default {
       const command = commands.get(interaction.data.name);
 
       if (!command) {
+        await interaction.createMessage('Command not found');
         return logger.warn(`Command was not found ${interaction.data.name}`);
       }
 
@@ -27,7 +28,7 @@ export default {
       }
 
       command.generator(interaction as CommandInteraction).catch((e) => {
-        logger.error(e, `Failed to execute command: ${interaction.toString()}}`);
+        logger.error(e, `Failed to execute command: ${JSON.stringify(interaction)}}`);
       });
     }
   },
