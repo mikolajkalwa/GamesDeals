@@ -38,7 +38,9 @@ export default class WebhookService {
 
   async delete(webhookId: string): Promise<null> {
     const deletedWebhook = await this.WebhookModel.findOneAndDelete({ webhookId });
-    if (!deletedWebhook) throw new NotFoundException('No webhook found.');
+    if (!deletedWebhook) {
+      throw new NotFoundException('No webhook found.');
+    }
     return null;
   }
 

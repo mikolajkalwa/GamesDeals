@@ -21,9 +21,7 @@ import StatisticsModule from './statistics/statistics.module';
         MONGO_URI: Joi.string().uri().required(),
       }),
     }),
-    MongooseModule.forRoot(process.env.MONGO_URI, {
-      useCreateIndex: true,
-    }),
+    MongooseModule.forRoot(process.env.MONGO_URI),
     TerminusModule,
     DealsModule,
     WebhookModule,
