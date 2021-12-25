@@ -16,7 +16,7 @@
     "dotenv": "^10.0.0",
     "eris": "github:DonovanDMC/eris#interactions-rewrite",
     "got": "^11.8.3",
-    "pino": "^7.6.0",
+    "pino": "^7.6.1",
     "string-argv": "^0.3.1",
     "yargs-parser": "^21.0.0"
   },
