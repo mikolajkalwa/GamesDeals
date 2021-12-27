@@ -1,11 +1,8 @@
-import {
-  CommandInteraction, Constants,
-} from 'eris';
-import bot from '../lib/bot';
-import gdapi from '../lib/APIClient';
-import logger from '../lib/logger';
-
-import InteractionDefinition from '../lib/InteractionDefinition';
+import { CommandInteraction } from 'eris';
+import bot from '../../lib/bot';
+import gdapi from '../../lib/APIClient';
+import logger from '../../lib/logger';
+import CommandHandler from '../../types/command-handler.type';
 
 const humanizeMs = (milliseconds: number) => {
   const totalSeconds = Math.floor(milliseconds / 1000);
@@ -20,10 +17,7 @@ const humanizeMs = (milliseconds: number) => {
   return `${days} days ${hours} hours ${minutes} minutes ${seconds} seconds`;
 };
 
-const statistics: InteractionDefinition = {
-  name: 'statistics',
-  description: 'Bot statistics.',
-  type: Constants.ApplicationCommandTypes.CHAT_INPUT,
+const statistics: CommandHandler = {
 
   generator: async (interaction: CommandInteraction) => {
     let content = `:robot: **Uptime:** ${humanizeMs(bot.uptime)}\n`

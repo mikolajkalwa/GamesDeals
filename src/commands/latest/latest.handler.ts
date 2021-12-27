@@ -1,13 +1,8 @@
-import {
-  CommandInteraction, Constants,
-} from 'eris';
-import gdapi from '../lib/APIClient';
-import InteractionDefinition from '../lib/InteractionDefinition';
+import { CommandInteraction } from 'eris';
+import CommandHandler from '../../types/command-handler.type';
+import gdapi from '../../lib/APIClient';
 
-const latestDeal: InteractionDefinition = {
-  name: 'latest',
-  description: 'Information about latest found game.',
-  type: Constants.ApplicationCommandTypes.CHAT_INPUT,
+const latestDeal: CommandHandler = {
 
   generator: async (interaction: CommandInteraction) => {
     const deal = await gdapi.getLastDeal();

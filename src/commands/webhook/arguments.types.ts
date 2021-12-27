@@ -5,19 +5,20 @@ export type CreateWebhookArgs = {
   blacklist?: string;
 };
 
-type EditWebhookSetArgs = {
+export type EditWebhookSetArgs = {
+  webhook: string;
   role?: string;
   keywords?: string;
   blacklist?: string;
 };
 
-type EditWebhookClearArgs = {
+export type EditWebhookClearArgs = {
+  webhook: string;
   role?: boolean;
   keywords?: boolean;
   blacklist?: boolean;
 };
 
-export type EditWebhookArgs = {
-  subcommand: string;
+export type DeleteWebhookArgs = {
   webhook: string;
-} & (EditWebhookClearArgs | EditWebhookSetArgs);
+};

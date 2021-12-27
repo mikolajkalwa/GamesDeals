@@ -39,6 +39,7 @@ class APIClient {
   constructor() {
     this.request = got.extend({
       prefixUrl: process.env.API_URL,
+      timeout: 2500, // we have 3 seconds to respond to an interaction
     });
   }
 

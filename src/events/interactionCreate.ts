@@ -15,19 +15,19 @@ export default {
         return logger.warn(`Command was not found ${interaction.data.name}`);
       }
 
-      if (command.guildOnly && !interaction.guildID) {
+      if (command.handler.guildOnly && !interaction.guildID) {
         return interaction.createMessage('This interaction can be used only within a guild server');
       }
 
-      if (command.requieredPermissions?.length) {
+      if (command.handler.requieredPermissions?.length) {
         const permission = interaction.member?.permissions;
-        const hasPermissions = command.requieredPermissions.every((x) => permission?.has(x));
+        const hasPermissions = command.handler.requieredPermissions.every((x) => permission?.has(x));
         if (!hasPermissions) {
           return interaction.createMessage('You do not have sufficient permissions to issue this command.');
         }
       }
 
-      command.generator(interaction as CommandInteraction).catch((e) => {
+      command.handler.generator(interaction as CommandInteraction).catch((e) => {
         logger.error(e, `Failed to execute command: ${JSON.stringify(interaction)}}`);
       });
     }
