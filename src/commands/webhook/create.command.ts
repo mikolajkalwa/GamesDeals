@@ -7,7 +7,7 @@ import bot from '../../lib/bot';
 import gdapi from '../../lib/APIClient';
 import { printWebhookDetails } from '../../helpers/webhookHelpers';
 
-const image = fs.readFileSync(path.resolve(__dirname, '..', '..', '..', 'avatar.png'), 'base64');
+const image = fs.readFileSync(path.resolve(__dirname, '..', '..', '..', 'assets', 'avatar.png'), 'base64');
 
 // eslint-disable-next-line consistent-return
 const run = async (interaction: CommandInteraction, args: CreateWebhookArgs) => {
