@@ -16,6 +16,7 @@
     "dotenv": "^10.0.0",
     "eris": "github:DonovanDMC/eris#interactions-rewrite",
     "got": "^11.8.3",
+    "joi": "^17.5.0",
     "pino": "^7.6.2"
   },
   "devDependencies": {
