@@ -8,8 +8,7 @@ async function bootstrap() {
 
   await bot.connect();
   bot.editStatus('online', {
-    // TODO: add /help command
-    name: 'for slash commands. Use /help',
+    name: 'for slash commands',
     type: 3,
   });
 }

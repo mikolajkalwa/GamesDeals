@@ -2,44 +2,47 @@
 
 [![GitHub](https://img.shields.io/github/license/mikolajkalwa/GamesDealsBot?style=for-the-badge)](LICENSE)
 [![Discord](https://img.shields.io/discord/731855809818132480?style=for-the-badge&logo=discord)](https://discord.gg/ZkjqCmM)
-[![BotInvite](https://img.shields.io/badge/Discord-Add%20bot%20to%20your%20server!-blue?style=for-the-badge&logo=discord)](https://discord.com/oauth2/authorize?client_id=396466836331429889&scope=bot&permissions=536890368)
-[![Liberapay](https://img.shields.io/liberapay/goal/hi_im_miki?style=for-the-badge&logo=liberapay)](https://liberapay.com/hi_im_miki/)
+[![BotInvite](https://img.shields.io/badge/Discord-Add%20bot%20to%20your%20server!-blue?style=for-the-badge&logo=discord)](https://discord.com/api/oauth2/authorize?client_id=396466836331429889&permissions=536870912&scope=bot%20applications.commands)
+[![Liberapay](https://img.shields.io/liberapay/goal/mikolajkalwa?style=for-the-badge&logo=liberapay)](https://liberapay.com/mikolajkalwa/)
 
 ## Description
 
-GamesDeals is a Discord bot built with [eris](https://github.com/abalabahaha/eris). GamesDeals informs about games which price was reduced by 100%. The data comes from [GameDeals subreddit](https://www.reddit.com/r/GameDeals).
+GamesDeals is a Discord bot built with [eris](https://github.com/abalabahaha/eris). GamesDeals sends notifications about games on -100% sale. The data comes from [GameDeals subreddit](https://www.reddit.com/r/GameDeals). (*Please note that this project is not associated with given subreddit in any way, except the data source*).
 
-## Command list 
+If you have trouble setting up the bot or have some questions join [Support Server](https://discord.gg/ZkjqCmM).
 
-| Command       | Alias            | Required permissions | Description                                                                          |
-| ------------- | ---------------- | -------------------- | ------------------------------------------------------------------------------------ |
-| createwebhook | cw, sendhere, sh | Manage Webhooks      | Bot will send notifications about free games in the channel this command was issued. |
-| webhookinfo   | wi               |                      | Information about webhooks created by the bot.                                       |
-| editwebhook   | ew               | Manage Webhooks      | Edits webhook parameters like role to mention or keywords.                           |
-| removewebhook | rw               | Manage Webhooks      | Removes webhook with provided ID.                                                    |
-| latestdeal    | lastdeal, ld     |                      | Latest found game.                                                                   |
-| stats         | statistics, info |                      | Statistics like: uptime, memory usage, cached users, guilds, webhooks, found games.  |
-| ping          | pong             |                      | Ping the bot to see if there are latency issues.                                     |
-| support       | sup, supp        |                      | Support server invitation URL. **This command works only in Direct Messages**        |
-| invite        | inv              |                      | Bot invitation URL. **This command works only in Direct Messages.**                  |
+This project is hosted on and supported by [MIKR.US](https://mikr.us/) - Polish VPS provider. 
 
-## How to setup the bot
+## ⚠️ If you don't have access to the slash commands please reinvite the bot!
+
+## Command list
+
+| Command             | Required permissions | Description                                                                                                                                                                                                                                                                                                                             |
+| ------------------- | -------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| /webhook create     | Manage Webhooks      | Set up notifications channel. You can set up as many webhooks as you want. If you want a specific role to get mentioned when a new game is found specify the `role` parameter. If you want to receive notification only on particular deals use `keywords` parameter. You can block particular notifications with `blacklist` parameter |
+| /webhook info       |                      | Retrieve details about configured webhooks in the guild.                                                                                                                                                                                                                                                                                |
+| /webhook edit set   | Manage Webhooks      | Add/edit `role` to mention, `keywords` or `blacklist` to previously configured webhook.                                                                                                                                                                                                                                                 |
+| /webhook edit clear | Manage Webhooks      | Remove `role` to mention, `keywords`, or `blacklist` of previously configured webhook.                                                                                                                                                                                                                                                  |
+| /webhook delete     | Manage Webhooks      | Delete previously configured webhook.                                                                                                                                                                                                                                                                                                   |
+| /statistics         |                      | Basic bot statistics like uptime, memory usage, cached users, guilds count webhooks count, found games count.                                                                                                                                                                                                                           |
+| /ping               |                      | Pong! 🏓                                                                                                                                                                                                                                                                                                                                |
+| /latest             |                      | Sends latest found game                                                                                                                                                                                                                                                                                                                 |
+
+## How to set up the bot
 
 1. Invite bot to your server.
-2. Use `gd:createwebhook` command. (please note this command accepts optional parameters, after inviting the bot use ` gd:help createwebhook` to learn more).
+2. Use `/webhook create` command
 3. 🎉 Done! 🎉
 
 ## Examples
 
-  - Notify only about games from steam and gog:
-    - gd:createwebhook --keywords steam gog
-  - Mention a role when a game is found:
-    - gd:createwebhook --mention @coolPeople
-  - Both:
-    - gd:createwebhook --mention @coolPeople --keywords steam gog
+- Notify only about games from steam and gog:
+  - /webhook create `channel:`#cool-channel `keywords:` steam gog
+- Mention a role when a game is found:
+  - /webhook create `role:`@coolPeople
+- Both: 
+  - /webhook create `channel:`#cool-channel `role:`@coolPeople `keywords:` steam gog
 
-If you already setup a webhook in the past and would like to modify it, use: `gd:editwebhook`, to learn more use `gd:help editwebhook`
-
-## Licence 
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
