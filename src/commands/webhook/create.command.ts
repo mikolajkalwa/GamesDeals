@@ -6,6 +6,7 @@ import { CreateWebhookArgs } from './arguments.types';
 import bot from '../../helpers/bot';
 import gdapi from '../../helpers/APIClient';
 import { printWebhookDetails } from './webhook.utils';
+import { parseArgs } from '../commands.utils';
 
 const image = fs.readFileSync(path.resolve(__dirname, '..', '..', '..', 'assets', 'avatar.png'), 'base64');
 
@@ -22,8 +23,8 @@ const run = async (interaction: CommandInteraction, args: CreateWebhookArgs) => 
       avatar: `data:image/png;base64,${image}`,
     });
 
-    const keywords = args.keywords?.match(/(?:[^\s"]+|"[^"]*")+/g) || undefined;
-    const blacklist = args.blacklist?.match(/(?:[^\s"]+|"[^"]*")+/g) || undefined;
+    const keywords = args.keywords ? parseArgs(args.keywords) : undefined;
+    const blacklist = args.blacklist ? parseArgs(args.blacklist) : undefined;
 
     const savedWebhook = await gdapi.saveWebhook({
       webhookId: webhook.id,

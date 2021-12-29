@@ -3,7 +3,7 @@ import CommandError from '../../errors/command.error';
 import { EditWebhookClearArgs, EditWebhookSetArgs } from './arguments.types';
 import gdapi from '../../helpers/APIClient';
 import { printWebhookDetails } from './webhook.utils';
-import { parseArgs } from '../commands.utils';
+import { parseArgs, parseOptions } from '../commands.utils';
 
 const clearPropertiesSubCommand = async (interaction: CommandInteraction, options: EditWebhookClearArgs) => {
   const updatedWebhook = await gdapi.patchWebhook(options.webhook, {
@@ -15,9 +15,12 @@ const clearPropertiesSubCommand = async (interaction: CommandInteraction, option
 };
 
 const setPropertiesSubCommand = async (interaction: CommandInteraction, options: EditWebhookSetArgs) => {
+  const keywords = options.keywords ? parseArgs(options.keywords) : undefined;
+  const blacklist = options.blacklist ? parseArgs(options.blacklist) : undefined;
+
   const updatedWebhook = await gdapi.patchWebhook(options.webhook, {
-    keywords: (options.keywords as string)?.match(/(?:[^\s"]+|"[^"]*")+/g) || undefined,
-    blacklist: (options.blacklist as string)?.match(/(?:[^\s"]+|"[^"]*")+/g) || undefined,
+    keywords,
+    blacklist,
     roleToMention: options.role ? `<@&${options.role}>` : undefined,
   });
   await interaction.createMessage(`Webhook updated succesfully\n${printWebhookDetails(updatedWebhook)}`);
@@ -25,7 +28,7 @@ const setPropertiesSubCommand = async (interaction: CommandInteraction, options:
 
 // eslint-disable-next-line consistent-return
 const run = async (interaction: CommandInteraction, options: InteractionDataOptionSubCommand) => {
-  const args = parseArgs<EditWebhookClearArgs | EditWebhookSetArgs>(options.options as InteractionDataOptionWithValue[]);
+  const args = parseOptions<EditWebhookClearArgs | EditWebhookSetArgs>(options.options as InteractionDataOptionWithValue[]);
 
   const webhooks = await gdapi.getWebhooksForGuild((interaction.guildID as string));
   const [webhook] = webhooks.filter((x) => x.webhookId === args.webhook);

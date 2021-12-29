@@ -1,4 +1,5 @@
 import { CommandInteraction, Interaction } from 'eris';
+import { HTTPError } from 'got/dist/source';
 import commands from '../commands';
 
 import logger from '../helpers/logger';
@@ -28,7 +29,10 @@ export default {
       }
 
       command.handler.generator(interaction as CommandInteraction).catch((e) => {
-        logger.error(e, `Failed to execute command: ${JSON.stringify(interaction)}}`);
+        logger.error(e, `Failed to execute command: ${JSON.stringify(interaction.data)}}`);
+        if (e instanceof HTTPError) {
+          logger.error(`Response body: ${JSON.stringify(e.response.body)}`);
+        }
       });
     }
   },

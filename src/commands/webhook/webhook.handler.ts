@@ -2,7 +2,7 @@ import {
   CommandInteraction, InteractionDataOptionSubCommand, InteractionDataOptionSubCommandGroup, InteractionDataOptionWithValue,
 } from 'eris';
 import CommandError from '../../errors/command.error';
-import { parseArgs } from '../commands.utils';
+import { parseOptions } from '../commands.utils';
 import CommandHandler from '../../types/command-handler.type';
 import createWebhook from './create.command';
 import editWebhook from './edit.command';
@@ -20,7 +20,7 @@ const webhookHandler: CommandHandler = {
 
     switch (subcommandArgs.name) {
       case 'create': {
-        const args = parseArgs<CreateWebhookArgs>(subcommandArgs.options as InteractionDataOptionWithValue[]);
+        const args = parseOptions<CreateWebhookArgs>(subcommandArgs.options as InteractionDataOptionWithValue[]);
         await createWebhook(interaction, args);
         break;
       }
@@ -30,7 +30,7 @@ const webhookHandler: CommandHandler = {
         break;
       }
       case 'delete': {
-        const args = parseArgs<DeleteWebhookArgs>(subcommandArgs.options as InteractionDataOptionWithValue[]);
+        const args = parseOptions<DeleteWebhookArgs>(subcommandArgs.options as InteractionDataOptionWithValue[]);
         await deleteWebhook(interaction, args);
         break;
       }

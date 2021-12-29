@@ -26,13 +26,13 @@ const webhookDefinition: ApplicationCommandStructure = {
         },
         {
           name: 'keywords',
-          description: 'Keywords list, separated by space (for multiword wrap in double quotes)',
+          description: 'Keywords list, separated by comma',
           type: Constants.ApplicationCommandOptionTypes.STRING,
           required: false,
         },
         {
           name: 'blacklist',
-          description: 'BLacklisted keywords list, separated by space (for multiword wrap in double quotes)',
+          description: 'BLacklisted keywords list, separated by comma',
           type: Constants.ApplicationCommandOptionTypes.STRING,
           required: false,
         },
@@ -75,13 +75,13 @@ const webhookDefinition: ApplicationCommandStructure = {
             },
             {
               name: 'keywords',
-              description: 'Keywords list, separated by space (for multiword wrap in double quotes)',
+              description: 'Keywords list, separated by comma',
               type: Constants.ApplicationCommandOptionTypes.STRING,
               required: false,
             },
             {
               name: 'blacklist',
-              description: 'BLacklisted keywords list, separated by space (for multiword wrap in double quotes)',
+              description: 'BLacklisted keywords list, separated by comma',
               type: Constants.ApplicationCommandOptionTypes.STRING,
               required: false,
             },
