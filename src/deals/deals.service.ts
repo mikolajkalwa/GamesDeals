@@ -1,20 +1,30 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import PrismaService from 'src/prisma/prisma.service';
+import { Deal } from '@prisma/client';
 import CreateDealDto from './dto/create-deal.dto';
-import { Deal } from './schemas/deal.schema';
 
 @Injectable()
 export default class DealsService {
-  constructor(@InjectModel(Deal.name) private readonly DealModel: Model<Deal>) { }
+  constructor(
+    private readonly prisma: PrismaService,
+  ) { }
 
   async create(creatDealDto: CreateDealDto): Promise<Deal> {
-    const createdDeal = new this.DealModel(creatDealDto);
-    return createdDeal.save();
+    return this.prisma.deal.create({
+      data: {
+        gameUrl: creatDealDto.gameUrl,
+        redditId: creatDealDto.redditId,
+        redditTitle: creatDealDto.redditTitle,
+      },
+    });
   }
 
   async find(redditId: string): Promise<Deal> {
-    const deal = await this.DealModel.findOne({ redditId });
+    const deal = await this.prisma.deal.findFirst({
+      where: {
+        redditId,
+      },
+    });
     if (!deal) {
       throw new NotFoundException('No deal found.');
     }
@@ -22,15 +32,23 @@ export default class DealsService {
   }
 
   async findLatest(): Promise<Deal> {
-    return this.DealModel.findOne({}).sort({ _id: -1 });
+    return this.prisma.deal.findFirst({
+      orderBy: {
+        createdAt: 'desc',
+      },
+    });
   }
 
   async findLatests(limit = 1): Promise<Deal[]> {
-    return this.DealModel.find({}).limit(limit).sort({ _id: -1 });
+    return this.prisma.deal.findMany({
+      orderBy: {
+        createdAt: 'desc',
+      },
+      take: limit,
+    });
   }
 
   async count(): Promise<number> {
-    const dealsCount = await this.DealModel.countDocuments({});
-    return dealsCount;
+    return this.prisma.deal.count();
   }
 }

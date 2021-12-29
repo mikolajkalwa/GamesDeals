@@ -1,9 +1,9 @@
 import {
   Body, Controller, Post, Get, Delete, Patch, Param, HttpCode,
 } from '@nestjs/common';
+import { Webhook } from '@prisma/client';
 import CreateWebhookDto from './dto/create-webhook.dto';
 import PatchWebhookDto from './dto/patch-webhook.dto';
-import { Webhook } from './schemas/webhook.schema';
 import WebhookService from './webhook.service';
 
 @Controller('webhooks')

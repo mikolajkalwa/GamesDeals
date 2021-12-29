@@ -10,4 +10,7 @@ export default class CreateWebhookDto extends PatchWebhookDto {
 
   @IsString()
   readonly guildId: string;
+
+  @IsString()
+  readonly channelId: string;
 }
