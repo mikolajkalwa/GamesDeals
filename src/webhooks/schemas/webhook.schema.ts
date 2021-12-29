@@ -8,46 +8,46 @@ export class Webhook extends Document {
     required: true,
     unique: true,
   })
-  webhookId: string;
+    webhookId: string;
 
   @Prop({
     required: true,
   })
-  webhookToken: string;
+    webhookToken: string;
 
   @Prop({
     required: true,
     unique: false,
   })
-  guildId: string;
+    guildId: string;
 
   @Prop({
     required: false,
     unique: false,
   })
-  roleToMention?: string;
+    roleToMention?: string;
 
   @Prop({
     required: false,
     unique: false,
     type: [String],
     validate: {
-      validator: (val) => val.length <= 5, // allow only to store 5 keywords
+      validator: (val: string[]) => val.length <= 100, // allow only to store 5 keywords
       message: 'array size exceeds the limit of 5',
     },
   })
-  keywords?: string[];
+    keywords?: string[];
 
   @Prop({
     required: false,
     unique: false,
     type: [String],
     validate: {
-      validator: (val) => val.length <= 5, // allow only to store 5 keywords
+      validator: (val: string[]) => val.length <= 100, // allow only to store 5 keywords
       message: 'array size exceeds the limit of 5',
     },
   })
-  blacklist?: string[];
+    blacklist?: string[];
 }
 
 export const WebhookSchema = SchemaFactory.createForClass(Webhook);

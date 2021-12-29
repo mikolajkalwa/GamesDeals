@@ -14,10 +14,11 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
 
   const configService = app.get(ConfigService);
-  const port = configService.get('PORT');
-  const baseAddress = configService.get('BASE_ADDRESS');
+  const port = configService.get<string>('PORT');
+  const baseAddress = configService.get<string>('BASE_ADDRESS');
 
   await app.listen(port, baseAddress);
 }
 
+// eslint-disable-next-line @typescript-eslint/no-floating-promises
 bootstrap();
