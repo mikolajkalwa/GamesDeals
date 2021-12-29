@@ -1,7 +1,7 @@
 import { CommandInteraction, Interaction } from 'eris';
 import commands from '../commands';
 
-import logger from '../lib/logger';
+import logger from '../helpers/logger';
 
 export default {
   event: 'interactionCreate',

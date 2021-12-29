@@ -1,4 +1,4 @@
-import logger from '../lib/logger';
+import logger from '../helpers/logger';
 
 export default {
   event: 'error',

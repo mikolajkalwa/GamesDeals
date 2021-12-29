@@ -1,7 +1,7 @@
-import './env';
+import '../env';
 
-import bot from './lib/bot';
-import commands from './commands';
+import bot from '../helpers/bot';
+import commands from '../commands';
 
 // eslint-disable-next-line @typescript-eslint/no-misused-promises
 bot.on('ready', async () => {

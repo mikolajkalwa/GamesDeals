@@ -1,6 +1,6 @@
 import { CommandInteraction } from 'eris';
 import CommandHandler from '../../types/command-handler.type';
-import gdapi from '../../lib/APIClient';
+import gdapi from '../../helpers/APIClient';
 
 const latestDeal: CommandHandler = {
 

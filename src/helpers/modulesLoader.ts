@@ -9,7 +9,7 @@ const loadEvents = (): void => {
 
   eventsToLoad.forEach((eventModule) => {
     const { event, generator } = eventModule.default;
-    logger.info(`Loading event: ${event} `);
+    logger.info(`Loading event: ${event}`);
 
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
     bot.on(event, generator);

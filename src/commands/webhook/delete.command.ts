@@ -1,8 +1,8 @@
 import { CommandInteraction } from 'eris';
 import { DeleteWebhookArgs } from './arguments.types';
-import bot from '../../lib/bot';
-import gdapi from '../../lib/APIClient';
-import logger from '../../lib/logger';
+import bot from '../../helpers/bot';
+import gdapi from '../../helpers/APIClient';
+import logger from '../../helpers/logger';
 
 // eslint-disable-next-line consistent-return
 const run = async (interaction: CommandInteraction, options: DeleteWebhookArgs) => {

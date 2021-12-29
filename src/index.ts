@@ -1,7 +1,7 @@
 import './env';
 
-import bot from './lib/bot';
-import loadEvents from './lib/modulesLoader';
+import bot from './helpers/bot';
+import loadEvents from './helpers/modulesLoader';
 
 async function bootstrap() {
   loadEvents();

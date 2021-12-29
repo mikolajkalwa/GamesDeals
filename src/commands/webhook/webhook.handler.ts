@@ -2,7 +2,7 @@ import {
   CommandInteraction, InteractionDataOptionSubCommand, InteractionDataOptionSubCommandGroup, InteractionDataOptionWithValue,
 } from 'eris';
 import CommandError from '../../errors/command.error';
-import parseArgs from '../../helpers/parseArgs';
+import { parseArgs } from '../commands.utils';
 import CommandHandler from '../../types/command-handler.type';
 import createWebhook from './create.command';
 import editWebhook from './edit.command';

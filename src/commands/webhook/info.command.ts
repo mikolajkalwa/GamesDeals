@@ -1,6 +1,6 @@
 import { CommandInteraction } from 'eris';
-import gdapi from '../../lib/APIClient';
-import { printWebhookDetails } from '../../helpers/webhookHelpers';
+import gdapi from '../../helpers/APIClient';
+import { printWebhookDetails } from './webhook.utils';
 
 const run = async (interaction: CommandInteraction) => {
   let content = '**Webhook details:**\n';

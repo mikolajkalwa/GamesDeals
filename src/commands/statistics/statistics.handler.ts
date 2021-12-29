@@ -1,7 +1,7 @@
 import { CommandInteraction } from 'eris';
-import bot from '../../lib/bot';
-import gdapi from '../../lib/APIClient';
-import logger from '../../lib/logger';
+import bot from '../../helpers/bot';
+import gdapi from '../../helpers/APIClient';
+import logger from '../../helpers/logger';
 import CommandHandler from '../../types/command-handler.type';
 
 const humanizeMs = (milliseconds: number) => {

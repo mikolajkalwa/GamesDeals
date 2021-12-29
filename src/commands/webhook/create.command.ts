@@ -1,11 +1,11 @@
 import path from 'path';
 import fs from 'fs';
 import { CommandInteraction, DiscordRESTError } from 'eris';
-import DiscordErrorCodes from '../../helpers/DiscordErrorCodes';
+import DiscordErrorCodes from '../../types/discord-error-codes.enum';
 import { CreateWebhookArgs } from './arguments.types';
-import bot from '../../lib/bot';
-import gdapi from '../../lib/APIClient';
-import { printWebhookDetails } from '../../helpers/webhookHelpers';
+import bot from '../../helpers/bot';
+import gdapi from '../../helpers/APIClient';
+import { printWebhookDetails } from './webhook.utils';
 
 const image = fs.readFileSync(path.resolve(__dirname, '..', '..', '..', 'assets', 'avatar.png'), 'base64');
 

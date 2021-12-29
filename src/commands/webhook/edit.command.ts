@@ -1,9 +1,9 @@
 import { CommandInteraction, InteractionDataOptionSubCommand, InteractionDataOptionWithValue } from 'eris';
 import CommandError from '../../errors/command.error';
-import parseArgs from '../../helpers/parseArgs';
 import { EditWebhookClearArgs, EditWebhookSetArgs } from './arguments.types';
-import gdapi from '../../lib/APIClient';
-import { printWebhookDetails } from '../../helpers/webhookHelpers';
+import gdapi from '../../helpers/APIClient';
+import { printWebhookDetails } from './webhook.utils';
+import { parseArgs } from '../commands.utils';
 
 const clearPropertiesSubCommand = async (interaction: CommandInteraction, options: EditWebhookClearArgs) => {
   const updatedWebhook = await gdapi.patchWebhook(options.webhook, {
