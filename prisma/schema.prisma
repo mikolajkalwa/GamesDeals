@@ -1,0 +1,40 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Webhook {
+  id        BigInt   @id @unique
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  token     String   @db.VarChar(255)
+  role      BigInt?
+  guild     BigInt
+  channel   BigInt
+  blacklist String[]
+  keywords  String[]
+
+  @@index([id])
+  @@index([guild])
+  @@map("webhooks")
+}
+
+model Deal {
+  id          Int      @id @default(autoincrement())
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+  redditId    String   @unique @map("reddit_id") @db.VarChar(63)
+  redditTitle String   @map("reddit_title") @db.VarChar(300)
+  gameUrl     String   @map("game_url") @db.VarChar(2083)
+
+
+  @@index([redditId])
+  @@map("deals")
+}
