@@ -1,16 +1,16 @@
-import { IsString } from 'class-validator';
+import { IsString, IsNumberString } from 'class-validator';
 import PatchWebhookDto from './patch-webhook.dto';
 
 export default class CreateWebhookDto extends PatchWebhookDto {
-  @IsString()
-  readonly webhookId: string;
+  @IsNumberString()
+  readonly id: string;
 
   @IsString()
-  readonly webhookToken: string;
+  readonly token: string;
 
-  @IsString()
-  readonly guildId: string;
+  @IsNumberString()
+  readonly guild: string;
 
-  @IsString()
-  readonly channelId: string;
+  @IsNumberString()
+  readonly channel: string;
 }

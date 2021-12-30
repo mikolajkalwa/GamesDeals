@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
-import { Webhook } from '@prisma/client';
+import { Webhook, Prisma } from '@prisma/client';
 import PrismaService from 'src/prisma/prisma.service';
 import CreateWebhookDto from './dto/create-webhook.dto';
 import PatchWebhookDto from './dto/patch-webhook.dto';
@@ -11,11 +11,11 @@ export default class WebhookService {
   async create(webhook: CreateWebhookDto): Promise<Webhook> {
     return this.prisma.webhook.create({
       data: {
-        channel: BigInt(webhook.channelId),
-        guild: BigInt(webhook.guildId),
-        id: BigInt(webhook.webhookId),
-        token: webhook.webhookToken,
-        role: webhook.roleToMention ? BigInt(webhook.webhookId) : null,
+        channel: BigInt(webhook.channel),
+        guild: BigInt(webhook.guild),
+        id: BigInt(webhook.id),
+        token: webhook.token,
+        role: webhook.role ? BigInt(webhook.role) : null,
         blacklist: webhook.blacklist,
         keywords: webhook.keywords,
       },
@@ -67,19 +67,29 @@ export default class WebhookService {
     if (
       webhookPatchData.keywords === undefined
       && webhookPatchData.blacklist === undefined
-      && webhookPatchData.roleToMention === undefined) {
+      && webhookPatchData.role === undefined) {
       throw new BadRequestException('No fields were provided to patch');
+    }
+
+    const patchObject: Prisma.WebhookUpdateInput = {};
+
+    if (Object.prototype.hasOwnProperty.call(webhookPatchData, 'role')) {
+      patchObject.role = webhookPatchData.role ? BigInt(webhookPatchData.role) : null;
+    }
+
+    if (Object.prototype.hasOwnProperty.call(webhookPatchData, 'blacklist')) {
+      patchObject.blacklist = webhookPatchData.blacklist ? webhookPatchData.blacklist : [];
+    }
+
+    if (Object.prototype.hasOwnProperty.call(webhookPatchData, 'keywords')) {
+      patchObject.keywords = webhookPatchData.keywords ? webhookPatchData.keywords : [];
     }
 
     return this.prisma.webhook.update({
       where: {
         id: BigInt(webhookId),
       },
-      data: {
-        keywords: webhookPatchData.keywords ? webhookPatchData.keywords : [],
-        blacklist: webhookPatchData.blacklist ? webhookPatchData.blacklist : [],
-        role: webhookPatchData.roleToMention ? BigInt(webhookPatchData.roleToMention) : null,
-      },
+      data: patchObject,
     });
   }
 }
