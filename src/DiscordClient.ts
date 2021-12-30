@@ -15,11 +15,11 @@ export class DiscordClient implements IDiscordClient {
 
   public executeWebhook = async (webhook: Webhook, message: string) => {
     let content = message;
-    if (Object.prototype.hasOwnProperty.call(webhook, 'roleToMention')) {
-      content = `${webhook.roleToMention} ${message}`;
+    if (Object.prototype.hasOwnProperty.call(webhook, 'role') && webhook.role) {
+      content = `<@&${webhook.role}> ${message}`;
     }
 
-    const response = await got.post(`${this.baseUrl}/api/webhooks/${webhook.webhookId}/${webhook.webhookToken}`, {
+    const response = await got.post(`${this.baseUrl}/api/webhooks/${webhook.id}/${webhook.token}`, {
       searchParams: {
         wait: true,
       },

@@ -66,7 +66,7 @@ const redditBaseUrl = process.env.REDDIT_URL || 'https://reddit.com';
           if (executionResult.failedWebhooks.length === retryResult.failedWebhooks.length) {
             logger.warn('After 3 seconds the same webhooks failed to execute.');
           }
-          const failedWebhooksIDs = retryResult.failedWebhooks.map((webhook) => webhook.webhookId);
+          const failedWebhooksIDs = retryResult.failedWebhooks.map((webhook) => webhook.id);
           logger.warn(`Failed webhooks ids: ${failedWebhooksIDs.join(', ')}`);
         }
       } catch (e: any) {

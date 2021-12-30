@@ -42,7 +42,7 @@ export class GamesDealsAPIClient implements IGamesDealsAPIClient {
   };
 
   public removeWebhook = async (webhook: Webhook) => {
-    const response = await got.delete(`${this.baseUrl}/webhooks/${webhook.webhookId}`);
+    const response = await got.delete(`${this.baseUrl}/webhooks/${webhook.id}`);
 
     if (response.statusCode === 204) {
       return true;
