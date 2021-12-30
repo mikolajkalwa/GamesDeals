@@ -27,10 +27,11 @@ const run = async (interaction: CommandInteraction, args: CreateWebhookArgs) => 
     const blacklist = args.blacklist ? parseArgs(args.blacklist) : undefined;
 
     const savedWebhook = await gdapi.saveWebhook({
-      webhookId: webhook.id,
-      guildId: webhook.guild_id as string,
-      webhookToken: webhook.token as string,
-      roleToMention: args.role ? `<@&${args.role}>` : undefined,
+      id: webhook.id,
+      guild: webhook.guild_id as string,
+      token: webhook.token as string,
+      role: args.role ? args.role : undefined,
+      channel: webhook.channel_id as string,
       keywords,
       blacklist,
     });

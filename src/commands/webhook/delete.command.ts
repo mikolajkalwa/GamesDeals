@@ -7,15 +7,15 @@ import logger from '../../helpers/logger';
 // eslint-disable-next-line consistent-return
 const run = async (interaction: CommandInteraction, options: DeleteWebhookArgs) => {
   const webhooks = await gdapi.getWebhooksForGuild((interaction.guildID as string));
-  const [webhook] = webhooks.filter((x) => x.webhookId === options.webhook);
+  const [webhook] = webhooks.filter((x) => x.id === options.webhook);
 
   if (!webhook) {
     return interaction.createMessage('Webhook with provided ID doesn\'t exist.');
   }
 
   const result = await Promise.allSettled([
-    bot.deleteWebhook(webhook.webhookId, webhook.webhookToken),
-    gdapi.deleteWebhook(webhook.webhookId),
+    bot.deleteWebhook(webhook.id, webhook.token),
+    gdapi.deleteWebhook(webhook.id),
   ]);
 
   if (result.every((x) => x.status === 'rejected')) {

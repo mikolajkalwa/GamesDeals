@@ -5,11 +5,16 @@ import gdapi from '../../helpers/APIClient';
 import { printWebhookDetails } from './webhook.utils';
 import { parseArgs, parseOptions } from '../commands.utils';
 
+// eslint-disable-next-line consistent-return
 const clearPropertiesSubCommand = async (interaction: CommandInteraction, options: EditWebhookClearArgs) => {
+  if (!options.blacklist && !options.keywords && !options.role) {
+    return interaction.createMessage('No fields to update');
+  }
+
   const updatedWebhook = await gdapi.patchWebhook(options.webhook, {
     keywords: options.keywords ? null : undefined,
     blacklist: options.blacklist ? null : undefined,
-    roleToMention: options.role ? null : undefined,
+    role: options.role ? null : undefined,
   });
   await interaction.createMessage(`Webhook updated succesfully\n${printWebhookDetails(updatedWebhook)}`);
 };
@@ -21,7 +26,7 @@ const setPropertiesSubCommand = async (interaction: CommandInteraction, options:
   const updatedWebhook = await gdapi.patchWebhook(options.webhook, {
     keywords,
     blacklist,
-    roleToMention: options.role ? `<@&${options.role}>` : undefined,
+    role: options.role,
   });
   await interaction.createMessage(`Webhook updated succesfully\n${printWebhookDetails(updatedWebhook)}`);
 };
@@ -31,7 +36,7 @@ const run = async (interaction: CommandInteraction, options: InteractionDataOpti
   const args = parseOptions<EditWebhookClearArgs | EditWebhookSetArgs>(options.options as InteractionDataOptionWithValue[]);
 
   const webhooks = await gdapi.getWebhooksForGuild((interaction.guildID as string));
-  const [webhook] = webhooks.filter((x) => x.webhookId === args.webhook);
+  const [webhook] = webhooks.filter((x) => x.id === args.webhook);
 
   if (!webhook) {
     return interaction.createMessage('Webhook with provided ID doesn\'t exist.');

@@ -14,10 +14,11 @@ interface Statistics {
 }
 
 interface Webhook {
-  webhookId: string;
-  webhookToken: string;
-  guildId: string;
-  roleToMention?: string;
+  id: string;
+  token: string;
+  guild: string;
+  channel: string;
+  role?: string;
   keywords?: string[];
   blacklist?: string[];
 }
@@ -28,7 +29,7 @@ export interface ReadWebhook extends Webhook {
 }
 
 interface PatchWebhook {
-  roleToMention?: string | null;
+  role?: string | null;
   keywords?: string[] | null;
   blacklist?: string[] | null;
 }
