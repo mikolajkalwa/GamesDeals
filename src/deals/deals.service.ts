@@ -31,7 +31,7 @@ export default class DealsService {
     return deal;
   }
 
-  async findLatest(): Promise<Deal> {
+  async findLatest(): Promise<Deal | null> {
     return this.prisma.deal.findFirst({
       orderBy: {
         createdAt: 'desc',

@@ -15,7 +15,6 @@ import StatisticsModule from './statistics/statistics.module';
         NODE_ENV: Joi.string().valid('development', 'production').default('development'),
         BASE_ADDRESS: Joi.string().ip().default('0.0.0.0'),
         PORT: Joi.number().default(3000),
-        MONGO_URI: Joi.string().uri().required(),
       }),
     }),
     DealsModule,
