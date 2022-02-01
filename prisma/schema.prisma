@@ -21,7 +21,6 @@ model Webhook {
   blacklist String[]
   keywords  String[]
 
-  @@index([id])
   @@index([guild])
   @@map("webhooks")
 }
@@ -34,7 +33,5 @@ model Deal {
   redditTitle String   @map("reddit_title")
   gameUrl     String   @map("game_url")
 
-
-  @@index([redditId])
   @@map("deals")
 }

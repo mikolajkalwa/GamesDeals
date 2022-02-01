@@ -29,13 +29,7 @@ CREATE TABLE "deals" (
 CREATE UNIQUE INDEX "webhooks_id_key" ON "webhooks"("id");
 
 -- CreateIndex
-CREATE INDEX "webhooks_id_idx" ON "webhooks"("id");
-
--- CreateIndex
 CREATE INDEX "webhooks_guild_idx" ON "webhooks"("guild");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "deals_reddit_id_key" ON "deals"("reddit_id");
-
--- CreateIndex
-CREATE INDEX "deals_reddit_id_idx" ON "deals"("reddit_id");
