@@ -1,11 +1,11 @@
 import {
-  IsString, IsOptional, Length, ArrayMaxSize, IsNumberString,
+  IsString, IsOptional, Length, ArrayMaxSize,
 } from 'class-validator';
 
 export default class PatchWebhookDto {
   @IsOptional()
-  @IsNumberString()
-  readonly role?: string;
+  @IsString()
+  readonly mention?: string;
 
   @IsOptional()
   @IsString({ each: true })

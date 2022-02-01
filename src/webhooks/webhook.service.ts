@@ -15,7 +15,7 @@ export default class WebhookService {
         guild: BigInt(webhook.guild),
         id: BigInt(webhook.id),
         token: webhook.token,
-        role: webhook.role ? BigInt(webhook.role) : null,
+        mention: webhook.mention ? webhook.mention : null,
         blacklist: webhook.blacklist,
         keywords: webhook.keywords,
       },
@@ -67,14 +67,14 @@ export default class WebhookService {
     if (
       webhookPatchData.keywords === undefined
       && webhookPatchData.blacklist === undefined
-      && webhookPatchData.role === undefined) {
+      && webhookPatchData.mention === undefined) {
       throw new BadRequestException('No fields were provided to patch');
     }
 
     const patchObject: Prisma.WebhookUpdateInput = {};
 
     if (Object.prototype.hasOwnProperty.call(webhookPatchData, 'role')) {
-      patchObject.role = webhookPatchData.role ? BigInt(webhookPatchData.role) : null;
+      patchObject.mention = webhookPatchData.mention ? webhookPatchData.mention : null;
     }
 
     if (Object.prototype.hasOwnProperty.call(webhookPatchData, 'blacklist')) {
