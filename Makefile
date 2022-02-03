@@ -1,3 +1,5 @@
+.PHONY: test
+
 build:
 	npm run build
 
@@ -11,7 +13,7 @@ update:
 	npx npm-check-updates -i
 
 e2e:
-	npm run test:e2e
+	docker-compose -f ./docker/docker-compose.e2e.yaml up --exit-code-from e2e-runner
 
 test:
 	npm run test

@@ -1,0 +1,19 @@
+version: "3.8"
+services:
+  db:
+    image: postgres:alpine
+    environment:
+      POSTGRES_PASSWORD: postgres
+
+  e2e-runner:
+    build:
+      context: ..
+      dockerfile: ./docker/Dockerfile.e2e
+      args:
+        DATABASE_URL: postgresql://postgres:postgres@db:5432/games_deals
+    environment:
+      PORT: 3000
+      DATABASE_URL: postgresql://postgres:postgres@db:5432/games_deals
+      NODE_ENV: test
+    depends_on:
+      - db

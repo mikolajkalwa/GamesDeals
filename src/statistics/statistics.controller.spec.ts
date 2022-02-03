@@ -22,12 +22,17 @@ describe('StatisticsController', () => {
     statisticsController = moduleRef.get<StatisticsController>(StatisticsController);
   });
 
+  it('should be defined', () => {
+    expect(statisticsController).toBeDefined();
+  });
+
   describe('getStatistics', () => {
     it('should return deal count and webhook count', async () => {
-      const result = Promise.resolve({ dealsCount: 100, webhooksCount: 3000 });
-      jest.spyOn(statisticsService, 'getStatistics').mockImplementation(() => result);
+      const result = { dealsCount: 100, webhooksCount: 3000 };
+      const spy = jest.spyOn(statisticsService, 'getStatistics').mockImplementation(() => Promise.resolve(result));
 
-      expect(await statisticsController.getStatistics()).toEqual({ dealsCount: 100, webhooksCount: 3000 });
+      expect(await statisticsController.getStatistics()).toEqual(result);
+      expect(spy).toBeCalledTimes(1);
     });
   });
 });

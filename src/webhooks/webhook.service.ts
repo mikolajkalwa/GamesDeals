@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
 import { Webhook, Prisma } from '@prisma/client';
-import PrismaService from 'src/prisma/prisma.service';
+import PrismaService from '../prisma/prisma.service';
 import CreateWebhookDto from './dto/create-webhook.dto';
 import PatchWebhookDto from './dto/patch-webhook.dto';
 
