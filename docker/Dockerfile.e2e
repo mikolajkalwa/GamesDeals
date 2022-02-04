@@ -3,4 +3,4 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 RUN npm install
 COPY . .
-CMD ["ash", "-c", "npx prisma migrate dev && npx jest --runInBand --config=./jest-e2e.config.json"]
+CMD ["ash", "-c", "npx prisma migrate reset --force && npx jest --runInBand --config=./jest-e2e.config.json"]

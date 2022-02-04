@@ -13,7 +13,7 @@ update:
 	npx npm-check-updates -i
 
 e2e:
-	docker-compose -f ./docker/docker-compose.e2e.yaml up --build --force-recreate --renew-anon-volumes --exit-code-from e2e-runner
+	docker-compose -f ./docker/docker-compose.e2e.yaml up --build --force-recreate --exit-code-from e2e-runner
 
 test:
 	npm run test
