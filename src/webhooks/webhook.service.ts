@@ -52,13 +52,19 @@ export default class WebhookService {
   }
 
   async delete(webhookId: string): Promise<null> {
-    const deletedWebhook = await this.prisma.webhook.delete({
-      where: {
-        id: BigInt(webhookId),
-      },
-    });
-    if (!deletedWebhook) {
-      throw new NotFoundException('No webhook found.');
+    try {
+      await this.prisma.webhook.delete({
+        where: {
+          id: BigInt(webhookId),
+        },
+      });
+    } catch (error: unknown) {
+      if (error instanceof Prisma.PrismaClientKnownRequestError) {
+        if (error.code === 'P2025') {
+          return null;
+        }
+      }
+      throw error;
     }
     return null;
   }
