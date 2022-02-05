@@ -1,4 +1,6 @@
-import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
+import {
+  Injectable, NotFoundException, BadRequestException, ConflictException,
+} from '@nestjs/common';
 import { Webhook, Prisma } from '@prisma/client';
 import PrismaService from '../prisma/prisma.service';
 import CreateWebhookDto from './dto/create-webhook.dto';
@@ -9,6 +11,16 @@ export default class WebhookService {
   constructor(private readonly prisma: PrismaService) { }
 
   async create(webhook: CreateWebhookDto): Promise<Webhook> {
+    const existingWebhook = await this.prisma.webhook.findUnique({
+      where: {
+        id: BigInt(webhook.id),
+      },
+    });
+
+    if (existingWebhook) {
+      throw new ConflictException('webhook with provided id already exists');
+    }
+
     return this.prisma.webhook.create({
       data: {
         channel: BigInt(webhook.channel),
