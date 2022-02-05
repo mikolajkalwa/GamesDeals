@@ -91,23 +91,32 @@ export default class WebhookService {
 
     const patchObject: Prisma.WebhookUpdateInput = {};
 
-    if (Object.prototype.hasOwnProperty.call(webhookPatchData, 'role')) {
+    if (Object.prototype.hasOwnProperty.call(webhookPatchData, 'mention')) {
       patchObject.mention = webhookPatchData.mention ? webhookPatchData.mention : null;
     }
 
     if (Object.prototype.hasOwnProperty.call(webhookPatchData, 'blacklist')) {
-      patchObject.blacklist = webhookPatchData.blacklist ? webhookPatchData.blacklist : [];
+      patchObject.blacklist = webhookPatchData.blacklist;
     }
 
     if (Object.prototype.hasOwnProperty.call(webhookPatchData, 'keywords')) {
-      patchObject.keywords = webhookPatchData.keywords ? webhookPatchData.keywords : [];
+      patchObject.keywords = webhookPatchData.keywords;
     }
 
-    return this.prisma.webhook.update({
-      where: {
-        id: BigInt(webhookId),
-      },
-      data: patchObject,
-    });
+    try {
+      return await this.prisma.webhook.update({
+        where: {
+          id: BigInt(webhookId),
+        },
+        data: patchObject,
+      });
+    } catch (error: unknown) {
+      if (error instanceof Prisma.PrismaClientKnownRequestError) {
+        if (error.code === 'P2025') {
+          throw new NotFoundException('webhook with provided id doesn\'t exist');
+        }
+      }
+      throw error;
+    }
   }
 }
