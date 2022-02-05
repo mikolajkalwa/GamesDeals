@@ -9,8 +9,6 @@ services:
     build:
       context: ..
       dockerfile: ./docker/Dockerfile.e2e
-      args:
-        DATABASE_URL: postgresql://postgres:postgres@db:5432/games_deals
     environment:
       PORT: 3000
       DATABASE_URL: postgresql://postgres:postgres@db:5432/games_deals
