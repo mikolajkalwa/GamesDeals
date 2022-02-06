@@ -32,7 +32,7 @@ describe('Webhooks', () => {
   });
 
   describe('GET', () => {
-    it('get all webhooks', async () => {
+    it('all webhooks should return status code 200 and all stored webhooks', async () => {
       const response = await request(app.getHttpServer())
         .get('/webhooks')
         .expect(200);
@@ -40,7 +40,7 @@ describe('Webhooks', () => {
       expect(response.body.length).toEqual(18);
     });
 
-    it('get webhooks for specific guild', async () => {
+    it('webhooks for specific guild should return status code 200 and all webhooks from specified guild', async () => {
       const response = await request(app.getHttpServer())
         .get('/webhooks/guild/1337')
         .expect(200);
@@ -52,7 +52,7 @@ describe('Webhooks', () => {
       });
     });
 
-    it('get webhooks for specific, non existing guild', async () => {
+    it('webhooks for specific, non existing guild should return status code 200 and empty array', async () => {
       const response = await request(app.getHttpServer())
         .get('/webhooks/guild/999999')
         .expect(200);
@@ -61,7 +61,7 @@ describe('Webhooks', () => {
       expect(response.body).toEqual([]);
     });
 
-    it('get webhook by id', async () => {
+    it('webhook by id should return status code 200 and specified webhook', async () => {
       const response = await request(app.getHttpServer())
         .get('/webhooks/13')
         .expect(200);
@@ -79,7 +79,7 @@ describe('Webhooks', () => {
       });
     });
 
-    it('get non existing webhook by id', async () => {
+    it('non existing webhook by id should return status code 404', async () => {
       await request(app.getHttpServer())
         .get('/webhooks/999999')
         .expect(404);
@@ -87,13 +87,13 @@ describe('Webhooks', () => {
   });
 
   describe('DELETE', () => {
-    it('delete webhook by id', async () => {
+    it('webhook by id should return status code 204', async () => {
       await request(app.getHttpServer())
         .delete('/webhooks/13')
         .expect(204);
     });
 
-    it('delete non existing webhook by id', async () => {
+    it('non existing webhook by id should return status code 204', async () => {
       await request(app.getHttpServer())
         .delete('/webhooks/999999')
         .expect(204);
@@ -101,7 +101,7 @@ describe('Webhooks', () => {
   });
 
   describe('POST', () => {
-    it('create basic webhook', async () => {
+    it('create basic webhook should return created webhook and status code 201', async () => {
       const response = await request(app.getHttpServer())
         .post('/webhooks')
         .send({
@@ -123,7 +123,7 @@ describe('Webhooks', () => {
       }));
     });
 
-    it('create webhook with mention', async () => {
+    it('create webhook with mention should return created webhook and status code 201', async () => {
       const response = await request(app.getHttpServer())
         .post('/webhooks')
         .send({
@@ -146,7 +146,7 @@ describe('Webhooks', () => {
       }));
     });
 
-    it('create webhook with mention, keywords and blacklist', async () => {
+    it('create webhook with mention, keywords and blacklist should return created webhook and status code 201', async () => {
       const response = await request(app.getHttpServer())
         .post('/webhooks')
         .send({
@@ -171,7 +171,7 @@ describe('Webhooks', () => {
       }));
     });
 
-    it('create webhook with id alredy existing in the db', async () => {
+    it('create webhook with id alredy existing in the database should return status code 409', async () => {
       await request(app.getHttpServer())
         .post('/webhooks')
         .send({
@@ -186,7 +186,7 @@ describe('Webhooks', () => {
         .expect(409);
     });
 
-    it('create webhook with requiered fields as empty strings', async () => {
+    it('create webhook with requiered fields as empty strings should return error message and status code 400', async () => {
       const response = await request(app.getHttpServer())
         .post('/webhooks')
         .send({
@@ -208,7 +208,7 @@ describe('Webhooks', () => {
       ]));
     });
 
-    it('create webhook with empty body', async () => {
+    it('create webhook with empty body should return error message and status code 400', async () => {
       const response = await request(app.getHttpServer())
         .post('/webhooks')
         .send({})
@@ -226,7 +226,7 @@ describe('Webhooks', () => {
       ]));
     });
 
-    it('create webhook with completly invalid keywords, blacklist and mention', async () => {
+    it('create webhook with completly invalid keywords, blacklist and mention should return error message and status code 400', async () => {
       const response = await request(app.getHttpServer())
         .post('/webhooks')
         .send({
@@ -251,7 +251,7 @@ describe('Webhooks', () => {
   });
 
   describe('PATCH', () => {
-    it('non existing should return 404', async () => {
+    it('non existing webhook should return status code 404', async () => {
       await request(app.getHttpServer())
         .patch('/webhooks/999999')
         .send({
@@ -260,7 +260,7 @@ describe('Webhooks', () => {
         .expect(404);
     });
 
-    it('with empty body should return 400', async () => {
+    it('with empty body should return error message and status code 400', async () => {
       const response = await request(app.getHttpServer())
         .patch('/webhooks/1')
         .send({})
@@ -269,7 +269,7 @@ describe('Webhooks', () => {
       expect(response.body.message).toBe('No fields were provided to patch');
     });
 
-    it('using invalid values should return 400', async () => {
+    it('using invalid values should error message and status code 400', async () => {
       const response = await request(app.getHttpServer())
         .patch('/webhooks/1')
         .send({
@@ -288,7 +288,7 @@ describe('Webhooks', () => {
       ]));
     });
 
-    it('with empty body should return 400', async () => {
+    it('with empty body should return error message and status code 400', async () => {
       const response = await request(app.getHttpServer())
         .patch('/webhooks/1')
         .send({})
@@ -297,7 +297,7 @@ describe('Webhooks', () => {
       expect(response.body.message).toBe('No fields were provided to patch');
     });
 
-    it('add mention, keywords and blacklist should return 200', async () => {
+    it('add mention, keywords and blacklist should return patched webhook and status code 200', async () => {
       const response = await request(app.getHttpServer())
         .patch('/webhooks/1')
         .send({
@@ -315,7 +315,7 @@ describe('Webhooks', () => {
       }));
     });
 
-    it('changing one property should not modify others', async () => {
+    it('changing one property should not modify other properties', async () => {
       const response = await request(app.getHttpServer())
         .patch('/webhooks/1')
         .send({
@@ -331,7 +331,7 @@ describe('Webhooks', () => {
       }));
     });
 
-    it('update mention role should return 200', async () => {
+    it('update mention role should return patched webhook and status code 200', async () => {
       const response = await request(app.getHttpServer())
         .patch('/webhooks/1')
         .send({
@@ -347,7 +347,7 @@ describe('Webhooks', () => {
       }));
     });
 
-    it('remove mention role should return 200', async () => {
+    it('remove mention role should return patched webhook and status code 200', async () => {
       const response = await request(app.getHttpServer())
         .patch('/webhooks/1')
         .send({
@@ -363,7 +363,7 @@ describe('Webhooks', () => {
       }));
     });
 
-    it('update mention role and blacklist clear should return 200', async () => {
+    it('update mention role and blacklist clear should return patched webhook and status code 200', async () => {
       const response = await request(app.getHttpServer())
         .patch('/webhooks/1')
         .send({
@@ -380,7 +380,7 @@ describe('Webhooks', () => {
       }));
     });
 
-    it('keywords clear should return 200', async () => {
+    it('keywords clear should return patched webhook and status code 200', async () => {
       const response = await request(app.getHttpServer())
         .patch('/webhooks/1')
         .send({

@@ -23,7 +23,7 @@ describe('Deals', () => {
   });
 
   describe('GET', () => {
-    it('/GET latest deal', async () => {
+    it('latest deal should return latest deal and status code 200', async () => {
       const response = await request(app.getHttpServer())
         .get('/deals/latest')
         .expect(200);
@@ -40,7 +40,7 @@ describe('Deals', () => {
       ]);
     });
 
-    it('/GET 3 latest deals', async () => {
+    it('3 latest deals should return 3 element array with latest deals', async () => {
       const response = await request(app.getHttpServer())
         .get('/deals/latest?limit=3')
         .expect(200);
@@ -72,7 +72,7 @@ describe('Deals', () => {
       ]);
     });
 
-    it('/GET latest deal with invalid query param', async () => {
+    it('latest deal with non numeric query should return error message', async () => {
       const response = await request(app.getHttpServer())
         .get('/deals/latest?limit=thisinnotanumber')
         .expect(400);
@@ -84,7 +84,7 @@ describe('Deals', () => {
       });
     });
 
-    it('/GET deal with reddit id', async () => {
+    it('deal with reddit id should return a deal object', async () => {
       const response = await request(app.getHttpServer())
         .get('/deals/reddit/8iyde5')
         .expect(200);
@@ -99,7 +99,7 @@ describe('Deals', () => {
       });
     });
 
-    it('/GET non existing deal with reddit id should return 404', async () => {
+    it('non existing deal with reddit id should return 404', async () => {
       await request(app.getHttpServer())
         .get('/deals/reddit/thisdoesntexist')
         .expect(404);
@@ -107,7 +107,7 @@ describe('Deals', () => {
   });
 
   describe('POST', () => {
-    it('/POST create new deal', async () => {
+    it('create new deal should save return status code 201 and newly created deal', async () => {
       const response = await request(app.getHttpServer())
         .post('/deals')
         .send({
@@ -116,12 +116,15 @@ describe('Deals', () => {
           gameUrl: 'https://store.steampowered.com/app/43110/Metro_2033/',
         })
         .expect(201);
-      expect(response.body.redditId).toBe('9rc66q');
-      expect(response.body.redditTitle).toBe('[Steam] Metro 2033 (Free/100% off)');
-      expect(response.body.gameUrl).toBe('https://store.steampowered.com/app/43110/Metro_2033/');
+
+      expect(response.body).toEqual(expect.objectContaining({
+        redditId: '9rc66q',
+        redditTitle: '[Steam] Metro 2033 (Free/100% off)',
+        gameUrl: 'https://store.steampowered.com/app/43110/Metro_2033/',
+      }));
     });
 
-    it('/POST create new deal with empty reddit id', async () => {
+    it('create new deal with empty reddit id should return status code 400 and error message', async () => {
       const response = await request(app.getHttpServer())
         .post('/deals')
         .send({
@@ -131,10 +134,12 @@ describe('Deals', () => {
         })
         .expect(400);
 
-      expect(response.body.message).toHaveLength(1);
+      expect(response.body.message).toEqual(expect.arrayContaining([
+        'redditId should not be empty',
+      ]));
     });
 
-    it('/POST create new deal with missing reddit id', async () => {
+    it('create new deal without reddit id should return status code 400 and error message', async () => {
       const response = await request(app.getHttpServer())
         .post('/deals')
         .send({
@@ -143,10 +148,13 @@ describe('Deals', () => {
         })
         .expect(400);
 
-      expect(response.body.message).toHaveLength(2);
+      expect(response.body.message).toEqual(expect.arrayContaining([
+        'redditId should not be empty',
+        'redditId must be a string',
+      ]));
     });
 
-    it('/POST create new deal with invalid body', async () => {
+    it('create new deal with invalid body should return status code 400 and error message', async () => {
       const response = await request(app.getHttpServer())
         .post('/deals')
         .send({
@@ -156,7 +164,13 @@ describe('Deals', () => {
         })
         .expect(400);
 
-      expect(response.body.message).toHaveLength(5);
+      expect(response.body.message).toEqual(expect.arrayContaining([
+        'redditId should not be empty',
+        'redditId must be a string',
+        'redditTitle should not be empty',
+        'redditTitle must be a string',
+        'gameUrl must be an URL address',
+      ]));
     });
   });
 });
