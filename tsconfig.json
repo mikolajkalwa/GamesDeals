@@ -14,7 +14,7 @@
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
     "outDir": "./dist",
-    "baseUrl": "/",
+    "baseUrl": "./",
     "incremental": true
   }
 }
