@@ -8,11 +8,15 @@ import StatisticsModule from './statistics/statistics.module';
 
 @Module({
   imports: [
-    LoggerModule.forRoot(),
+    LoggerModule.forRoot({
+      pinoHttp: {
+        enabled: !Object.is(process.env.NODE_ENV, 'test'),
+      },
+    }),
     ConfigModule.forRoot({
       isGlobal: true,
       validationSchema: Joi.object({
-        NODE_ENV: Joi.string().valid('development', 'production').default('development'),
+        NODE_ENV: Joi.string().valid('development', 'production', 'test').default('development'),
         BASE_ADDRESS: Joi.string().ip().default('0.0.0.0'),
         PORT: Joi.number().default(3000),
       }),

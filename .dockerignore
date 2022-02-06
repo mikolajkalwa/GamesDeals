@@ -3,3 +3,9 @@ dist
 *.env
 *.log
 *.tsbuildinfo
+.eslintignore
+.git
+.gitignore
+.github
+.husky
+commitlint.config.js

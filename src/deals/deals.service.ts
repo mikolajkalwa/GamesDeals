@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import PrismaService from 'src/prisma/prisma.service';
 import { Deal } from '@prisma/client';
+import PrismaService from '../prisma/prisma.service';
 import CreateDealDto from './dto/create-deal.dto';
 
 @Injectable()
@@ -31,15 +31,7 @@ export default class DealsService {
     return deal;
   }
 
-  async findLatest(): Promise<Deal | null> {
-    return this.prisma.deal.findFirst({
-      orderBy: {
-        createdAt: 'desc',
-      },
-    });
-  }
-
-  async findLatests(limit = 1): Promise<Deal[]> {
+  async findLatest(limit = 1): Promise<Deal[]> {
     return this.prisma.deal.findMany({
       orderBy: {
         createdAt: 'desc',

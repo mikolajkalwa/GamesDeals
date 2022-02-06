@@ -1,33 +1,33 @@
 import * as request from 'supertest';
 import { Test } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
-import StatisticsModule from '../src/statistics/statistics.module';
-import StatisticsService from '../src/statistics/statistics.service';
+import AppModule from '../src/app.module';
 
 describe('Statistics', () => {
   let app: INestApplication;
-  const statisticsService = { getStatistics: () => ({ dealsCount: 100, webhooksCount: 3000 }) };
 
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
-      imports: [StatisticsModule],
-    })
-      .overrideProvider(StatisticsService)
-      .useValue(statisticsService)
-      .compile();
+      imports: [AppModule],
+    }).compile();
 
     app = moduleRef.createNestApplication();
-    await app.init();
-  });
 
-  it('/GET statistics', async () => {
-    const response = await request(app.getHttpServer())
-      .get('/statistics')
-      .expect(200);
-    expect(response.body).toEqual(statisticsService.getStatistics());
+    await app.init();
   });
 
   afterAll(async () => {
     await app.close();
+  });
+
+  describe('GET', () => {
+    it('statistics should return status code 200 and statistics data', async () => {
+      const response = await request(app.getHttpServer())
+        .get('/statistics')
+        .expect(200);
+
+      expect(response.body).toHaveProperty('dealsCount');
+      expect(response.body).toHaveProperty('webhooksCount');
+    });
   });
 });
