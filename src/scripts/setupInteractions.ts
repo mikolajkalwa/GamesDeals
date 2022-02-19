@@ -1,17 +1,27 @@
 import '../env';
 
-import bot from '../helpers/bot';
-import commands from '../commands';
+import { REST } from '@discordjs/rest';
+import { Routes } from 'discord-api-types/v9';
+import commands from '../bot/commands';
 
-// eslint-disable-next-line @typescript-eslint/no-misused-promises
-bot.on('ready', async () => {
-  console.log('Ready!');
-  const definitions = Array.from(commands.values()).map((x) => x.definition);
-  await bot.bulkEditGuildCommands('527065903926345728', definitions);
-  const existingCommands = await bot.getCommands();
-  console.log(existingCommands);
-  process.exit(0);
-});
+const definitions = Array.from(commands.values()).map((x) => x.definition.toJSON());
+const clientId = '904077341846818888';
+const guildId = '527065903926345728';
+
+const rest = new REST({ version: '9' }).setToken(process.env.BOT_TOKEN);
 
 // eslint-disable-next-line @typescript-eslint/no-floating-promises
-bot.connect();
+(async () => {
+  try {
+    console.log('Started refreshing application (/) commands.');
+
+    await rest.put(
+      Routes.applicationGuildCommands(clientId, guildId),
+      { body: definitions },
+    );
+
+    console.log('Successfully reloaded application (/) commands.');
+  } catch (error) {
+    console.error(error);
+  }
+})();

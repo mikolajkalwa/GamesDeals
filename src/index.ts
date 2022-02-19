@@ -1,17 +1,16 @@
 import './env';
 
-import bot from './helpers/bot';
-import loadEvents from './helpers/modulesLoader';
+import path from 'path';
+import { ShardingManager } from 'discord.js';
+import pino from 'pino';
 
-async function bootstrap() {
-  loadEvents();
+const logger = pino({
+  level: 'debug',
+});
 
-  await bot.connect();
-  bot.editStatus('online', {
-    name: 'for slash commands',
-    type: 3,
-  });
-}
+const manager = new ShardingManager(path.resolve(__dirname, 'bot', 'bot.js'), { token: process.env.BOT_TOKEN });
+
+manager.on('shardCreate', (shard) => logger.info(`Launched shard ${shard.id}`));
 
 // eslint-disable-next-line @typescript-eslint/no-floating-promises
-bootstrap();
+manager.spawn();
