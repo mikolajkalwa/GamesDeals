@@ -1,5 +1,5 @@
 import GamesDealsApiClient from './gd-api.client';
 
-const gpApi = new GamesDealsApiClient();
+const gdApi = new GamesDealsApiClient();
 
-export default gpApi;
+export default gdApi;
