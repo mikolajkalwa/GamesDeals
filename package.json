@@ -1,13 +1,12 @@
 {
   "name": "games-deals-bot",
-  "version": "3.0.0",
+  "version": "2.0.0",
   "main": "dist/index.js",
   "repository": "git@github.com:mikolajkalwa/GamesDealsBot.git",
   "author": "Mikolaj Kalwa",
   "license": "MIT",
   "scripts": {
     "build": "tsc",
-    "start:dev": "nodemon --config nodemon.json --exec \"./node_modules/.bin/tsc && node dist/index.js\"",
     "start:prod": "node dist/index.js",
     "prepare": "husky install",
     "check-updates": "npm-check-updates -e 2 -t minor"
@@ -36,8 +35,7 @@
     "eslint-config-airbnb-typescript": "^16.1.0",
     "eslint-plugin-import": "^2.25.4",
     "husky": "^7.0.4",
-    "nodemon": "^2.0.15",
-    "npm-check-updates": "^12.3.1",
+    "npm-check-updates": "^12.4.0",
     "ts-node": "^10.5.0",
     "typescript": "^4.5.5"
   }
