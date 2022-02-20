@@ -17,7 +17,7 @@ const clearPropertiesSubCommand = async (interaction: CommandInteraction, webhoo
   const updatedWebhook = await gdapi.patchWebhook(webhookId, {
     keywords: keywords ? null : undefined,
     blacklist: blacklist ? null : undefined,
-    role: role ? null : undefined,
+    mention: role ? null : undefined,
   });
   await interaction.reply(`Webhook updated succesfully\n${printWebhookDetails(updatedWebhook)}`);
 };
@@ -30,7 +30,7 @@ const setPropertiesSubCommand = async (interaction: CommandInteraction, webhookI
   const updatedWebhook = await gdapi.patchWebhook(webhookId, {
     keywords,
     blacklist,
-    role: role?.id,
+    mention: role?.id,
   });
   await interaction.reply(`Webhook updated succesfully\n${printWebhookDetails(updatedWebhook)}`);
 };
@@ -38,7 +38,7 @@ const setPropertiesSubCommand = async (interaction: CommandInteraction, webhookI
 // eslint-disable-next-line consistent-return
 const run = async (interaction: CommandInteraction, logger: Logger) => {
   const targetWebhook = interaction.options.getString('webhook', true);
-  const subcommandGroup = interaction.options.getSubcommandGroup();
+  const subcommand = interaction.options.getSubcommand();
 
   const webhooks = await gdapi.getWebhooksForGuild((interaction.guildId as string));
   const [webhook] = webhooks.filter((x) => x.id === targetWebhook);
@@ -47,7 +47,7 @@ const run = async (interaction: CommandInteraction, logger: Logger) => {
     return interaction.reply({ content: 'Webhook with provided ID doesn\'t exist.', ephemeral: true });
   }
 
-  switch (subcommandGroup) {
+  switch (subcommand) {
     case 'clear': {
       await clearPropertiesSubCommand(interaction, targetWebhook);
       break;
@@ -58,7 +58,7 @@ const run = async (interaction: CommandInteraction, logger: Logger) => {
     }
     default: {
       await interaction.reply({ content: 'Unknown subcommand', ephemeral: true });
-      logger.warn(`Unknown subcommand group: ${subcommandGroup}`);
+      logger.warn(`Unknown subcommand: ${subcommand}`);
     }
   }
 };

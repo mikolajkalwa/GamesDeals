@@ -29,7 +29,7 @@ const run = async (interaction: CommandInteraction) => {
       id: webhook.id,
       guild: webhook.guildId,
       token: webhook.token as string,
-      role: role?.id,
+      mention: role?.id,
       channel: webhook.channelId,
       keywords: keywords || undefined,
       blacklist: blacklist || undefined,

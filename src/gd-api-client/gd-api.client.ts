@@ -21,7 +21,8 @@ export default class GamesDealsApiClient {
   }
 
   public async getLastDeal(): Promise<Deal> {
-    return this.request.get('deals/latest').json();
+    const result: Deal[] = await this.request.get('deals/latest').json();
+    return result[0];
   }
 
   public async getWebhooksForGuild(guildID: string): Promise<ReadWebhook[]> {

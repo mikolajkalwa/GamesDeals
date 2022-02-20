@@ -3,7 +3,7 @@ export default interface Webhook {
   token: string;
   guild: string;
   channel: string;
-  role?: string;
+  mention?: string;
   keywords?: string[];
   blacklist?: string[];
 }
