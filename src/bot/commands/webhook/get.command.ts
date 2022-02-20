@@ -2,10 +2,11 @@ import { CommandInteraction } from 'discord.js';
 import gdapi from '../../../gd-api-client';
 import { printWebhookDetails } from './command.utils';
 
+const SEPARATOR = ' -------\n';
 // eslint-disable-next-line consistent-return
 const run = async (interaction: CommandInteraction) => {
-  let content = '';
-  const messageChunksToSend: string[] = [];
+  let currentChunkContent: string[] = [];
+  const chunksToSend: Array<string[]> = [];
   const webhooks = await gdapi.getWebhooksForGuild((interaction.guildId as string));
 
   if (!webhooks.length) {
@@ -14,18 +15,22 @@ const run = async (interaction: CommandInteraction) => {
 
   webhooks.forEach((webhook) => {
     const nextWebhook = printWebhookDetails(webhook);
-    if (content.length + nextWebhook.length <= 2000) {
-      content += printWebhookDetails(webhook);
+    const charactersInChunk = currentChunkContent.join('').length + (SEPARATOR.length * currentChunkContent.length);
+    if (charactersInChunk + nextWebhook.length + SEPARATOR.length <= 2000) {
+      currentChunkContent.push(printWebhookDetails(webhook));
     } else {
-      messageChunksToSend.push(content);
-      content = nextWebhook;
+      chunksToSend.push([...currentChunkContent]);
+      currentChunkContent = [];
+      currentChunkContent.push(nextWebhook);
     }
   });
-  messageChunksToSend.push(content);
 
-  await Promise.all(messageChunksToSend.map(async (chunk) => interaction
+  chunksToSend.push(currentChunkContent);
+
+  await interaction.deferReply();
+  await Promise.all(chunksToSend.map(async (chunk) => interaction
     .followUp({
-      content: chunk,
+      content: chunk.join(SEPARATOR),
       allowedMentions: {
         parse: [],
       },
