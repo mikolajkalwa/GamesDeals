@@ -19,10 +19,6 @@ const webhookHandler: CommandHandler = {
         await createWebhook(interaction);
         break;
       }
-      case 'edit': {
-        await editWebhook(interaction, logger);
-        break;
-      }
       case 'delete': {
         await deleteWebhook(interaction, logger);
         break;
@@ -31,8 +27,15 @@ const webhookHandler: CommandHandler = {
         await describeWebhooks(interaction);
         break;
       }
+
+      // edit webhook methods
+      case 'set':
+      case 'clear': {
+        await editWebhook(interaction, logger);
+        break;
+      }
       default: {
-        logger.warn(`Unknown subcommand execution ${subcommand}`);
+        logger.warn(`Unknown subcommand: ${subcommand}`);
         await interaction.reply({ content: 'Unknown subcommand', ephemeral: true });
       }
     }
