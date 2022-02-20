@@ -7,7 +7,7 @@
 
 ## Description
 
-GamesDeals is a Discord bot built with [eris](https://github.com/abalabahaha/eris). GamesDeals sends notifications about games on -100% sale. The data comes from [GameDeals subreddit](https://www.reddit.com/r/GameDeals). (*Please note that this project is not associated with given subreddit in any way, except the data source*).
+GamesDeals is a Discord bot built with [Discord.js](https://github.com/discordjs/discord.js/). GamesDeals sends notifications about games on -100% sale. The data comes from [GameDeals subreddit](https://www.reddit.com/r/GameDeals). (*Please note that this project is not associated with given subreddit in any way, except the data source*).
 
 If you have trouble setting up the bot or have some questions join [Support Server](https://discord.gg/ZkjqCmM).
 
@@ -24,7 +24,6 @@ This project is hosted on and supported by [MIKR.US](https://mikr.us/) - Polish 
 | /webhook edit set   | Manage Webhooks      | Add/edit `role` to mention, `keywords` or `blacklist` to previously configured webhook.                                                                                                                                                                                                                                                 |
 | /webhook edit clear | Manage Webhooks      | Remove `role` to mention, `keywords`, or `blacklist` of previously configured webhook.                                                                                                                                                                                                                                                  |
 | /webhook delete     | Manage Webhooks      | Delete previously configured webhook.                                                                                                                                                                                                                                                                                                   |
-| /statistics         |                      | Basic bot statistics like uptime, memory usage, cached users, guilds count webhooks count, found games count.                                                                                                                                                                                                                           |
 | /ping               |                      | Pong! 🏓                                                                                                                                                                                                                                                                                                                                |
 | /latest             |                      | Sends latest found game                                                                                                                                                                                                                                                                                                                 |
 
@@ -37,13 +36,13 @@ This project is hosted on and supported by [MIKR.US](https://mikr.us/) - Polish 
 ## Examples
 
 - Notify only about euro truck simulator 2 deals on steam:
-  - /webhook create `channel:`#cool-channel `keywords:` euro truck simulator 2, steam
+  - /webhook create `channel:`#cool-channel `keywords:` euro truck simulator 2,steam
 - Notify only about games from steam and gog:
-  - /webhook create `channel:`#cool-channel `keywords:` steam, gog
+  - /webhook create `channel:`#cool-channel `keywords:` steam,gog
 - Mention a role when a game is found:
   - /webhook create `role:`@coolPeople
 - Both: 
-  - /webhook create `channel:`#cool-channel `role:`@coolPeople `keywords:` steam, gog
+  - /webhook create `channel:`#cool-channel `role:`@coolPeople `keywords:` steam,gog
 
 ## License
 
