@@ -55,6 +55,7 @@ client.on('interactionCreate', async (interaction) => {
     const hasPermissions = command.handler.requieredPermissions.every((requieredPermission) => interaction.memberPermissions?.has(requieredPermission));
     if (!hasPermissions) {
       await interaction.reply({ content: 'Sorry, you don\'t have permissions to do this!', ephemeral: true });
+      return;
     }
   }
 
