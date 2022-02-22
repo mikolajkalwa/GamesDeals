@@ -9,3 +9,6 @@ install:
 
 update:
 	npx npm-check-updates -i
+
+test: 
+	npm run test
