@@ -15,7 +15,7 @@ model Webhook {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
   token     String
-  mention   String?
+  mention   BigInt?
   guild     BigInt
   channel   BigInt
   blacklist String[]

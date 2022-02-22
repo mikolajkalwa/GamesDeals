@@ -27,7 +27,7 @@ export default class WebhookService {
         guild: BigInt(webhook.guild),
         id: BigInt(webhook.id),
         token: webhook.token,
-        mention: webhook.mention ? webhook.mention : null,
+        mention: webhook.mention ? BigInt(webhook.mention) : null,
         blacklist: webhook.blacklist,
         keywords: webhook.keywords,
       },
@@ -92,7 +92,7 @@ export default class WebhookService {
     const patchObject: Prisma.WebhookUpdateInput = {};
 
     if (Object.prototype.hasOwnProperty.call(webhookPatchData, 'mention')) {
-      patchObject.mention = webhookPatchData.mention ? webhookPatchData.mention : null;
+      patchObject.mention = webhookPatchData.mention ? BigInt(webhookPatchData.mention) : null;
     }
 
     if (Object.prototype.hasOwnProperty.call(webhookPatchData, 'blacklist')) {

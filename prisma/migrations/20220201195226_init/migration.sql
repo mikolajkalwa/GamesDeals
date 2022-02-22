@@ -4,7 +4,7 @@ CREATE TABLE "webhooks" (
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
     "token" TEXT NOT NULL,
-    "mention" TEXT,
+    "mention" BIGINT,
     "guild" BIGINT NOT NULL,
     "channel" BIGINT NOT NULL,
     "blacklist" TEXT[],

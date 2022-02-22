@@ -131,7 +131,7 @@ describe('Webhooks', () => {
           token: 'super-secret',
           guild: '17',
           channel: '1',
-          mention: '@here',
+          mention: '123132',
         })
         .expect(201);
 
@@ -140,7 +140,7 @@ describe('Webhooks', () => {
         token: 'super-secret',
         guild: '17',
         channel: '1',
-        mention: '@here',
+        mention: '123132',
         keywords: [],
         blacklist: [],
       }));
@@ -154,7 +154,7 @@ describe('Webhooks', () => {
           token: 'super-secret',
           guild: '17',
           channel: '1',
-          mention: '@here',
+          mention: '12312344',
           keywords: ['steam', 'epic'],
           blacklist: ['indiegala', 'itch.io'],
         })
@@ -165,7 +165,7 @@ describe('Webhooks', () => {
         token: 'super-secret',
         guild: '17',
         channel: '1',
-        mention: '@here',
+        mention: '12312344',
         keywords: ['steam', 'epic'],
         blacklist: ['indiegala', 'itch.io'],
       }));
@@ -179,7 +179,7 @@ describe('Webhooks', () => {
           token: 'super-secret',
           guild: '17',
           channel: '1',
-          mention: '@here',
+          mention: '132321',
           keywords: ['steam', 'epic'],
           blacklist: ['indiegala', 'itch.io'],
         })
@@ -255,7 +255,7 @@ describe('Webhooks', () => {
       await request(app.getHttpServer())
         .patch('/webhooks/999999')
         .send({
-          mention: '@here',
+          mention: '132123213',
         })
         .expect(404);
     });
@@ -301,7 +301,7 @@ describe('Webhooks', () => {
       const response = await request(app.getHttpServer())
         .patch('/webhooks/1')
         .send({
-          mention: '@here',
+          mention: '123123123',
           keywords: ['steam', 'epic games'],
           blacklist: ['indiegala', 'itch.io'],
         })
@@ -309,7 +309,7 @@ describe('Webhooks', () => {
 
       expect(response.body).toEqual(expect.objectContaining({
         id: '1',
-        mention: '@here',
+        mention: '123123123',
         keywords: ['steam', 'epic games'],
         blacklist: ['indiegala', 'itch.io'],
       }));
@@ -319,13 +319,13 @@ describe('Webhooks', () => {
       const response = await request(app.getHttpServer())
         .patch('/webhooks/1')
         .send({
-          mention: '@everyone',
+          mention: '123132',
         })
         .expect(200);
 
       expect(response.body).toEqual(expect.objectContaining({
         id: '1',
-        mention: '@everyone',
+        mention: '123132',
         keywords: ['steam', 'epic games'],
         blacklist: ['indiegala', 'itch.io'],
       }));
@@ -335,13 +335,13 @@ describe('Webhooks', () => {
       const response = await request(app.getHttpServer())
         .patch('/webhooks/1')
         .send({
-          mention: '@coolPeople',
+          mention: '123321',
         })
         .expect(200);
 
       expect(response.body).toEqual(expect.objectContaining({
         id: '1',
-        mention: '@coolPeople',
+        mention: '123321',
         keywords: ['steam', 'epic games'],
         blacklist: ['indiegala', 'itch.io'],
       }));
@@ -367,14 +367,14 @@ describe('Webhooks', () => {
       const response = await request(app.getHttpServer())
         .patch('/webhooks/1')
         .send({
-          mention: '@people',
+          mention: '123132',
           blacklist: [],
         })
         .expect(200);
 
       expect(response.body).toEqual(expect.objectContaining({
         id: '1',
-        mention: '@people',
+        mention: '123132',
         keywords: ['steam', 'epic games'],
         blacklist: [],
       }));
