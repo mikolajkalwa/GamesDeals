@@ -15,6 +15,11 @@
   "rules": {
     "no-console": 0,
     "linebreak-style": 0,
-    "max-len": 0
+    "max-len": 0,
+    "no-return-await": 0,
+    "@typescript-eslint/return-await": [
+      "error",
+      "always"
+    ]
   }
 }

@@ -12,3 +12,6 @@ update:
 
 setup: build
 	node dist/scripts/setupInteractions.js
+
+lint:
+	npm run lint

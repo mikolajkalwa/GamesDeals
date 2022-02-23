@@ -8,7 +8,6 @@ import { parseArgs, printWebhookDetails } from './command.utils';
 
 const image = fs.readFileSync(path.resolve(__dirname, '..', '..', '..', '..', 'assets', 'avatar.png'), 'base64');
 
-// eslint-disable-next-line consistent-return
 const run = async (interaction: CommandInteraction) => {
   try {
     const targetChannel = interaction.options.getChannel('channel') as BaseGuildTextChannel;
@@ -35,7 +34,7 @@ const run = async (interaction: CommandInteraction) => {
       blacklist: blacklist || undefined,
     });
 
-    await interaction.reply(`Webhook created succesfully\n${printWebhookDetails(savedWebhook)}`);
+    return await interaction.reply(`Webhook created succesfully\n${printWebhookDetails(savedWebhook)}`);
   } catch (err) {
     if (err instanceof DiscordAPIError) {
       if (err.code === Constants.APIErrors.MISSING_PERMISSIONS) {

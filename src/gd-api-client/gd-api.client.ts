@@ -17,7 +17,7 @@ export default class GamesDealsApiClient {
   }
 
   public async getStatistics(): Promise<Statistics> {
-    return this.request.get('statistics').json();
+    return await this.request.get('statistics').json();
   }
 
   public async getLastDeal(): Promise<Deal> {
@@ -26,21 +26,21 @@ export default class GamesDealsApiClient {
   }
 
   public async getWebhooksForGuild(guildID: string): Promise<ReadWebhook[]> {
-    return this.request.get(`webhooks/guild/${guildID}`).json();
+    return await this.request.get(`webhooks/guild/${guildID}`).json();
   }
 
   public async patchWebhook(webhookId: string, webhookPatch: PatchWebhook): Promise<ReadWebhook> {
-    return this.request.patch(`webhooks/${webhookId}`, {
+    return await this.request.patch(`webhooks/${webhookId}`, {
       json: webhookPatch,
     }).json();
   }
 
   public async deleteWebhook(webhookId: string): Promise<void> {
-    return this.request.delete(`webhooks/${webhookId}`).json();
+    return await this.request.delete(`webhooks/${webhookId}`).json();
   }
 
   public async saveWebhook(webhook: Webhook): Promise<ReadWebhook> {
-    return this.request.post('webhooks', {
+    return await this.request.post('webhooks', {
       json: webhook,
     }).json();
   }

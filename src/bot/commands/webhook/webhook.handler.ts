@@ -6,39 +6,29 @@ import editWebhook from './edit.command';
 import deleteWebhook from './delete.command';
 import describeWebhooks from './get.command';
 
+type SubcommandFunction = (interaction: CommandInteraction, logger: Logger) => Promise<void>;
+
+const subcommands = new Map<string, SubcommandFunction>([
+  ['create', createWebhook],
+  ['delete', deleteWebhook],
+  ['info', describeWebhooks],
+  ['set', editWebhook],
+  ['clear', editWebhook],
+]);
+
 const webhookHandler: CommandHandler = {
   guildOnly: true,
   requieredPermissions: [Permissions.FLAGS.MANAGE_WEBHOOKS],
 
-  // eslint-disable-next-line consistent-return
   generator: async (interaction: CommandInteraction, logger: Logger): Promise<void> => {
     const subcommand = interaction.options.getSubcommand();
+    const strategy = subcommands.get(subcommand);
 
-    switch (subcommand) {
-      case 'create': {
-        await createWebhook(interaction);
-        break;
-      }
-      case 'delete': {
-        await deleteWebhook(interaction, logger);
-        break;
-      }
-      case 'info': {
-        await describeWebhooks(interaction);
-        break;
-      }
-
-      // edit webhook methods
-      case 'set':
-      case 'clear': {
-        await editWebhook(interaction, logger);
-        break;
-      }
-      default: {
-        logger.warn(`Unknown subcommand: ${subcommand}`);
-        await interaction.reply({ content: 'Unknown subcommand', ephemeral: true });
-      }
+    if (!strategy) {
+      logger.warn(`Unknown subcommand: ${subcommand}`);
+      return await interaction.reply({ content: 'Unknown subcommand', ephemeral: true });
     }
+    return await strategy(interaction, logger);
   },
 };
 
