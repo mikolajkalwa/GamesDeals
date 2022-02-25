@@ -6,7 +6,7 @@
   "author": "Mikolaj Kalwa",
   "license": "MIT",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc -p tsconfig.prod.json",
     "start:prod": "node dist/index.js",
     "prepare": "husky install",
     "check-updates": "npm-check-updates -e 2 -t minor",
