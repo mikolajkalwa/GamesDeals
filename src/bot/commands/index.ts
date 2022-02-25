@@ -3,6 +3,7 @@ import CommandHandler from './command-handler.type';
 import * as webhook from './webhook';
 import * as latest from './latest';
 import * as ping from './ping';
+import * as statistics from './statistics';
 
 const commands = new Map<string, {
   handler: CommandHandler,
@@ -22,6 +23,11 @@ commands.set(latest.definition.name, {
 commands.set(ping.definition.name, {
   definition: ping.definition,
   handler: ping.handler,
+});
+
+commands.set(statistics.definition.name, {
+  definition: statistics.definition,
+  handler: statistics.handler,
 });
 
 export default commands;
