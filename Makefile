@@ -15,3 +15,9 @@ setup: build
 
 lint:
 	npm run lint
+
+docker-build:
+	docker build . -t mikolajkalwa/gamesdealsbot
+
+docker-run:
+	docker run --env-file=.env mikolajkalwa/gamesdealsbot
