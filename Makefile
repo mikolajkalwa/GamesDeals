@@ -12,3 +12,9 @@ update:
 
 test: 
 	npm run test
+
+docker-build:
+	docker build . -t mikolajkalwa/gamesdealsnotifier
+
+docker-run:
+	docker run --init -it --env-file=.env mikolajkalwa/gamesdealsnotifier
