@@ -26,3 +26,9 @@ db-setup:
 
 db-reset:
 	npx prisma migrate reset --force
+
+docker-build:
+	docker build . -t mikolajkalwa/gamesdealsapi
+
+docker-run:
+	docker run --init -it --env-file=.env mikolajkalwa/gamesdealsapi
