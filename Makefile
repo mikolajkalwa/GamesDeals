@@ -20,4 +20,4 @@ docker-build:
 	docker build . -t mikolajkalwa/gamesdealsbot
 
 docker-run:
-	docker run --env-file=.env mikolajkalwa/gamesdealsbot
+	docker run --init -it --env-file=.env mikolajkalwa/gamesdealsbot
