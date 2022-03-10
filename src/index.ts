@@ -5,15 +5,15 @@ import { container } from 'tsyringe';
 import http from 'http';
 import https from 'https';
 import { Logger } from 'pino';
+import { setTimeout } from 'timers/promises';
 import logger from './lib/logger';
 import { GamesDealsAPIClient, IGamesDealsAPIClient } from './GamesDealsAPIClient';
 import { DiscordClient, IDiscordClient } from './DiscordClient';
 import { IRedditClient, RedditClient } from './RedditClient';
 import { INotifier, Notifier } from './Notifier';
-import sleep from './lib/sleep';
 
-http.globalAgent.maxSockets = 30;
-https.globalAgent.maxSockets = 30;
+http.globalAgent.maxSockets = 50;
+https.globalAgent.maxSockets = 50;
 
 const resultsWebhook = process.env.WEBHOOK_URL;
 const discordUrl = process.env.DISCORD_URL || 'https://discord.com';
@@ -59,15 +59,17 @@ const redditBaseUrl = process.env.REDDIT_URL || 'https://reddit.com';
         await notifier.cleanupInvalidWebhooks(executionResult.webhooksToRemove);
         await notifier.reportExecutionResult(executionResult, resultsWebhook);
 
-        // todo: implement appropriate retry mechanism
         if (executionResult.failedWebhooks.length > 0) {
-          await sleep(3000);
+          await setTimeout(15000);
+
           const retryResult = await notifier.announceDeal(deal, executionResult.failedWebhooks);
           if (executionResult.failedWebhooks.length === retryResult.failedWebhooks.length) {
-            logger.warn('After 3 seconds the same webhooks failed to execute.');
+            logger.warn('After 15 seconds the same webhooks failed to execute.');
           }
+
           const failedWebhooksIDs = retryResult.failedWebhooks.map((webhook) => webhook.id);
           logger.warn(`Failed webhooks ids: ${failedWebhooksIDs.join(', ')}`);
+          await notifier.reportExecutionResult(retryResult, resultsWebhook);
         }
       } catch (e: any) {
         logger.error(e);

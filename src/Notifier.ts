@@ -52,6 +52,7 @@ export class Notifier implements INotifier {
 
   public static createMessageContent = (deal: Deal) => `**${deal.title}**\n<${deal.url}>\nPosted by: *${deal.author}*\nhttps://reddit.com/${deal.id}\n`;
 
+  // eslint-disable-next-line class-methods-use-this
   public getWebhooksToExecute = (deal: Deal, allWebhooks: Webhook[]) => {
     const title = deal.title.toLowerCase();
 
@@ -131,7 +132,7 @@ Planned to execute: ${executionResult.webhooksToExecute.length}
 Webhooks to remove: ${executionResult.webhooksToRemove.length}
 Rate-limited: ${executionResult.rateLimitedWebhooks.length}
 Failed to execute: ${executionResult.failedWebhooks.length}
-Bad requests: ${executionResult.badRequestWebhooks.length};
+Bad requests: ${executionResult.badRequestWebhooks.length}
 `;
     this.logger.info(content);
     if (webhookUrl) {
