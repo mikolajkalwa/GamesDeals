@@ -2,8 +2,8 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { LoggerModule } from 'nestjs-pino';
 import { PrometheusModule } from '@willsoto/nestjs-prometheus';
-
 import * as Joi from 'joi';
+import HealthModule from './health/health.module';
 import DealsModule from './deals/deals.module';
 import WebhookModule from './webhooks/webhook.module';
 import StatisticsModule from './statistics/statistics.module';
@@ -27,6 +27,7 @@ import StatisticsModule from './statistics/statistics.module';
     DealsModule,
     WebhookModule,
     StatisticsModule,
+    HealthModule,
   ],
   providers: [],
 })
