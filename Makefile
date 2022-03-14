@@ -31,4 +31,4 @@ docker-build:
 	docker build . -t mikolajkalwa/gamesdealsapi
 
 docker-run:
-	docker run --init -it --env-file=.env mikolajkalwa/gamesdealsapi
+	docker run --init -it -p 3000:3000 --env-file=.env mikolajkalwa/gamesdealsapi

@@ -1,6 +1,8 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { LoggerModule } from 'nestjs-pino';
+import { PrometheusModule } from '@willsoto/nestjs-prometheus';
+
 import * as Joi from 'joi';
 import DealsModule from './deals/deals.module';
 import WebhookModule from './webhooks/webhook.module';
@@ -21,6 +23,7 @@ import StatisticsModule from './statistics/statistics.module';
         PORT: Joi.number().default(3000),
       }),
     }),
+    PrometheusModule.register(),
     DealsModule,
     WebhookModule,
     StatisticsModule,
