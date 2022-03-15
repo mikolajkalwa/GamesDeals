@@ -1,12 +1,19 @@
 import '../env';
 
 import { Client, Intents, Options } from 'discord.js';
+import { Pushgateway, collectDefaultMetrics, Registry } from 'prom-client';
+
 import pino from 'pino';
 import commands from './commands';
 
 const logger = pino({
   level: 'debug',
 });
+
+const register = new Registry();
+register.setDefaultLabels({ serviceName: `games-deals-shard-${process.pid}` });
+collectDefaultMetrics({ register });
+const gateway = new Pushgateway(process.env.PROMETHEUS_GATEWAY, {}, register);
 
 const client = new Client({
   intents: [Intents.FLAGS.GUILDS],
@@ -64,3 +71,9 @@ client.on('interactionCreate', async (interaction) => {
 
 // eslint-disable-next-line @typescript-eslint/no-floating-promises
 client.login(process.env.BOT_TOKEN);
+
+setInterval(() => {
+  gateway.push({ jobName: `games-deals-shard-${process.pid}` })
+    .then(() => logger.debug('Metrics pushed'))
+    .catch((e) => logger.error(e));
+}, 5 * 1000);
