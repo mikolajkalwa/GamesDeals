@@ -1,6 +1,7 @@
 import '../env';
 
 import { Client, Intents, Options } from 'discord.js';
+import Cluster from 'discord-hybrid-sharding';
 import { Pushgateway, collectDefaultMetrics, Registry } from 'prom-client';
 
 import pino from 'pino';
@@ -11,11 +12,13 @@ const logger = pino({
 });
 
 const register = new Registry();
-register.setDefaultLabels({ serviceName: `games-deals-shard-${process.pid}` });
+register.setDefaultLabels({ serviceName: `games-deals-cluster-${process.pid}` });
 collectDefaultMetrics({ register });
 const gateway = new Pushgateway(process.env.PROMETHEUS_GATEWAY, {}, register);
 
 const client = new Client({
+  shards: Cluster.data.SHARD_LIST,
+  shardCount: Cluster.data.TOTAL_SHARDS,
   intents: [Intents.FLAGS.GUILDS],
   makeCache: Options.cacheWithLimits({
     ApplicationCommandManager: 0, // guild.commands
@@ -37,7 +40,11 @@ const client = new Client({
   }),
 });
 
-client.on('ready', () => logger.info('Shard is online'));
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+client.cluster = new Cluster.Client(client);
+
+client.on('ready', () => logger.info('Cluster is online'));
 client.on('debug', (m) => logger.debug(m));
 client.on('warn', (m) => logger.warn(m));
 client.on('error', (m) => logger.error(m));
@@ -73,7 +80,7 @@ client.on('interactionCreate', async (interaction) => {
 client.login(process.env.BOT_TOKEN);
 
 setInterval(() => {
-  gateway.push({ jobName: `games-deals-shard-${process.pid}` })
+  gateway.push({ jobName: `games-deals-cluster-${process.pid}` })
     .then(() => logger.debug('Metrics pushed'))
     .catch((e) => logger.error(e));
 }, 5 * 1000);
