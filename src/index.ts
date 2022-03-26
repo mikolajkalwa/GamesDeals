@@ -28,5 +28,5 @@ setInterval(() => {
   gateway
     .push({ jobName: 'cluster-manager' })
     .then(() => logger.debug('Metrics pushed'))
-    .catch((e) => logger.error(e));
+    .catch((e) => logger.error(e, 'Failed to push manager metrics'));
 }, 5 * 1000);

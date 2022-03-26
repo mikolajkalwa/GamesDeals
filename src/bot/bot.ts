@@ -45,9 +45,9 @@ const client = new Client({
 client.cluster = new Cluster.Client(client);
 
 client.on('ready', () => logger.info('Cluster is online'));
-client.on('debug', (m) => logger.debug(m));
-client.on('warn', (m) => logger.warn(m));
-client.on('error', (m) => logger.error(m));
+client.on('debug', (m) => logger.debug(m, 'Debug event occured in Discord Client'));
+client.on('warn', (m) => logger.warn(m, 'Warn event occured in Discord Client'));
+client.on('error', (m) => logger.error(m, 'Error event occured in Discord Client'));
 
 client.on('interactionCreate', async (interaction) => {
   if (!interaction.isCommand()) return;
@@ -73,7 +73,7 @@ client.on('interactionCreate', async (interaction) => {
     }
   }
 
-  command.handler.generator(interaction, logger).catch((error) => logger.error(error));
+  command.handler.generator(interaction, logger).catch((error) => logger.error(error, 'Command handler error occured'));
 });
 
 // eslint-disable-next-line @typescript-eslint/no-floating-promises
@@ -82,5 +82,5 @@ client.login(process.env.BOT_TOKEN);
 setInterval(() => {
   gateway.push({ jobName: `games-deals-cluster-${process.pid}` })
     .then(() => logger.debug('Metrics pushed'))
-    .catch((e) => logger.error(e));
+    .catch((e) => logger.error(e, 'Failed to push cluster metrics'));
 }, 5 * 1000);
