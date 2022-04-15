@@ -76,8 +76,10 @@ client.on('interactionCreate', async (interaction) => {
   command.handler.generator(interaction, logger).catch((error) => logger.error(error, 'Command handler error occured'));
 });
 
-// eslint-disable-next-line @typescript-eslint/no-floating-promises
-client.login(process.env.BOT_TOKEN);
+client.login(process.env.BOT_TOKEN).catch((e) => {
+  logger.error(e, 'Cluster failed to login');
+  process.exit(1);
+});
 
 setInterval(() => {
   gateway.push({ jobName: `games-deals-cluster-${process.pid}` })
