@@ -12,8 +12,8 @@ import { DiscordClient, IDiscordClient } from './DiscordClient';
 import { IRedditClient, RedditClient } from './RedditClient';
 import { INotifier, Notifier } from './Notifier';
 
-http.globalAgent.maxSockets = 50;
-https.globalAgent.maxSockets = 50;
+http.globalAgent.maxSockets = 64;
+https.globalAgent.maxSockets = 64;
 
 const resultsWebhook = process.env.WEBHOOK_URL;
 const discordUrl = process.env.DISCORD_URL || 'https://discord.com';
