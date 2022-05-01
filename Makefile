@@ -13,6 +13,9 @@ update:
 test: 
 	npm run test
 
+lint:
+	npm run lint
+
 docker-build:
 	docker build . -t mikolajkalwa/gamesdealsnotifier
 

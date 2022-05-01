@@ -1,14 +1,8 @@
-import got, { Response } from 'got';
-import { inject, injectable } from 'tsyringe';
-import { Webhook } from './types/Webhook';
+import got from 'got';
+import { Webhook } from './types/GamesDealsApi';
 
-export interface IDiscordClient {
-  executeWebhook(webhook: Webhook, message: string): Promise<Response<string>>;
-}
-
-@injectable()
-export class DiscordClient implements IDiscordClient {
-  constructor(@inject('discordBaseUrl') private readonly baseUrl: string) { }
+export default class DiscordClient {
+  constructor(private readonly baseUrl: string) { }
 
   public executeWebhook = async (webhook: Webhook, message: string) => {
     let content = message;

@@ -1,16 +1,12 @@
-import 'reflect-metadata';
-import './lib/env';
-
-import { container } from 'tsyringe';
+import 'dotenv/config';
 import http from 'http';
 import https from 'https';
-import { Logger } from 'pino';
+import pino from 'pino';
 import { setTimeout } from 'timers/promises';
-import logger from './lib/logger';
-import { GamesDealsAPIClient, IGamesDealsAPIClient } from './GamesDealsAPIClient';
-import { DiscordClient, IDiscordClient } from './DiscordClient';
-import { IRedditClient, RedditClient } from './RedditClient';
-import { INotifier, Notifier } from './Notifier';
+import DiscordClient from './DiscordClient';
+import GamesDealsAPIClient from './GamesDealsAPIClient';
+import Notifier from './Notifier';
+import RedditClient from './RedditClient';
 
 http.globalAgent.maxSockets = 64;
 https.globalAgent.maxSockets = 64;
@@ -18,34 +14,19 @@ https.globalAgent.maxSockets = 64;
 const resultsWebhook = process.env.WEBHOOK_URL;
 const discordUrl = process.env.DISCORD_URL || 'https://discord.com';
 const gamesDealsApiUrl = process.env.GAMES_DEALS_API_URL || 'http://localhost:3000';
-const redditBaseUrl = process.env.REDDIT_URL || 'https://reddit.com';
+const redditUrl = process.env.REDDIT_URL || 'https://reddit.com';
+
+const logger = pino({
+  level: process.env.LOG_LEVEL || 'debug',
+});
+
+const redditClient = new RedditClient(redditUrl);
+const gdApiClient = new GamesDealsAPIClient(gamesDealsApiUrl);
+const discordClient = new DiscordClient(discordUrl);
+const notifier = new Notifier(logger, gdApiClient, discordClient);
 
 (async () => {
-  container.register('discordBaseUrl', { useValue: discordUrl });
-  container.register('gdApiBaseUrl', { useValue: gamesDealsApiUrl });
-  container.register('redditBaseUrl', { useValue: redditBaseUrl });
-
-  container.register<Logger>('Logger', {
-    useValue: logger,
-  });
-  container.register<IGamesDealsAPIClient>('IGamesDealsAPIClient', {
-    useClass: GamesDealsAPIClient,
-  });
-  container.register<IDiscordClient>('IDiscordClient', {
-    useClass: DiscordClient,
-  });
-  container.register<IRedditClient>('IRedditClient', {
-    useClass: RedditClient,
-  });
-  container.register<INotifier>('INotifier', {
-    useClass: Notifier,
-  });
-
   try {
-    const notifier = container.resolve(Notifier);
-    const redditClient = container.resolve(RedditClient);
-    const gdApiClient = container.resolve(GamesDealsAPIClient);
-
     const trendingDeals = await redditClient.getTrendingDeals();
     const allWebhooks = await gdApiClient.getAllWebhooks();
     const dealsToAnnounce = await notifier.getDealsToAnnounce(trendingDeals);
@@ -71,21 +52,14 @@ const redditBaseUrl = process.env.REDDIT_URL || 'https://reddit.com';
           logger.warn(`Failed webhooks ids: ${failedWebhooksIDs.join(', ')}`);
           await notifier.reportExecutionResult(retryResult, resultsWebhook);
         }
-      } catch (e: any) {
+      } catch (e) {
         logger.error(e);
       }
     }));
-  } catch (e: any) {
+  } catch (e) {
     logger.error(e);
   }
-})();
-
-process.on('unhandledRejection', (reason) => {
-  // eslint-disable-next-line @typescript-eslint/no-throw-literal
-  throw reason;
-});
-
-process.on('uncaughtException', (error) => {
-  logger.error(error);
+})().catch((e) => {
+  logger.error(e, 'main function crashed');
   process.exit(1);
 });

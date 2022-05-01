@@ -1,9 +1,8 @@
-import { Deal } from '../src/types/Deal';
-import { Webhook } from '../src/types/Webhook';
-import { Notifier } from '../src/Notifier';
 import pino from 'pino';
-import { GamesDealsAPIClient } from '../src/GamesDealsAPIClient';
-import { DiscordClient } from '../src/DiscordClient';
+import DiscordClient from '../src/DiscordClient';
+import GamesDealsAPIClient from '../src/GamesDealsAPIClient';
+import Notifier from '../src/Notifier';
+import { Deal, Webhook } from '../src/types/GamesDealsApi';
 
 const logger = pino();
 

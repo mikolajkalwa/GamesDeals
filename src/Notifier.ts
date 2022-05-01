@@ -1,37 +1,16 @@
 import got from 'got/dist/source';
 import { Logger } from 'pino';
-import { inject, injectable } from 'tsyringe';
-import { IDiscordClient } from './DiscordClient';
-import { IGamesDealsAPIClient } from './GamesDealsAPIClient';
-import isFree from './lib/isFree';
-import { Deal } from './types/Deal';
-import { Webhook } from './types/Webhook';
+import DiscordClient from './DiscordClient';
+import GamesDealsAPIClient from './GamesDealsAPIClient';
+import { Deal, Webhook } from './types/GamesDealsApi';
+import { ExecutionResult } from './types/Notifier';
+import isFree from './utils/isFree';
 
-export interface INotifier {
-  getDealsToAnnounce(deals: Deal[]): Promise<Deal[]>;
-  getWebhooksToExecute(deal: Deal, allWebhooks: Webhook[]): Webhook[];
-  announceDeal(deal: Deal, allWebhooks: Webhook[]): Promise<ExecutionResult>;
-  reportExecutionResult(
-    executionResult: ExecutionResult,
-    webhook?: string,
-  ): Promise<void>;
-  cleanupInvalidWebhooks(webhooks: Webhook[]): Promise<void>;
-}
-
-export interface ExecutionResult {
-  webhooksToExecute: Webhook[];
-  webhooksToRemove: Webhook[];
-  rateLimitedWebhooks: Webhook[];
-  failedWebhooks: Webhook[];
-  badRequestWebhooks: Webhook[];
-}
-
-@injectable()
-export class Notifier implements INotifier {
+export default class Notifier {
   constructor(
-    @inject('Logger') private readonly logger: Logger,
-    @inject('IGamesDealsAPIClient') private readonly gdApiClient: IGamesDealsAPIClient,
-    @inject('IDiscordClient') private readonly discordClient: IDiscordClient,
+    private readonly logger: Logger,
+    private readonly gdApiClient: GamesDealsAPIClient,
+    private readonly discordClient: DiscordClient,
   ) { }
 
   public getDealsToAnnounce = async (deals: Deal[]) => (

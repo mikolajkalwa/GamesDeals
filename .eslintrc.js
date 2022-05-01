@@ -5,24 +5,22 @@ module.exports = {
         '@typescript-eslint',
     ],
     extends: [
-        'airbnb-base',
-        'airbnb-typescript/base',
+        "airbnb-base",
+        "airbnb-typescript/base",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:@typescript-eslint/recommended-requiring-type-checking"
     ],
     parserOptions: {
         project: './tsconfig.json'
     },
     rules: {
-        'linebreak-style': 0,
-        'no-console': 0,
-        '@typescript-eslint/member-delimiter-style': ['error', {
-            'multiline': {
-                'delimiter': 'semi',
-                'requireLast': true
-            },
-            'singleline': {
-                'delimiter': 'semi',
-                'requireLast': true
-            }
-        }]
+        "no-console": 0,
+        "linebreak-style": 0,
+        "max-len": 0,
+        "no-return-await": 0,
+        "@typescript-eslint/return-await": [
+          "error",
+          "always"
+        ]
     }
 };
