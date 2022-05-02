@@ -1,14 +1,13 @@
-import '../env';
-
 import { REST } from '@discordjs/rest';
-import { Routes } from 'discord-api-types/v9';
+import { Routes } from 'discord-api-types/v10';
+import config from '../config';
 import commands from '../bot/commands';
 
 const definitions = Array.from(commands.values()).map((x) => x.definition.toJSON());
 const clientId = '904077341846818888';
 const guildId = '527065903926345728';
 
-const rest = new REST({ version: '9' }).setToken(process.env.BOT_TOKEN);
+const rest = new REST({ version: '10' }).setToken(config.BOT_TOKEN);
 
 // eslint-disable-next-line @typescript-eslint/no-floating-promises
 (async () => {

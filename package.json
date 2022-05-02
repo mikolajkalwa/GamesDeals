@@ -22,11 +22,11 @@
     "dotenv": "^16.0.0",
     "erlpack": "github:discord/erlpack",
     "got": "^11.8.3",
-    "joi": "^17.6.0",
     "pino": "^7.11.0",
     "prom-client": "^14.0.1",
     "utf-8-validate": "^5.0.9",
-    "zlib-sync": "^0.1.7"
+    "zlib-sync": "^0.1.7",
+    "zod": "^3.14.4"
   },
   "devDependencies": {
     "@commitlint/cli": "^16.2.4",
