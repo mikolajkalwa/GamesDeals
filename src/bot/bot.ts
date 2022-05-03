@@ -1,21 +1,18 @@
-import '../env';
-
 import { Client, Intents, Options } from 'discord.js';
+import Cluster from 'discord-hybrid-sharding';
 import { Pushgateway, collectDefaultMetrics, Registry } from 'prom-client';
 
 import pino from 'pino';
+import config from '../config';
 import commands from './commands';
 
 const logger = pino({
   level: 'debug',
 });
 
-const register = new Registry();
-register.setDefaultLabels({ serviceName: `games-deals-shard-${process.pid}` });
-collectDefaultMetrics({ register });
-const gateway = new Pushgateway(process.env.PROMETHEUS_GATEWAY, {}, register);
-
 const client = new Client({
+  shards: Cluster.data.SHARD_LIST,
+  shardCount: Cluster.data.TOTAL_SHARDS,
   intents: [Intents.FLAGS.GUILDS],
   makeCache: Options.cacheWithLimits({
     ApplicationCommandManager: 0, // guild.commands
@@ -37,10 +34,14 @@ const client = new Client({
   }),
 });
 
-client.on('ready', () => logger.info('Shard is online'));
-client.on('debug', (m) => logger.debug(m));
-client.on('warn', (m) => logger.warn(m));
-client.on('error', (m) => logger.error(m));
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+client.cluster = new Cluster.Client(client);
+
+client.on('ready', () => logger.info('Cluster is online'));
+client.on('debug', (m) => logger.debug(m, 'Debug event occured in Discord Client'));
+client.on('warn', (m) => logger.warn(m, 'Warn event occured in Discord Client'));
+client.on('error', (m) => logger.error(m, 'Error event occured in Discord Client'));
 
 client.on('interactionCreate', async (interaction) => {
   if (!interaction.isCommand()) return;
@@ -66,14 +67,23 @@ client.on('interactionCreate', async (interaction) => {
     }
   }
 
-  command.handler.generator(interaction, logger).catch((error) => logger.error(error));
+  command.handler.generator(interaction, logger).catch((error) => logger.error(error, 'Command handler error occured'));
 });
 
-// eslint-disable-next-line @typescript-eslint/no-floating-promises
-client.login(process.env.BOT_TOKEN);
+client.login(config.BOT_TOKEN).catch((e) => {
+  logger.error(e, 'Cluster failed to login');
+  process.exit(1);
+});
 
-setInterval(() => {
-  gateway.push({ jobName: `games-deals-shard-${process.pid}` })
-    .then(() => logger.debug('Metrics pushed'))
-    .catch((e) => logger.error(e));
-}, 5 * 1000);
+if (config.PROMETHEUS_GATEWAY) {
+  const register = new Registry();
+  register.setDefaultLabels({ serviceName: `games-deals-cluster-${process.pid}` });
+  collectDefaultMetrics({ register });
+  const gateway = new Pushgateway(config.PROMETHEUS_GATEWAY, {}, register);
+
+  setInterval(() => {
+    gateway.push({ jobName: `games-deals-cluster-${process.pid}` })
+      .then(() => logger.debug('Metrics pushed'))
+      .catch((e) => logger.error(e, 'Failed to push cluster metrics'));
+  }, 5 * 1000);
+}

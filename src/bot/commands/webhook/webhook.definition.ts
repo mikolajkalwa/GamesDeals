@@ -1,5 +1,5 @@
 import { SlashCommandBuilder } from '@discordjs/builders';
-import { Constants } from 'discord.js';
+import { ChannelType } from 'discord-api-types/v10';
 
 const webhookDefinition = new SlashCommandBuilder()
   .setName('webhook')
@@ -10,9 +10,7 @@ const webhookDefinition = new SlashCommandBuilder()
     .addChannelOption((option) => option
       .setName('channel')
       .setDescription('Select channel')
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      .addChannelType(Constants.ChannelTypes.GUILD_TEXT)
+      .addChannelTypes(ChannelType.GuildText)
       .setRequired(true))
     .addRoleOption((option) => option
       .setName('role')

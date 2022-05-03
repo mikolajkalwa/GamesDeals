@@ -1,5 +1,5 @@
 import got, { Got } from 'got';
-
+import config from '../config';
 import Deal from './interfaces/deal.interface';
 import PatchWebhook from './interfaces/patch-webhook.interface';
 import ReadWebhook from './interfaces/read-webhook.interface';
@@ -11,7 +11,7 @@ export default class GamesDealsApiClient {
 
   constructor() {
     this.request = got.extend({
-      prefixUrl: process.env.API_URL,
+      prefixUrl: config.API_URL,
       timeout: 2500, // we have 3 seconds to respond to an interaction
     });
   }
