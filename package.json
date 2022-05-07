@@ -21,7 +21,7 @@
   "devDependencies": {
     "@commitlint/cli": "16.2.4",
     "@commitlint/config-conventional": "16.2.4",
-    "@types/jest": "27.4.1",
+    "@types/jest": "27.5.0",
     "@typescript-eslint/eslint-plugin": "5.22.0",
     "@typescript-eslint/parser": "5.22.0",
     "eslint": "8.14.0",
@@ -29,7 +29,7 @@
     "eslint-plugin-import": "2.26.0",
     "eslint-plugin-jest": "26.1.5",
     "husky": "7.0.4",
-    "jest": "28.0.3",
+    "jest": "28.1.0",
     "nock": "13.2.4",
     "npm-check-updates": "12.5.11",
     "ts-jest": "28.0.1",
