@@ -9,7 +9,7 @@
     "build": "tsc -p tsconfig.prod.json",
     "start:prod": "node dist/index.js",
     "prepare": "husky install",
-    "check-updates": "npm-check-updates -e 2 -t minor",
+    "check-updates": "npm-check-updates -e 2 -t minor --stdin",
     "lint": "eslint src/**"
   },
   "dependencies": {
@@ -38,7 +38,7 @@
     "eslint-config-airbnb-typescript": "^17.0.0",
     "eslint-plugin-import": "^2.26.0",
     "husky": "^8.0.1",
-    "npm-check-updates": "^13.1.5",
+    "npm-check-updates": "^14.0.1",
     "typescript": "^4.7.3"
   }
 }
