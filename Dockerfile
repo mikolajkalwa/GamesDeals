@@ -1,14 +1,14 @@
-FROM node:14-alpine as build
+FROM node:16-bullseye as build
 WORKDIR /usr/src/app
 COPY package*.json ./
-RUN npm install
+RUN npm ci --ignore-scripts
 COPY . .
 RUN npm run build
 
-FROM node:14-alpine
+FROM node:16-bullseye
 WORKDIR /usr/src/app
 COPY --from=build /usr/src/app/package*.json ./
-COPY --from=build /usr/src/app/avatar.png ./
-RUN npm ci --only=production && npm cache clean --force
-COPY --from=build /usr/src/app/built ./built
-CMD ["node", "--max-old-space-size=3072", "./built/index.js"]
+COPY --from=build /usr/src/app/assets/avatar.png ./assets/avatar.png
+RUN npm ci --ignore-scripts --only=production && npm cache clean --force
+COPY --from=build /usr/src/app/dist ./dist
+CMD ["node", "./dist/index.js"]

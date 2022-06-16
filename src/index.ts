@@ -1,32 +1,34 @@
-import './env';
 import path from 'path';
-import got from 'got';
-import bot from './lib/bot';
-import { loadCommands, loadEvents } from './lib/modulesLoader';
-import Time from './helpers/Time';
+import { Manager } from 'discord-hybrid-sharding';
+import pino from 'pino';
+import { Pushgateway, collectDefaultMetrics, Registry } from 'prom-client';
+import config from './config';
 
-(async () => {
-  await Promise.all([
-    loadEvents(path.resolve(__dirname, 'events')),
-    loadCommands(path.resolve(__dirname, 'commands')),
-  ]);
+const logger = pino({
+  level: 'debug',
+});
 
-  await bot.connect();
-  bot.editStatus('online', {
-    name: 'Use gd:help',
-    type: 3,
-  });
+const manager = new Manager(path.resolve(__dirname, 'bot', 'bot.js'), {
+  shardsPerClusters: 20,
+  token: config.BOT_TOKEN,
+});
 
-  if (process.env.BOT_ID && process.env.TOPGG_TOKEN) {
-    setInterval(async () => {
-      await got.post(`https://top.gg/api/bots/${process.env.BOT_ID}/stats`, {
-        json: {
-          server_count: bot.guilds.size,
-        },
-        headers: {
-          Authorization: process.env.TOPGG_TOKEN,
-        },
-      });
-    }, 30 * Time.MINUTE);
-  }
-})();
+manager.on('clusterCreate', (cluster) => logger.info(`Launched cluster ${cluster.id}`));
+
+manager.spawn({ timeout: -1 }).catch((e) => {
+  logger.error(e, 'Hybrid sharding maanger failed');
+  process.exit(1);
+});
+
+if (config.PROMETHEUS_GATEWAY) {
+  const register = new Registry();
+  register.setDefaultLabels({ serviceName: 'cluster-manager' });
+  collectDefaultMetrics({ register });
+  const gateway = new Pushgateway(config.PROMETHEUS_GATEWAY, {}, register);
+
+  setInterval(() => {
+    gateway
+      .push({ jobName: 'cluster-manager' })
+      .catch((e) => logger.error(e, 'Failed to push manager metrics'));
+  }, 5 * 1000);
+}

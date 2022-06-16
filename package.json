@@ -1,31 +1,44 @@
 {
   "name": "games-deals-bot",
-  "version": "1.0.0",
-  "main": "/built/index.js",
+  "version": "2.0.0",
+  "main": "dist/index.js",
   "repository": "git@github.com:mikolajkalwa/GamesDealsBot.git",
   "author": "Mikolaj Kalwa",
   "license": "MIT",
   "scripts": {
-    "build": "tsc",
-    "start": "node --max-old-space-size=3072 built/index.js"
+    "build": "tsc -p tsconfig.prod.json",
+    "start:prod": "node dist/index.js",
+    "prepare": "husky install",
+    "check-updates": "npm-check-updates -e 2 -t minor --stdin",
+    "lint": "eslint src/**"
   },
   "dependencies": {
-    "dotenv": "^10.0.0",
-    "eris": "^0.15.1",
-    "got": "^11.8.0",
-    "pino": "^6.7.0",
-    "string-argv": "^0.3.1",
-    "yargs-parser": "^20.2.4"
+    "@discordjs/builders": "^0.15.0",
+    "@discordjs/rest": "^0.5.0",
+    "bufferutil": "^4.0.6",
+    "discord-api-types": "^0.34.0",
+    "discord-hybrid-sharding": "^1.5.5",
+    "discord.js": "^13.8.0",
+    "dotenv": "^16.0.1",
+    "erlpack": "github:discord/erlpack",
+    "got": "^11.8.3",
+    "pino": "^8.0.0",
+    "prom-client": "^14.0.1",
+    "utf-8-validate": "^5.0.9",
+    "zlib-sync": "^0.1.7",
+    "zod": "^3.17.3"
   },
   "devDependencies": {
-    "@types/node": "^14.14.9",
-    "@types/pino": "^6.3.4",
-    "@types/yargs-parser": "^15.0.0",
-    "@typescript-eslint/eslint-plugin": "^4.8.1",
-    "@typescript-eslint/parser": "^4.8.1",
-    "eslint": "^7.14.0",
-    "eslint-config-airbnb-typescript": "^12.0.0",
-    "eslint-plugin-import": "^2.22.1",
-    "typescript": "^4.1.2"
+    "@commitlint/cli": "^17.0.2",
+    "@commitlint/config-conventional": "^17.0.2",
+    "@types/node": "^18.0.0",
+    "@typescript-eslint/eslint-plugin": "^5.28.0",
+    "@typescript-eslint/parser": "^5.28.0",
+    "eslint": "^8.17.0",
+    "eslint-config-airbnb-typescript": "^17.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "husky": "^8.0.1",
+    "npm-check-updates": "^14.0.1",
+    "typescript": "^4.7.3"
   }
 }
