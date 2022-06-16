@@ -4,15 +4,12 @@
 
 ### Environment variables
   1. PORT - specifies on which port API should run.
-  2. MONGO_URI - [MongoDB Connection URI](https://docs.mongodb.com/manual/reference/connection-string/)
+  2. DATABASE_URL - Postgres Connection URI
   3. NODE_ENV - production / development 
 
 ## Installation
 
-1. Install Node.js (I recommend latest LTS version).
-2. Run some MongoDB instance. https://docs.mongodb.com/manual/administration/install-community/ 
-3. Clone this repo.
-4. Install dependencies `npm ci --only=production`
+1. Use provided docker image
 5. Configure the required environment variables (`.env` file can be used).
 
 ## Licence 
