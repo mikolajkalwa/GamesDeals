@@ -11,8 +11,6 @@ GamesDeals is a Discord bot built with [Discord.js](https://github.com/discordjs
 
 If you have trouble setting up the bot or have some questions join [Support Server](https://discord.gg/ZkjqCmM).
 
-This project is hosted on and supported by [MIKR.US](https://mikr.us/) - Polish VPS provider. 
-
 ## ⚠️ If you don't have access to the slash commands please reinvite the bot!
 
 ## Command list
@@ -44,6 +42,11 @@ This project is hosted on and supported by [MIKR.US](https://mikr.us/) - Polish 
   - /webhook create `role:`@coolPeople
 - Both: 
   - /webhook create `channel:`#cool-channel `role:`@coolPeople `keywords:` steam,gog
+
+## Repositories associated with this project:
+* https://github.com/mikolajkalwa/GamesDealsBot
+* https://github.com/mikolajkalwa/GamesDealsAPI
+* https://github.com/mikolajkalwa/GamesDealsNotifier
 
 ## License
 
