@@ -1,22 +1,20 @@
-name: Docker
-
 # This workflow uses actions that are not certified by GitHub.
 # They are provided by a third-party and are governed by
 # separate terms of service, privacy policy, and support
 # documentation.
 
+name: Create and publish a Docker image
+
 on:
   push:
-    branches: [ master ]
+    branches: ["master"]
 
 env:
-  REGISTRY: docker.io
-  IMAGE_NAME: mikolajkalwa/gamesdealsapi
-
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
 
 jobs:
-  build:
-
+  build-and-push-image:
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -24,18 +22,25 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
-      - name: Log into registry ${{ env.REGISTRY }}
-        uses: docker/login-action@28218f9b04b4f3f62068d7b6ce6ca5b26e35336c
+      - name: Log in to the Container registry
+        uses: docker/login-action@d398f07826957cd0a18ea1b059cf1207835e60bc
         with:
           registry: ${{ env.REGISTRY }}
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@97c170d70b5f8bfc77e6b23e68381f217cb64ded
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
       - name: Build and push Docker image
-        uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
+        uses: docker/build-push-action@42863b1282f7046f6c1ec9222965bbceafae3bb8
         with:
           context: .
           push: true
-          tags: mikolajkalwa/gamesdealsapi:latest
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
