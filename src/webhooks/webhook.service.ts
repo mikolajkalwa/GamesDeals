@@ -1,30 +1,53 @@
-import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import {
+  Injectable, NotFoundException, BadRequestException, ConflictException,
+} from '@nestjs/common';
+import { Webhook, Prisma } from '@prisma/client';
+import PrismaService from '../prisma/prisma.service';
 import CreateWebhookDto from './dto/create-webhook.dto';
 import PatchWebhookDto from './dto/patch-webhook.dto';
-import { Webhook } from './schemas/webhook.schema';
 
 @Injectable()
 export default class WebhookService {
-  constructor(@InjectModel(Webhook.name) private readonly WebhookModel: Model<Webhook>) { }
+  constructor(private readonly prisma: PrismaService) { }
 
   async create(webhook: CreateWebhookDto): Promise<Webhook> {
-    const createdWebhook = new this.WebhookModel(webhook);
-    return createdWebhook.save();
+    const existingWebhook = await this.prisma.webhook.findUnique({
+      where: {
+        id: BigInt(webhook.id),
+      },
+    });
+
+    if (existingWebhook) {
+      throw new ConflictException('webhook with provided id already exists');
+    }
+
+    return this.prisma.webhook.create({
+      data: {
+        channel: BigInt(webhook.channel),
+        guild: BigInt(webhook.guild),
+        id: BigInt(webhook.id),
+        token: webhook.token,
+        mention: webhook.mention ? BigInt(webhook.mention) : null,
+        blacklist: webhook.blacklist,
+        keywords: webhook.keywords,
+      },
+    });
   }
 
   async count(): Promise<number> {
-    const webhookCount = await this.WebhookModel.countDocuments({});
-    return webhookCount;
+    return this.prisma.webhook.count();
   }
 
   async findMany(): Promise<Webhook[]> {
-    return this.WebhookModel.find({});
+    return this.prisma.webhook.findMany();
   }
 
   async findByWebhookId(webhookId: string): Promise<Webhook> {
-    const webhook = await this.WebhookModel.findOne({ webhookId });
+    const webhook = await this.prisma.webhook.findUnique({
+      where: {
+        id: BigInt(webhookId),
+      },
+    });
     if (!webhook) {
       throw new NotFoundException('No webhook found.');
     }
@@ -33,12 +56,28 @@ export default class WebhookService {
 
   // an array is returned because in the future there might be many webhooks per guild
   async findByGuild(guildId: string): Promise<Webhook[]> {
-    return this.WebhookModel.find({ guildId });
+    return this.prisma.webhook.findMany({
+      where: {
+        guild: BigInt(guildId),
+      },
+    });
   }
 
   async delete(webhookId: string): Promise<null> {
-    const deletedWebhook = await this.WebhookModel.findOneAndDelete({ webhookId });
-    if (!deletedWebhook) throw new NotFoundException('No webhook found.');
+    try {
+      await this.prisma.webhook.delete({
+        where: {
+          id: BigInt(webhookId),
+        },
+      });
+    } catch (error: unknown) {
+      if (error instanceof Prisma.PrismaClientKnownRequestError) {
+        if (error.code === 'P2025') {
+          return null;
+        }
+      }
+      throw error;
+    }
     return null;
   }
 
@@ -46,20 +85,38 @@ export default class WebhookService {
     if (
       webhookPatchData.keywords === undefined
       && webhookPatchData.blacklist === undefined
-      && webhookPatchData.roleToMention === undefined) {
+      && webhookPatchData.mention === undefined) {
       throw new BadRequestException('No fields were provided to patch');
     }
-    // mongoose will run $unset on fields with undefined value
-    const webhookToPatch = await this.findByWebhookId(webhookId);
-    if (webhookPatchData.keywords === null || webhookPatchData.keywords) {
-      webhookToPatch.keywords = webhookPatchData.keywords || undefined;
+
+    const patchObject: Prisma.WebhookUpdateInput = {};
+
+    if (Object.prototype.hasOwnProperty.call(webhookPatchData, 'mention')) {
+      patchObject.mention = webhookPatchData.mention ? BigInt(webhookPatchData.mention) : null;
     }
-    if (webhookPatchData.blacklist === null || webhookPatchData.blacklist) {
-      webhookToPatch.blacklist = webhookPatchData.blacklist || undefined;
+
+    if (Object.prototype.hasOwnProperty.call(webhookPatchData, 'blacklist')) {
+      patchObject.blacklist = webhookPatchData.blacklist;
     }
-    if (webhookPatchData.roleToMention === null || webhookPatchData.roleToMention) {
-      webhookToPatch.roleToMention = webhookPatchData.roleToMention || undefined;
+
+    if (Object.prototype.hasOwnProperty.call(webhookPatchData, 'keywords')) {
+      patchObject.keywords = webhookPatchData.keywords;
     }
-    return webhookToPatch.save();
+
+    try {
+      return await this.prisma.webhook.update({
+        where: {
+          id: BigInt(webhookId),
+        },
+        data: patchObject,
+      });
+    } catch (error: unknown) {
+      if (error instanceof Prisma.PrismaClientKnownRequestError) {
+        if (error.code === 'P2025') {
+          throw new NotFoundException('webhook with provided id doesn\'t exist');
+        }
+      }
+      throw error;
+    }
   }
 }

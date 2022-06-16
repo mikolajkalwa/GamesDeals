@@ -1,8 +1,8 @@
 import {
-  Body, Controller, Get, Post, Query, Param,
+  Body, Controller, Get, Post, Query, Param, ParseIntPipe, DefaultValuePipe,
 } from '@nestjs/common';
+import { Deal } from '@prisma/client';
 import CreateDealDto from './dto/create-deal.dto';
-import { Deal } from './schemas/deal.schema';
 import DealsService from './deals.service';
 
 @Controller('deals')
@@ -20,10 +20,7 @@ export default class DealsController {
   }
 
   @Get('latest')
-  async findLatest(@Query('limit') limit?: string): Promise<Deal[] | Deal> {
-    if (!limit) {
-      return this.dealsService.findLatest();
-    }
-    return this.dealsService.findLatests(+limit);
+  async findLatest(@Query('limit', new DefaultValuePipe(1), ParseIntPipe) limit = 1): Promise<Deal[]> {
+    return this.dealsService.findLatest(limit);
   }
 }

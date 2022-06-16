@@ -1,18 +1,19 @@
 import { Controller, Get } from '@nestjs/common';
-import { HealthCheck, HealthCheckService, MongooseHealthIndicator } from '@nestjs/terminus';
+import { HealthCheck, HealthCheckService } from '@nestjs/terminus';
+import PrismaHealthIndicator from './prisma.health';
 
 @Controller('health')
 export default class HealthController {
   constructor(
-    private readonly health: HealthCheckService,
-    private readonly db: MongooseHealthIndicator,
+    private readonly healthCheckService: HealthCheckService,
+    private readonly prismaHealthIndicator: PrismaHealthIndicator,
   ) { }
 
   @Get()
   @HealthCheck()
-  check(): unknown {
-    return this.health.check([
-      () => this.db.pingCheck('mongodb'),
+  healthCheck() {
+    return this.healthCheckService.check([
+      () => this.prismaHealthIndicator.isHealthy('database'),
     ]);
   }
 }
