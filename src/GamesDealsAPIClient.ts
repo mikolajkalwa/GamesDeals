@@ -1,18 +1,8 @@
 import got from 'got';
-import { inject, injectable } from 'tsyringe';
-import { Deal } from './types/Deal';
-import { Webhook } from './types/Webhook';
+import { Deal, Webhook } from './types/GamesDealsApi';
 
-export interface IGamesDealsAPIClient {
-  isNewDeal(redditThreadIdentifier: string): Promise<boolean>;
-  insertNewDeal(deal: Deal): Promise<boolean>;
-  removeWebhook(webhook: Webhook): Promise<boolean>;
-  getAllWebhooks(): Promise<Webhook[]>;
-}
-
-@injectable()
-export class GamesDealsAPIClient implements IGamesDealsAPIClient {
-  constructor(@inject('gdApiBaseUrl') private readonly baseUrl: string) { }
+export default class GamesDealsAPIClient {
+  constructor(private readonly baseUrl: string) { }
 
   public isNewDeal = async (redditThreadIdentifier: string) => {
     const response = await got.get(`${this.baseUrl}/deals/reddit/${redditThreadIdentifier}`, {
@@ -42,7 +32,7 @@ export class GamesDealsAPIClient implements IGamesDealsAPIClient {
   };
 
   public removeWebhook = async (webhook: Webhook) => {
-    const response = await got.delete(`${this.baseUrl}/webhooks/${webhook.webhookId}`);
+    const response = await got.delete(`${this.baseUrl}/webhooks/${webhook.id}`);
 
     if (response.statusCode === 204) {
       return true;
@@ -51,5 +41,5 @@ export class GamesDealsAPIClient implements IGamesDealsAPIClient {
     return false;
   };
 
-  public getAllWebhooks = async () => await got.get(`${this.baseUrl}/webhooks`).json() as Webhook[];
+  public getAllWebhooks = async () => await got.get(`${this.baseUrl}/webhooks`).json<Webhook[]>();
 }
