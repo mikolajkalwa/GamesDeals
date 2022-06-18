@@ -4,6 +4,7 @@ import * as webhook from './webhook';
 import * as latest from './latest';
 import * as ping from './ping';
 import * as statistics from './statistics';
+import * as help from './help';
 
 const commands = new Map<string, {
   handler: CommandHandler,
@@ -28,6 +29,11 @@ commands.set(ping.definition.name, {
 commands.set(statistics.definition.name, {
   definition: statistics.definition,
   handler: statistics.handler,
+});
+
+commands.set(help.definition.name, {
+  definition: help.definition,
+  handler: help.handler,
 });
 
 export default commands;
