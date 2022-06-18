@@ -5,7 +5,7 @@ import { printWebhookDetails } from '../command.utils';
 
 const clearPropertiesSubCommand = async (interaction: CommandInteraction, webhookId: string) => {
   const keywords = interaction.options.getBoolean('keywords');
-  const blacklist = interaction.options.getBoolean('blacklist');
+  const blacklist = interaction.options.getBoolean('reject');
   const role = interaction.options.getBoolean('role');
 
   if (!blacklist && !keywords && !role) {

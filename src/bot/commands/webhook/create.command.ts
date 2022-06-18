@@ -21,7 +21,7 @@ const run = async (interaction: CommandInteraction) => {
     });
 
     const keywords = parseArgs(interaction.options.getString('keywords'));
-    const blacklist = parseArgs(interaction.options.getString('blacklist'));
+    const blacklist = parseArgs(interaction.options.getString('reject'));
     const role = interaction.options.getRole('role');
 
     const savedWebhook = await gdapi.saveWebhook({
