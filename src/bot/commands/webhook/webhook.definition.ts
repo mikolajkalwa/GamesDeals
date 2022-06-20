@@ -19,8 +19,8 @@ const webhookDefinition = new SlashCommandBuilder()
       .setName('keywords')
       .setDescription('Keywords list, separated by comma'))
     .addStringOption((option) => option
-      .setName('reject')
-      .setDescription('Rejected keywords list, separated by comma')))
+      .setName('ignore')
+      .setDescription('Ignored words list, separated by comma')))
   .addSubcommand((readSubcommand) => readSubcommand
     .setName('info')
     .setDescription('Details about configured webhooks'))
@@ -41,8 +41,8 @@ const webhookDefinition = new SlashCommandBuilder()
         .setName('keywords')
         .setDescription('Keywords list, separated by comma'))
       .addStringOption((option) => option
-        .setName('reject')
-        .setDescription('Rejected keywords list, separated by comma')))
+        .setName('ignore')
+        .setDescription('Ignored words list, separated by comma')))
     .addSubcommand((clearSubcommand) => clearSubcommand
       .setName('clear')
       .setDescription('Clear previously set properties')
@@ -57,8 +57,8 @@ const webhookDefinition = new SlashCommandBuilder()
         .setName('keywords')
         .setDescription('Select true to clear keywords'))
       .addBooleanOption((option) => option
-        .setName('reject')
-        .setDescription('Select true to clear rejected list'))))
+        .setName('ignore')
+        .setDescription('Select true to clear ignored list'))))
   .addSubcommand((deleteSubcommand) => deleteSubcommand
     .setName('delete')
     .setDescription('Delete webhook')
