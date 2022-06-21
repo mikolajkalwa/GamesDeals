@@ -1,15 +1,10 @@
 import 'dotenv/config';
-import http from 'http';
-import https from 'https';
 import pino from 'pino';
 import { setTimeout } from 'timers/promises';
 import DiscordClient from './DiscordClient';
 import GamesDealsAPIClient from './GamesDealsAPIClient';
 import Notifier from './Notifier';
 import RedditClient from './RedditClient';
-
-http.globalAgent.maxSockets = 64;
-https.globalAgent.maxSockets = 64;
 
 const resultsWebhook = process.env.WEBHOOK_URL;
 const discordUrl = process.env.DISCORD_URL || 'https://discord.com';

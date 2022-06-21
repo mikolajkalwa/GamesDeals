@@ -147,7 +147,7 @@ const webhooks: Webhook[] = [
   },
 ];
 
-const notifier = new Notifier(logger, new GamesDealsAPIClient(''), new DiscordClient(''))
+const notifier = new Notifier(logger, new GamesDealsAPIClient(''), new DiscordClient('http://localhost'))
 
 test('Get webhooks for steam deal', () => {
   const result = notifier.getWebhooksToExecute(steam, webhooks);
