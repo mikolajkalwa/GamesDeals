@@ -1,8 +1,8 @@
-import path from 'path';
-import fs from 'fs';
 import {
-  CommandInteraction, DiscordAPIError, BaseGuildTextChannel, Constants,
+  BaseGuildTextChannel, CommandInteraction, Constants, DiscordAPIError,
 } from 'discord.js';
+import fs from 'fs';
+import path from 'path';
 import gdapi from '../../../gd-api-client';
 import { parseArgs, printWebhookDetails } from './command.utils';
 
@@ -21,7 +21,7 @@ const run = async (interaction: CommandInteraction) => {
     });
 
     const keywords = parseArgs(interaction.options.getString('keywords'));
-    const blacklist = parseArgs(interaction.options.getString('blacklist'));
+    const blacklist = parseArgs(interaction.options.getString('ignore'));
     const role = interaction.options.getRole('role');
 
     const savedWebhook = await gdapi.saveWebhook({

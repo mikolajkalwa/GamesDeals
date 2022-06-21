@@ -3,7 +3,7 @@ import ReadWebhook from '../../../gd-api-client/interfaces/read-webhook.interfac
 export const printWebhookDetails = (webhook: ReadWebhook): string => `**Webhook ID: ${webhook.id}**\n`
   + `Channel: <#${webhook.channel}>\n`
   + `Keywords: ${webhook.keywords?.length ? `${webhook.keywords.toString()}` : 'None'}\n`
-  + `Blacklist: ${webhook.blacklist?.length ? `${webhook.blacklist.toString()}` : 'None'}\n`
+  + `Ignore: ${webhook.blacklist?.length ? `${webhook.blacklist.toString()}` : 'None'}\n`
   + `Role to mention: ${webhook.mention ? `<@&${webhook.mention}>` : 'None'}\n`;
 
 export const parseArgs = (input: string | null): string[] | null => {
