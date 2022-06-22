@@ -7,7 +7,7 @@
     "test": "jest",
     "build": "tsc",
     "prepare": "husky install",
-    "check-updates": "npm-check-updates -e 2 -t minor",
+    "check-updates": "npm-check-updates -e 2 -t minor --stdin",
     "lint": "eslint src/**"
   },
   "author": "Mikołaj Kalwa",
@@ -16,23 +16,24 @@
     "dotenv": "^16.0.1",
     "got": "^11.8.2",
     "pino": "^8.0.0",
+    "undici": "^5.5.1",
     "zod": "^3.17.3"
   },
   "devDependencies": {
     "@commitlint/cli": "17.0.2",
     "@commitlint/config-conventional": "17.0.2",
-    "@types/jest": "28.1.1",
-    "@typescript-eslint/eslint-plugin": "5.28.0",
-    "@typescript-eslint/parser": "5.28.0",
-    "eslint": "8.17.0",
+    "@types/jest": "28.1.2",
+    "@typescript-eslint/eslint-plugin": "5.29.0",
+    "@typescript-eslint/parser": "5.29.0",
+    "eslint": "8.18.0",
     "eslint-config-airbnb-typescript": "17.0.0",
     "eslint-plugin-import": "2.26.0",
     "eslint-plugin-jest": "26.5.3",
     "husky": "8.0.1",
     "jest": "28.1.1",
     "nock": "13.2.7",
-    "npm-check-updates": "13.1.5",
+    "npm-check-updates": "14.0.1",
     "ts-jest": "28.0.5",
-    "typescript": "4.7.3"
+    "typescript": "4.7.4"
   }
 }

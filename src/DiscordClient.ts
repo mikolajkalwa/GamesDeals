@@ -1,8 +1,14 @@
-import got from 'got';
+import { Client } from 'undici';
 import { Webhook } from './types/GamesDealsApi';
 
 export default class DiscordClient {
-  constructor(private readonly baseUrl: string) { }
+  private readonly client: Client;
+
+  constructor(private readonly baseUrl: string) {
+    this.client = new Client(this.baseUrl, {
+      pipelining: 128,
+    });
+  }
 
   public executeWebhook = async (webhook: Webhook, message: string) => {
     let content = message;
@@ -14,14 +20,15 @@ export default class DiscordClient {
       }
     }
 
-    const response = await got.post(`${this.baseUrl}/api/webhooks/${webhook.id}/${webhook.token}`, {
-      searchParams: {
-        wait: true,
+    const response = await this.client.request({
+      path: `/api/webhooks/${webhook.id}/${webhook.token}?wait=true`,
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
       },
-      json: {
+      body: JSON.stringify({
         content,
-      },
-      throwHttpErrors: false,
+      }),
     });
 
     return response;
