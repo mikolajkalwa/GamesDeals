@@ -1,12 +1,13 @@
-import { Client } from 'undici';
+import { Pool } from 'undici';
 import { Webhook } from './types/GamesDealsApi';
 
 export default class DiscordClient {
-  private readonly client: Client;
+  private readonly client: Pool;
 
   constructor(private readonly baseUrl: string) {
-    this.client = new Client(this.baseUrl, {
-      pipelining: 128,
+    this.client = new Pool(this.baseUrl, {
+      pipelining: 10,
+      connections: 128,
     });
   }
 
