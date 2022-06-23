@@ -21,7 +21,7 @@
     "discord.js": "^13.8.0",
     "dotenv": "^16.0.1",
     "erlpack": "github:discord/erlpack",
-    "got": "^11.8.3",
+    "got": "^11.8.5",
     "pino": "^8.0.0",
     "prom-client": "^14.0.1",
     "utf-8-validate": "^5.0.9",
