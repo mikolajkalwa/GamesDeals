@@ -1,8 +1,8 @@
-import { Client, Intents, Options } from 'discord.js';
 import Cluster from 'discord-hybrid-sharding';
-import { Pushgateway, collectDefaultMetrics, Registry } from 'prom-client';
-
+import { Client, Intents, Options } from 'discord.js';
+import got from 'got';
 import pino from 'pino';
+import { collectDefaultMetrics, Pushgateway, Registry } from 'prom-client';
 import config from '../config';
 import commands from './commands';
 
@@ -44,30 +44,39 @@ client.on('warn', (m) => logger.warn(m, 'Warn event occured in Discord Client'))
 client.on('error', (m) => logger.error(m, 'Error event occured in Discord Client'));
 
 client.on('interactionCreate', async (interaction) => {
-  if (!interaction.isCommand()) return;
+  try {
+    if (!interaction.isCommand()) return;
 
-  const command = commands.get(interaction.commandName);
+    const command = commands.get(interaction.commandName);
 
-  if (!command) {
-    await interaction.reply({ content: 'Command not found', ephemeral: true });
-    logger.warn(`Command was not found ${interaction.commandName}`);
-    return;
-  }
-
-  if (command.handler.guildOnly && !interaction.guildId) {
-    await interaction.reply({ content: 'This command can be used only within a guild server', ephemeral: true });
-    return;
-  }
-
-  if (command.handler.requieredPermissions?.length) {
-    const hasPermissions = command.handler.requieredPermissions.every((requieredPermission) => interaction.memberPermissions?.has(requieredPermission));
-    if (!hasPermissions) {
-      await interaction.reply({ content: 'Sorry, you don\'t have permissions to do this!', ephemeral: true });
+    if (!command) {
+      await interaction.reply({ content: 'Command not found', ephemeral: true });
+      logger.warn(`Command was not found ${interaction.commandName}`);
       return;
     }
-  }
 
-  command.handler.generator(interaction, logger).catch((error) => logger.error(error, 'Command handler error occured'));
+    if (command.handler.guildOnly && !interaction.guildId) {
+      await interaction.reply({ content: 'This command can be used only within a guild server', ephemeral: true });
+      return;
+    }
+
+    if (command.handler.requieredPermissions?.length) {
+      const hasPermissions = command.handler.requieredPermissions.every((requieredPermission) => interaction.memberPermissions?.has(requieredPermission));
+      if (!hasPermissions) {
+        await interaction.reply({ content: 'Sorry, you don\'t have permissions to do this!', ephemeral: true });
+        return;
+      }
+    }
+
+    command.handler.generator(interaction, logger).catch((error:unknown) => {
+      logger.error(error, 'Command handler error occured');
+      if (error instanceof got.HTTPError) {
+        logger.error(error.response, 'GamesDeals API returned non 2xx nor 3xx status code');
+      }
+    });
+  } catch (error: unknown) {
+    logger.error(error, 'interactionCreate event threw an error');
+  }
 });
 
 client.login(config.BOT_TOKEN).catch((e) => {

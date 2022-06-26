@@ -16,21 +16,21 @@
     "@discordjs/builders": "^0.15.0",
     "@discordjs/rest": "^0.5.0",
     "bufferutil": "^4.0.6",
-    "discord-api-types": "^0.34.0",
+    "discord-api-types": "^0.35.0",
     "discord-hybrid-sharding": "^1.6.2",
-    "discord.js": "^13.8.0",
+    "discord.js": "^13.8.1",
     "dotenv": "^16.0.1",
     "erlpack": "github:discord/erlpack",
-    "got": "^11.8.3",
-    "pino": "^8.0.0",
+    "got": "^11.8.5",
+    "pino": "^8.1.0",
     "prom-client": "^14.0.1",
     "utf-8-validate": "^5.0.9",
     "zlib-sync": "^0.1.7",
     "zod": "^3.17.3"
   },
   "devDependencies": {
-    "@commitlint/cli": "^17.0.2",
-    "@commitlint/config-conventional": "^17.0.2",
+    "@commitlint/cli": "^17.0.3",
+    "@commitlint/config-conventional": "^17.0.3",
     "@types/node": "^18.0.0",
     "@typescript-eslint/eslint-plugin": "^5.29.0",
     "@typescript-eslint/parser": "^5.29.0",
@@ -38,7 +38,7 @@
     "eslint-config-airbnb-typescript": "^17.0.0",
     "eslint-plugin-import": "^2.26.0",
     "husky": "^8.0.1",
-    "npm-check-updates": "^14.0.1",
+    "npm-check-updates": "^14.1.1",
     "typescript": "^4.7.4"
   }
 }

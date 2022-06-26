@@ -29,7 +29,7 @@ const webhookDefinition = new SlashCommandBuilder()
     .setDescription('Edit webhook')
     .addSubcommand((setSubcommand) => setSubcommand
       .setName('set')
-      .setDescription('Override configured previously configured properties')
+      .setDescription('Override previously configured properties')
       .addStringOption((option) => option
         .setName('webhook')
         .setDescription('ID of webhook to edit')
