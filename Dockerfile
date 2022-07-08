@@ -6,13 +6,15 @@ COPY . .
 RUN npx prisma generate && npm run build:prod
 
 FROM node:16-alpine
+ENV NODE_ENV production
 EXPOSE 3000/tcp
 WORKDIR /usr/src/app
-COPY --from=build /usr/src/app/package*.json ./
+COPY --chown=node:node --from=build /usr/src/app/package*.json ./
 RUN npm ci --ignore-scripts --only=production && npm cache clean --force
-COPY --from=build /usr/src/app/scripts ./scripts
-COPY --from=build /usr/src/app/prisma/schema.prisma ./prisma/schema.prisma
-COPY --from=build /usr/src/app/prisma/migrations ./prisma/migrations
-COPY --from=build /usr/src/app/dist ./dist
+COPY --chown=node:node --from=build /usr/src/app/scripts ./scripts
+COPY --chown=node:node --from=build /usr/src/app/prisma/schema.prisma ./prisma/schema.prisma
+COPY --chown=node:node --from=build /usr/src/app/prisma/migrations ./prisma/migrations
+COPY --chown=node:node --from=build /usr/src/app/dist ./dist
 RUN npx prisma generate
-CMD ["/bin/sh", "./scripts/start.sh"]
+USER node
+CMD ["/bin/sh", "/usr/src/app/scripts/start.sh"]
