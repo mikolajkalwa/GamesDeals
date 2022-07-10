@@ -38,7 +38,7 @@
     "eslint-config-airbnb-typescript": "^17.0.0",
     "eslint-plugin-import": "^2.26.0",
     "husky": "^8.0.1",
-    "npm-check-updates": "^15.2.1",
+    "npm-check-updates": "^15.2.6",
     "typescript": "^4.7.4"
   }
 }
