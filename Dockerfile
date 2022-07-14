@@ -8,7 +8,8 @@ RUN npm run build
 
 FROM node:16-alpine
 WORKDIR /usr/src/app
-COPY --from=build /usr/src/app/package*.json ./
+COPY --chown=node:node --from=build /usr/src/app/package*.json ./
 RUN npm ci --ignore-scripts --only=production && npm cache clean --force
-COPY --from=build /usr/src/app/dist ./dist
+COPY --chown=node:node --from=build /usr/src/app/dist ./dist
+USER node
 CMD ["node", "./dist/index.js"]

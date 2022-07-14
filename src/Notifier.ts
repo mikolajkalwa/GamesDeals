@@ -1,5 +1,5 @@
-import got from 'got/dist/source';
 import { Logger } from 'pino';
+import { request } from 'undici';
 import DiscordClient from './DiscordClient';
 import GamesDealsAPIClient from './GamesDealsAPIClient';
 import { Deal, Webhook } from './types/GamesDealsApi';
@@ -40,10 +40,10 @@ export default class Notifier {
         return true;
       }
 
-      const blacklistInterection = webhook.blacklist.filter(
+      const blacklistIntersection = webhook.blacklist.filter(
         (keyword) => title.includes(keyword.toLowerCase()),
       );
-      if (blacklistInterection.length) {
+      if (blacklistIntersection.length) {
         return false;
       }
 
@@ -115,14 +115,12 @@ Bad requests: ${executionResult.badRequestWebhooks.length}
 `;
     this.logger.info(content);
     if (webhookUrl) {
-      await got.post(webhookUrl, {
-        searchParams: {
-          wait: true,
+      await request(`${webhookUrl}?wait=true`, {
+        body: JSON.stringify({ content }),
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
         },
-        json: {
-          content,
-        },
-        throwHttpErrors: false,
       });
     }
   };

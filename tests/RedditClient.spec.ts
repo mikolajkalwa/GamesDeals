@@ -1,30 +1,31 @@
 import fs from 'fs/promises';
 import path from 'path';
-import nock from 'nock';
+import { MockAgent, setGlobalDispatcher } from 'undici';
 import { ZodError } from 'zod';
 import RedditClient from '../src/RedditClient';
 
 const redditClient = new RedditClient('https://reddit.com');
 
-afterEach(() => {
-  nock.cleanAll();
-});
+const mockAgent = new MockAgent();
+setGlobalDispatcher(mockAgent);
+const mockPool = mockAgent.get('https://reddit.com');
 
 test('getTrendingDeals should throw an error if reddit api response does not fulfill schema', async () => {
-  nock('https://reddit.com')
-    .get('/r/GameDeals/hot/.json?limit=3')
-    .reply(200, {})
-    .persist();
+  mockPool.intercept({
+    path: '/r/GameDeals/hot/.json?limit=3',
+    method: 'GET'
+  }).reply(200, {})
 
   await expect(redditClient.getTrendingDeals()).rejects.toBeInstanceOf(ZodError);
 });
 
 test('getTrendingDeals should strip extra properties and resolve to defined object', async () => {
   const fixture = await fs.readFile(path.resolve(__dirname, 'RedditClient.fixture.json'), { encoding: 'utf-8' });
-  nock('https://reddit.com')
-    .get('/r/GameDeals/hot/.json?limit=3')
-    .reply(200, JSON.parse(fixture))
-    .persist();
+
+  mockPool.intercept({
+    path: '/r/GameDeals/hot/.json?limit=3',
+    method: 'GET'
+  }).reply(200, JSON.parse(fixture))
 
   await expect(redditClient.getTrendingDeals()).resolves.toEqual([
     {
