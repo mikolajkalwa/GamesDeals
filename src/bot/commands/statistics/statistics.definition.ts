@@ -1,4 +1,4 @@
-import { SlashCommandBuilder } from '@discordjs/builders';
+import { SlashCommandBuilder } from 'discord.js';
 
 const statisticsDefinition = new SlashCommandBuilder()
   .setName('statistics')

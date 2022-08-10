@@ -1,9 +1,9 @@
-import { CommandInteraction } from 'discord.js';
+import { ChatInputCommandInteraction } from 'discord.js';
 
 import gdapi from '../../../../gd-api-client';
 import { printWebhookDetails } from '../command.utils';
 
-const clearPropertiesSubCommand = async (interaction: CommandInteraction, webhookId: string) => {
+const clearPropertiesSubCommand = async (interaction: ChatInputCommandInteraction, webhookId: string) => {
   const keywords = interaction.options.getBoolean('keywords');
   const blacklist = interaction.options.getBoolean('ignore');
   const role = interaction.options.getBoolean('role');

@@ -1,10 +1,10 @@
-import { SlashCommandBuilder, SlashCommandSubcommandsOnlyBuilder } from '@discordjs/builders';
+import { SlashCommandBuilder, SlashCommandSubcommandsOnlyBuilder } from 'discord.js';
 import CommandHandler from './command-handler.type';
-import * as webhook from './webhook';
+import * as help from './help';
 import * as latest from './latest';
 import * as ping from './ping';
 import * as statistics from './statistics';
-import * as help from './help';
+import * as webhook from './webhook';
 
 const commands = new Map<string, {
   handler: CommandHandler,

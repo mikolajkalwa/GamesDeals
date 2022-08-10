@@ -1,18 +1,18 @@
-import { CommandInteraction } from 'discord.js';
+import { ChatInputCommandInteraction } from 'discord.js';
 import { Logger } from 'pino';
 
 import gdapi from '../../../gd-api-client';
 import clearPropertiesSubCommand from './edit/clear-properties.subcommand';
 import setPropertiesSubCommand from './edit/set-properties.subcommand';
 
-type SubcommandFunction = (interaction: CommandInteraction, webhook: string) => Promise<void>;
+type SubcommandFunction = (interaction: ChatInputCommandInteraction, webhook: string) => Promise<unknown>;
 
 const subcommands = new Map<string, SubcommandFunction>([
   ['clear', clearPropertiesSubCommand],
   ['set', setPropertiesSubCommand],
 ]);
 
-const run = async (interaction: CommandInteraction, logger: Logger) => {
+const run = async (interaction: ChatInputCommandInteraction, logger: Logger) => {
   const targetWebhook = interaction.options.getString('webhook', true);
   const subcommand = interaction.options.getSubcommand();
 

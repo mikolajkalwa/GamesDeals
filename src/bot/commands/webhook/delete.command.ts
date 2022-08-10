@@ -1,8 +1,8 @@
-import { CommandInteraction, WebhookClient } from 'discord.js';
+import { ChatInputCommandInteraction, WebhookClient } from 'discord.js';
 import { Logger } from 'pino';
 import gdapi from '../../../gd-api-client';
 
-const run = async (interaction: CommandInteraction, logger: Logger) => {
+const run = async (interaction: ChatInputCommandInteraction, logger: Logger) => {
   const targetWebhook = interaction.options.getString('webhook', true);
 
   const webhooks = await gdapi.getWebhooksForGuild((interaction.guildId as string));

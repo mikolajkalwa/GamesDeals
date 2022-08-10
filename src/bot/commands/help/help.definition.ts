@@ -1,4 +1,4 @@
-import { SlashCommandBuilder } from '@discordjs/builders';
+import { SlashCommandBuilder } from 'discord.js';
 
 const helpDefinition = new SlashCommandBuilder()
   .setName('help')

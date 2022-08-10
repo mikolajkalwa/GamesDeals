@@ -1,5 +1,7 @@
 import Cluster from 'discord-hybrid-sharding';
-import { Client, Intents, Options } from 'discord.js';
+import {
+  ChatInputCommandInteraction, Client, GatewayIntentBits, Options,
+} from 'discord.js';
 import got from 'got';
 import pino from 'pino';
 import { collectDefaultMetrics, Pushgateway, Registry } from 'prom-client';
@@ -10,10 +12,12 @@ const logger = pino({
   level: 'debug',
 });
 
+const clusterData = Cluster.Client.getInfo();
+
 const client = new Client({
-  shards: Cluster.data.SHARD_LIST,
-  shardCount: Cluster.data.TOTAL_SHARDS,
-  intents: [Intents.FLAGS.GUILDS],
+  shards: clusterData.SHARD_LIST,
+  shardCount: clusterData.TOTAL_SHARDS,
+  intents: [GatewayIntentBits.Guilds],
   makeCache: Options.cacheWithLimits({
     ApplicationCommandManager: 0, // guild.commands
     BaseGuildEmojiManager: 0, // guild.emojis
@@ -68,7 +72,7 @@ client.on('interactionCreate', async (interaction) => {
       }
     }
 
-    command.handler.generator(interaction, logger).catch((error:unknown) => {
+    command.handler.generator(interaction as ChatInputCommandInteraction, logger).catch((error: unknown) => {
       logger.error(error, 'Command handler error occured');
       if (error instanceof got.HTTPError) {
         logger.error(error.response, 'GamesDeals API returned non 2xx nor 3xx status code');

@@ -10,9 +10,6 @@ install:
 update:
 	npx npm-check-updates -i
 
-setup: build
-	node dist/scripts/setupInteractions.js
-
 lint:
 	npm run lint
 

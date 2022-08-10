@@ -1,4 +1,4 @@
-import { SlashCommandBuilder } from '@discordjs/builders';
+import { SlashCommandBuilder } from 'discord.js';
 
 const latestDefinition = new SlashCommandBuilder()
   .setName('latest')

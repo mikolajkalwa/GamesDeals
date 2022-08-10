@@ -1,12 +1,12 @@
-import { Permissions, CommandInteraction } from 'discord.js';
+import { ChatInputCommandInteraction, PermissionFlagsBits } from 'discord.js';
 import { Logger } from 'pino';
 import CommandHandler from '../command-handler.type';
 import createWebhook from './create.command';
-import editWebhook from './edit.command';
 import deleteWebhook from './delete.command';
+import editWebhook from './edit.command';
 import describeWebhooks from './get.command';
 
-type SubcommandFunction = (interaction: CommandInteraction, logger: Logger) => Promise<void>;
+type SubcommandFunction = (interaction: ChatInputCommandInteraction, logger: Logger) => Promise<unknown>;
 
 const subcommands = new Map<string, SubcommandFunction>([
   ['create', createWebhook],
@@ -18,9 +18,9 @@ const subcommands = new Map<string, SubcommandFunction>([
 
 const webhookHandler: CommandHandler = {
   guildOnly: true,
-  requieredPermissions: [Permissions.FLAGS.MANAGE_WEBHOOKS],
+  requieredPermissions: [PermissionFlagsBits.ManageWebhooks],
 
-  generator: async (interaction: CommandInteraction, logger: Logger): Promise<void> => {
+  generator: async (interaction: ChatInputCommandInteraction, logger: Logger): Promise<unknown> => {
     const subcommand = interaction.options.getSubcommand();
     const strategy = subcommands.get(subcommand);
 

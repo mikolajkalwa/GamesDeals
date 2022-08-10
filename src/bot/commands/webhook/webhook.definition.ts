@@ -1,5 +1,5 @@
-import { SlashCommandBuilder } from '@discordjs/builders';
 import { ChannelType } from 'discord-api-types/v10';
+import { SlashCommandBuilder } from 'discord.js';
 
 const webhookDefinition = new SlashCommandBuilder()
   .setName('webhook')
