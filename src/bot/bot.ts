@@ -38,9 +38,10 @@ const client = new Client({
   }),
 });
 
+const cluster = new Cluster.Client(client);
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-client.cluster = new Cluster.Client(client);
+client.cluster = cluster;
 
 client.on('ready', () => logger.info('Cluster is online'));
 client.on('debug', (m) => logger.debug(m, 'Debug event occured in Discord Client'));
@@ -90,12 +91,12 @@ client.login(config.BOT_TOKEN).catch((e) => {
 
 if (config.PROMETHEUS_GATEWAY) {
   const register = new Registry();
-  register.setDefaultLabels({ serviceName: `games-deals-cluster-${process.pid}` });
+  register.setDefaultLabels({ serviceName: `games-deals-cluster-${cluster.id}` });
   collectDefaultMetrics({ register });
   const gateway = new Pushgateway(config.PROMETHEUS_GATEWAY, {}, register);
 
   setInterval(() => {
-    gateway.push({ jobName: `games-deals-cluster-${process.pid}` })
+    gateway.push({ jobName: `games-deals-cluster-${cluster.id}` })
       .then(() => logger.debug('Metrics pushed'))
       .catch((e) => logger.error(e, 'Failed to push cluster metrics'));
   }, 5 * 1000);
