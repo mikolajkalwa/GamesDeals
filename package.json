@@ -14,7 +14,7 @@
   "license": "MIT",
   "dependencies": {
     "dotenv": "^16.0.1",
-    "pino": "^8.4.0",
+    "pino": "^8.4.1",
     "undici": "^5.8.2",
     "zod": "^3.18.0"
   },

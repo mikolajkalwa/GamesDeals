@@ -9,4 +9,6 @@ module.exports = {
   "transform": {
     "^.+\\.(ts|tsx)$": "ts-jest"
   },
+  "collectCoverage": true,
+  "coverageReporters": ["text"]
 }
