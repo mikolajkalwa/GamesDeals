@@ -77,7 +77,8 @@ const cases: Array<[string, boolean]> = [
   ['[Epic Games] Void Bastards and Yooka-Laylee (100% off/Free)', true],
   ['[Microsoft Store] Battlefield 1 Turning Tides (FREE)', true],
   ['[Origin] Battlefield 4: Naval Strike (Free)', true],
-  ['[Origin] Battlefield 1: Turning Tides (Free)', true]
+  ['[Origin] Battlefield 1: Turning Tides (Free)', true],
+  ['[GoG.Com] Shadow Warrior 2 Free To Claim (0$)', true]
 
 ];
 
