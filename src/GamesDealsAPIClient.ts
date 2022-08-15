@@ -13,7 +13,7 @@ export default class GamesDealsAPIClient {
     return false;
   }
 
-  async insertNewDeal(deal: Deal) {
+  async insertNewDeal(deal: Omit<Deal, 'author' | 'over18'>) {
     const respose = await request(`${this.baseUrl}/deals`, {
       method: 'POST',
       headers: {
@@ -32,7 +32,7 @@ export default class GamesDealsAPIClient {
     }
   }
 
-  async removeWebhook(webhook: Webhook) {
+  async removeWebhook(webhook: Pick<Webhook, 'id'>) {
     const response = await request(`${this.baseUrl}/webhooks/${webhook.id}`, {
       method: 'DELETE',
     });
