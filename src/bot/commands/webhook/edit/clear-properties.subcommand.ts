@@ -13,8 +13,8 @@ const clearPropertiesSubCommand = async (interaction: ChatInputCommandInteractio
   }
 
   const updatedWebhook = await gdapi.patchWebhook(webhookId, {
-    keywords: keywords ? null : undefined,
-    blacklist: blacklist ? null : undefined,
+    keywords: keywords ? [] : undefined,
+    blacklist: blacklist ? [] : undefined,
     mention: role ? null : undefined,
   });
   return await interaction.reply(`Webhook updated succesfully\n${printWebhookDetails(updatedWebhook)}`);
