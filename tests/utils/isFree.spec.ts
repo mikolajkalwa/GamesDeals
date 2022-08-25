@@ -51,7 +51,8 @@ const cases: Array<[string, boolean]> = [
   ['[The Good Guys - eBay Australia] Nintendo SNES Classic $95.96 AUD - NES Classic $79.96 AUD - Free Click &amp; Collect or an extra $5-$8 posted. Use code PGOOD20 (20% off)', false],
   ['[GreenManGaming] Toybox Turbos (Free/100% off voucher Code) (VIP Deal) Located at bottom of VIP page.', false],
   ['[GreenManGaming] Fahrenheit: Indigo Prophecy Remastered (Free/100% off voucher Code) (VIP Deal) Located at bottom of VIP page.', false],
-  // ['[Steam] Worms Franchise Sale (up to 81% off) - Worms W.M.D. Temporally Free to Play', false],
+  ['[Steam] Worms Franchise Sale (up to 81% off) - Worms W.M.D. Temporally Free to Play', false],
+  ['[Steam] Worms Franchise Sale (up to 81% off) - Worms W.M.D. Temporarily Free to Play', false],
   // ['[TwitchCon] Free copy of Code Vein when you donate blood at TwitchCon (FREE/100% OFF)', false],
   // ['SOULCALIBUR VI &amp; TEKKEN 7 - FREE TO MILTARY.',false], // Missleading title, nothing I can do about
   ['[Fanatical] Australia Bushfire Fundraiser (100% of proceeds from sales go to the WWF. Flash Deals Include – DOOM (-75%), Everspace Ultimate Edition (-85%), Brothers: A Tale of Two Sons (-85%), Skullgirls Complete Bundle (-95%), RiME (-97%)', false],
@@ -78,7 +79,8 @@ const cases: Array<[string, boolean]> = [
   ['[Microsoft Store] Battlefield 1 Turning Tides (FREE)', true],
   ['[Origin] Battlefield 4: Naval Strike (Free)', true],
   ['[Origin] Battlefield 1: Turning Tides (Free)', true],
-  ['[GoG.Com] Shadow Warrior 2 Free To Claim (0$)', true]
+  ['[GoG.Com] Shadow Warrior 2 Free To Claim (0$)', true],
+  ['[Steam] Age of Empires IV ($29.99 / 50% off) + Free to play until August 29th', false]
 
 ];
 

@@ -33,6 +33,10 @@ const isFree = (title: string) => {
     }
   }
 
+  if (/free to play until|(temporally|temporarily free)/gi.test(title)) {
+    return false;
+  }
+
   if (/free to play/gi.test(title)) {
     return true;
   }
