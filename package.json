@@ -1,6 +1,6 @@
 {
   "name": "games-deals-notifier",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "main": "index.js",
   "scripts": {
     "start": "node dist/index.js",
@@ -13,24 +13,24 @@
   "author": "Mikołaj Kalwa",
   "license": "MIT",
   "dependencies": {
-    "dotenv": "^16.0.1",
-    "pino": "^8.4.2",
+    "dotenv": "^16.0.2",
+    "pino": "^8.5.0",
     "undici": "^5.10.0",
-    "zod": "^3.18.0"
+    "zod": "^3.19.0"
   },
   "devDependencies": {
-    "@commitlint/cli": "17.0.3",
-    "@commitlint/config-conventional": "17.0.3",
+    "@commitlint/cli": "17.1.2",
+    "@commitlint/config-conventional": "17.1.0",
     "@types/jest": "28.1.8",
-    "@typescript-eslint/eslint-plugin": "5.35.1",
-    "@typescript-eslint/parser": "5.35.1",
-    "eslint": "8.22.0",
+    "@typescript-eslint/eslint-plugin": "5.36.2",
+    "@typescript-eslint/parser": "5.36.2",
+    "eslint": "8.23.0",
     "eslint-config-airbnb-typescript": "17.0.0",
     "eslint-plugin-import": "2.26.0",
-    "eslint-plugin-jest": "26.8.7",
+    "eslint-plugin-jest": "26.9.0",
     "husky": "8.0.1",
     "jest": "28.1.3",
-    "npm-check-updates": "16.0.6",
+    "npm-check-updates": "16.1.0",
     "ts-jest": "28.0.8",
     "typescript": "4.8.2"
   }
