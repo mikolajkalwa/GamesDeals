@@ -5,13 +5,13 @@ import Notifier from '../src/Notifier';
 import { epic, gog, indiegala, itchio, steam, webhooks } from './Notifier.fixture';
 
 jest.mock('../src/GamesDealsAPIClient');
-const gdApiMock = jest.mocked(new GamesDealsAPIClient('http://localhost'), true)
+const gdApiMock = jest.mocked(new GamesDealsAPIClient('http://localhost'), { shallow: true });
 
-let notifier: Notifier
+let notifier: Notifier;
 
 beforeEach(() => {
-  jest.clearAllMocks()
-  notifier = new Notifier(pino(), gdApiMock, new DiscordClient('http://localhost'))
+  jest.clearAllMocks();
+  notifier = new Notifier(pino(), gdApiMock, new DiscordClient('http://localhost'));
 });
 
 describe('getWebhooksToExecute', () => {
@@ -248,7 +248,7 @@ describe('getWebhooksToExecute', () => {
     ]);
   });
 
-})
+});
 
 describe('createMessageContent', () => {
   it('should create correct message content', () => {
