@@ -1,9 +1,9 @@
-import { Logger } from 'pino';
+import type { Logger } from 'pino';
 import { request } from 'undici';
-import DiscordClient from './DiscordClient';
-import GamesDealsAPIClient from './GamesDealsAPIClient';
-import { Deal, Webhook } from './types/GamesDealsApi';
-import { ExecutionResult } from './types/Notifier';
+import type DiscordClient from './DiscordClient';
+import type GamesDealsAPIClient from './GamesDealsAPIClient';
+import type { Deal, Webhook } from './types/GamesDealsApi';
+import type { ExecutionResult } from './types/Notifier';
 import isFree from './utils/isFree';
 
 export default class Notifier {

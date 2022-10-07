@@ -1,5 +1,5 @@
 import { request } from 'undici';
-import { Deal, Webhook } from './types/GamesDealsApi';
+import type { Deal, Webhook } from './types/GamesDealsApi';
 
 export default class GamesDealsAPIClient {
   constructor(private readonly baseUrl: string) { }

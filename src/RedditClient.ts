@@ -1,6 +1,6 @@
 import { request } from 'undici';
 
-import { Deal } from './types/GamesDealsApi';
+import type { Deal } from './types/GamesDealsApi';
 import { RedditResponse, RedditResponseSchema } from './types/Reddit';
 
 export default class RedditClient {

@@ -6,13 +6,13 @@ import GamesDealsAPIClient from './GamesDealsAPIClient';
 import Notifier from './Notifier';
 import RedditClient from './RedditClient';
 
-const resultsWebhook = process.env.WEBHOOK_URL;
-const discordUrl = process.env.DISCORD_URL || 'https://discord.com';
-const gamesDealsApiUrl = process.env.GAMES_DEALS_API_URL || 'http://localhost:3000';
-const redditUrl = process.env.REDDIT_URL || 'https://reddit.com';
+const resultsWebhook = process.env['WEBHOOK_URL'];
+const discordUrl = process.env['DISCORD_URL'] || 'https://discord.com';
+const gamesDealsApiUrl = process.env['GAMES_DEALS_API_URL'] || 'http://localhost:3000';
+const redditUrl = process.env['REDDIT_URL'] || 'https://reddit.com';
 
 const logger = pino({
-  level: process.env.LOG_LEVEL || 'debug',
+  level: process.env['LOG_LEVEL'] || 'debug',
 });
 
 const redditClient = new RedditClient(redditUrl);

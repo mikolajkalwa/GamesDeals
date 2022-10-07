@@ -1,4 +1,4 @@
-import { Webhook } from './GamesDealsApi';
+import type { Webhook } from './GamesDealsApi';
 
 export interface ExecutionResult {
   webhooksToExecute: Webhook[];

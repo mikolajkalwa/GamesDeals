@@ -1,5 +1,5 @@
 import { Pool } from 'undici';
-import { Webhook } from './types/GamesDealsApi';
+import type { Webhook } from './types/GamesDealsApi';
 
 export default class DiscordClient {
   private readonly client: Pool;
