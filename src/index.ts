@@ -1,7 +1,7 @@
-import path from 'path';
 import { Manager } from 'discord-hybrid-sharding';
+import path from 'path';
 import pino from 'pino';
-import { Pushgateway, collectDefaultMetrics, Registry } from 'prom-client';
+import { collectDefaultMetrics, Pushgateway, Registry } from 'prom-client';
 import config from './config';
 
 const logger = pino({
@@ -14,6 +14,7 @@ const manager = new Manager(path.resolve(__dirname, 'bot', 'bot.js'), {
 });
 
 manager.on('clusterCreate', (cluster) => logger.info(`Launched cluster ${cluster.id}`));
+manager.on('debug', (m) => logger.debug(m, 'Debug event from manager'));
 
 manager.spawn({ timeout: -1 }).catch((e) => {
   logger.error(e, 'Hybrid sharding maanger failed');

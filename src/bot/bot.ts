@@ -43,10 +43,13 @@ const cluster = new Cluster.Client(client);
 // @ts-ignore
 client.cluster = cluster;
 
-client.on('ready', () => logger.info('Cluster is online'));
+client.on('ready', () => logger.info('Client is online'));
 client.on('debug', (m) => logger.debug(m, 'Debug event occured in Discord Client'));
 client.on('warn', (m) => logger.warn(m, 'Warn event occured in Discord Client'));
-client.on('error', (m) => logger.error(m, 'Error event occured in Discord Client'));
+client.on('error', (error) => {
+  logger.error(error, 'Error event occured in Discord Client');
+  throw error;
+});
 
 client.on('interactionCreate', async (interaction) => {
   try {
