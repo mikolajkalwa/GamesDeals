@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-import * as request from 'supertest';
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
-import { Webhook } from '@prisma/client';
+import type { Webhook } from '@prisma/client';
+import request from 'supertest';
 import AppModule from '../src/app.module';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment

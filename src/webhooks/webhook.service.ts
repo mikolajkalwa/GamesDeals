@@ -1,10 +1,10 @@
 import {
-  Injectable, NotFoundException, BadRequestException, ConflictException,
+  BadRequestException, ConflictException, Injectable, NotFoundException,
 } from '@nestjs/common';
-import { Webhook, Prisma } from '@prisma/client';
+import { Prisma, Webhook } from '@prisma/client';
 import PrismaService from '../prisma/prisma.service';
-import CreateWebhookDto from './dto/create-webhook.dto';
-import PatchWebhookDto from './dto/patch-webhook.dto';
+import type CreateWebhookDto from './dto/create-webhook.dto';
+import type PatchWebhookDto from './dto/patch-webhook.dto';
 
 @Injectable()
 export default class WebhookService {
@@ -28,8 +28,8 @@ export default class WebhookService {
         id: BigInt(webhook.id),
         token: webhook.token,
         mention: webhook.mention ? BigInt(webhook.mention) : null,
-        blacklist: webhook.blacklist,
-        keywords: webhook.keywords,
+        blacklist: webhook.blacklist ?? [],
+        keywords: webhook.keywords ?? [],
       },
     });
   }
@@ -95,11 +95,11 @@ export default class WebhookService {
       patchObject.mention = webhookPatchData.mention ? BigInt(webhookPatchData.mention) : null;
     }
 
-    if (Object.prototype.hasOwnProperty.call(webhookPatchData, 'blacklist')) {
+    if (Object.prototype.hasOwnProperty.call(webhookPatchData, 'blacklist') && webhookPatchData.blacklist) {
       patchObject.blacklist = webhookPatchData.blacklist;
     }
 
-    if (Object.prototype.hasOwnProperty.call(webhookPatchData, 'keywords')) {
+    if (Object.prototype.hasOwnProperty.call(webhookPatchData, 'keywords') && webhookPatchData.keywords) {
       patchObject.keywords = webhookPatchData.keywords;
     }
 

@@ -10,6 +10,7 @@
     "src/**/*"
   ],
   "compilerOptions": {
-    "sourceMap": false
+    "sourceMap": false,
+    "declaration": false
   }
 }

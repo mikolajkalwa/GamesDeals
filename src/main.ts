@@ -1,8 +1,8 @@
-import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { NestFactory } from '@nestjs/core';
+import type { NestExpressApplication } from '@nestjs/platform-express';
 import { Logger } from 'nestjs-pino';
-import { NestExpressApplication } from '@nestjs/platform-express';
 import AppModule from './app.module';
 
 // add missing prototype to serialize BigInt
@@ -23,10 +23,9 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
 
   const configService = app.get(ConfigService);
-  const port = configService.get<string>('PORT');
-  const baseAddress = configService.get<string>('BASE_ADDRESS');
+  const port = configService.get<string>('PORT') || 3000;
 
-  await app.listen(port, baseAddress);
+  await app.listen(port);
 }
 
 // eslint-disable-next-line @typescript-eslint/no-floating-promises

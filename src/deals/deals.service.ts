@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { Deal } from '@prisma/client';
+import type { Deal } from '@prisma/client';
 import PrismaService from '../prisma/prisma.service';
-import CreateDealDto from './dto/create-deal.dto';
+import type CreateDealDto from './dto/create-deal.dto';
 
 @Injectable()
 export default class DealsService {

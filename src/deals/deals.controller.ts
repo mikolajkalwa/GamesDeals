@@ -1,9 +1,9 @@
 import {
-  Body, Controller, Get, Post, Query, Param, ParseIntPipe, DefaultValuePipe,
+  Body, Controller, DefaultValuePipe, Get, Param, ParseIntPipe, Post, Query,
 } from '@nestjs/common';
-import { Deal } from '@prisma/client';
-import CreateDealDto from './dto/create-deal.dto';
+import type { Deal } from '@prisma/client';
 import DealsService from './deals.service';
+import CreateDealDto from './dto/create-deal.dto';
 
 @Controller('deals')
 export default class DealsController {
