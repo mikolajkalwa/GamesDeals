@@ -13,32 +13,32 @@
     "lint": "eslint src/**"
   },
   "dependencies": {
-    "@discordjs/rest": "^1.0.1",
+    "@discordjs/rest": "^1.2.0",
     "bufferutil": "^4.0.6",
-    "discord-api-types": "^0.37.2",
-    "discord-hybrid-sharding": "^1.7.1",
-    "discord.js": "^14.2.0",
-    "dotenv": "^16.0.1",
+    "discord-api-types": "^0.37.12",
+    "discord-hybrid-sharding": "^1.7.4",
+    "discord.js": "^14.5.0",
+    "dotenv": "^16.0.3",
     "erlpack": "github:discord/erlpack",
     "got": "^11.8.5",
-    "pino": "^8.4.1",
-    "prom-client": "^14.0.1",
+    "pino": "^8.6.1",
+    "prom-client": "^14.1.0",
     "utf-8-validate": "^5.0.9",
     "zlib-sync": "^0.1.7",
-    "zod": "^3.18.0"
+    "zod": "^3.19.1"
   },
   "devDependencies": {
-    "@commitlint/cli": "^17.0.3",
-    "@commitlint/config-conventional": "^17.0.3",
-    "@types/node": "^18.7.6",
-    "@typescript-eslint/eslint-plugin": "^5.33.1",
-    "@typescript-eslint/parser": "^5.33.1",
-    "eslint": "^8.22.0",
+    "@commitlint/cli": "^17.1.2",
+    "@commitlint/config-conventional": "^17.1.0",
+    "@types/node": "^18.8.3",
+    "@typescript-eslint/eslint-plugin": "^5.39.0",
+    "@typescript-eslint/parser": "^5.39.0",
+    "eslint": "^8.24.0",
     "eslint-config-airbnb-typescript": "^17.0.0",
     "eslint-plugin-import": "^2.26.0",
     "husky": "^8.0.1",
-    "npm-check-updates": "^16.0.5",
+    "npm-check-updates": "^16.3.8",
     "tap": "^16.3.0",
-    "typescript": "^4.7.4"
+    "typescript": "^4.8.4"
   }
 }
