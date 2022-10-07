@@ -1,6 +1,6 @@
-import { CommandInteraction } from 'discord.js';
-import CommandHandler from '../command-handler.type';
+import type { CommandInteraction } from 'discord.js';
 import gdapi from '../../../gd-api-client';
+import type CommandHandler from '../command-handler.type';
 
 const latestDeal: CommandHandler = {
 

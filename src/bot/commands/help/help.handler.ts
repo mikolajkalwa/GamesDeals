@@ -1,5 +1,5 @@
-import { CommandInteraction } from 'discord.js';
-import CommandHandler from '../command-handler.type';
+import type { CommandInteraction } from 'discord.js';
+import type CommandHandler from '../command-handler.type';
 
 const help: CommandHandler = {
   generator: async (interaction: CommandInteraction) => await interaction.reply({

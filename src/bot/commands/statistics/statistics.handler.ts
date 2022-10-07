@@ -1,7 +1,7 @@
-import { CommandInteraction } from 'discord.js';
-import { Logger } from 'pino';
-import CommandHandler from '../command-handler.type';
+import type { CommandInteraction } from 'discord.js';
+import type { Logger } from 'pino';
 import gdapi from '../../../gd-api-client';
+import type CommandHandler from '../command-handler.type';
 
 const statistics: CommandHandler = {
   generator: async (interaction: CommandInteraction, logger: Logger) => {

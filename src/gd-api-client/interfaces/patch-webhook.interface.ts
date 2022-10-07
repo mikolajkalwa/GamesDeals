@@ -1,5 +1,5 @@
 export default interface PatchWebhook {
-  mention?: string | null;
-  keywords?: string[] | null;
-  blacklist?: string[] | null;
+  mention?: string | null | undefined;
+  keywords?: string[] | null | undefined;
+  blacklist?: string[] | null | undefined;
 }

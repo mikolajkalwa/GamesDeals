@@ -1,5 +1,5 @@
-import { SlashCommandBuilder, SlashCommandSubcommandsOnlyBuilder } from 'discord.js';
-import CommandHandler from './command-handler.type';
+import type { SlashCommandBuilder, SlashCommandSubcommandsOnlyBuilder } from 'discord.js';
+import type CommandHandler from './command-handler.type';
 import * as help from './help';
 import * as latest from './latest';
 import * as ping from './ping';

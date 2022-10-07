@@ -1,10 +1,9 @@
-import { CommandInteraction } from 'discord.js';
+import type { CommandInteraction } from 'discord.js';
 import gdapi from '../../../gd-api-client';
 import { printWebhookDetails } from './command.utils';
 
 const SEPARATOR = ' -------\n';
 
-// eslint-disable-next-line consistent-return
 const run = async (interaction: CommandInteraction) => {
   let currentChunkContent: string[] = [];
   const chunksToSend: Array<string[]> = [];
@@ -29,7 +28,7 @@ const run = async (interaction: CommandInteraction) => {
   chunksToSend.push(currentChunkContent);
 
   await interaction.deferReply();
-  await Promise.all(chunksToSend.map(async (chunk) => await interaction
+  return await Promise.all(chunksToSend.map(async (chunk) => await interaction
     .followUp({
       content: chunk.join(SEPARATOR),
       allowedMentions: {

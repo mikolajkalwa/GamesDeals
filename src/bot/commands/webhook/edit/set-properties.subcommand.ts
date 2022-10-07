@@ -1,4 +1,4 @@
-import { ChatInputCommandInteraction } from 'discord.js';
+import type { ChatInputCommandInteraction } from 'discord.js';
 import gdapi from '../../../../gd-api-client';
 import { parseArgs, printWebhookDetails } from '../command.utils';
 

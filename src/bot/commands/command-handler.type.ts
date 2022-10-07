@@ -1,5 +1,5 @@
-import { ChatInputCommandInteraction } from 'discord.js';
-import { Logger } from 'pino';
+import type { ChatInputCommandInteraction } from 'discord.js';
+import type { Logger } from 'pino';
 
 type CommandHandler = {
   guildOnly?: boolean;

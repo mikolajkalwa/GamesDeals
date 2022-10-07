@@ -1,6 +1,6 @@
 import { ChatInputCommandInteraction, PermissionFlagsBits } from 'discord.js';
-import { Logger } from 'pino';
-import CommandHandler from '../command-handler.type';
+import type { Logger } from 'pino';
+import type CommandHandler from '../command-handler.type';
 import createWebhook from './create.command';
 import deleteWebhook from './delete.command';
 import editWebhook from './edit.command';

@@ -1,4 +1,4 @@
-import ReadWebhook from '../../../gd-api-client/interfaces/read-webhook.interface';
+import type ReadWebhook from '../../../gd-api-client/interfaces/read-webhook.interface';
 
 export const printWebhookDetails = (webhook: ReadWebhook): string => `**Webhook ID: ${webhook.id}**\n`
   + `Channel: <#${webhook.channel}>\n`

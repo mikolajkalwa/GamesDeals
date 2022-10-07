@@ -1,10 +1,10 @@
 import got, { Got } from 'got';
 import config from '../config';
-import Deal from './interfaces/deal.interface';
-import PatchWebhook from './interfaces/patch-webhook.interface';
-import ReadWebhook from './interfaces/read-webhook.interface';
-import Statistics from './interfaces/statistics.interface';
-import Webhook from './interfaces/webhook.interface';
+import type Deal from './interfaces/deal.interface';
+import type PatchWebhook from './interfaces/patch-webhook.interface';
+import type ReadWebhook from './interfaces/read-webhook.interface';
+import type Statistics from './interfaces/statistics.interface';
+import type Webhook from './interfaces/webhook.interface';
 
 export default class GamesDealsApiClient {
   private readonly request: Got;
@@ -20,7 +20,7 @@ export default class GamesDealsApiClient {
     return await this.request.get('statistics').json();
   }
 
-  public async getLastDeal(): Promise<Deal> {
+  public async getLastDeal(): Promise<Deal | undefined> {
     const result: Deal[] = await this.request.get('deals/latest').json();
     return result[0];
   }

@@ -1,4 +1,4 @@
-import Webhook from './webhook.interface';
+import type Webhook from './webhook.interface';
 
 export default interface ReadWebhook extends Webhook {
   readonly createdAt: string;

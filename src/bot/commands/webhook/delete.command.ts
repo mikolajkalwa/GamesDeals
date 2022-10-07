@@ -1,5 +1,5 @@
 import { ChatInputCommandInteraction, WebhookClient } from 'discord.js';
-import { Logger } from 'pino';
+import type { Logger } from 'pino';
 import gdapi from '../../../gd-api-client';
 
 const run = async (interaction: ChatInputCommandInteraction, logger: Logger) => {

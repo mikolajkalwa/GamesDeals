@@ -1,6 +1,6 @@
 {
   "name": "games-deals-bot",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "main": "dist/index.js",
   "repository": "git@github.com:mikolajkalwa/GamesDealsBot.git",
   "author": "Mikolaj Kalwa",
