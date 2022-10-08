@@ -1,6 +1,6 @@
 {
   "name": "games-deals-notifier",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "main": "index.js",
   "scripts": {
     "start": "node dist/index.js",
@@ -24,7 +24,7 @@
     "@types/jest": "29.1.2",
     "@typescript-eslint/eslint-plugin": "5.39.0",
     "@typescript-eslint/parser": "5.39.0",
-    "eslint": "8.24.0",
+    "eslint": "8.25.0",
     "eslint-config-airbnb-typescript": "17.0.0",
     "eslint-plugin-import": "2.26.0",
     "eslint-plugin-jest": "27.1.1",

@@ -10,5 +10,6 @@ module.exports = {
     "^.+\\.(ts|tsx)$": "ts-jest"
   },
   "collectCoverage": true,
-  "coverageReporters": ["text"]
+  "coverageReporters": ["text"],
+  "setupFiles": ["dotenv/config"]
 }

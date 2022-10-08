@@ -8,7 +8,7 @@ import RedditClient from './RedditClient';
 
 const resultsWebhook = process.env['WEBHOOK_URL'];
 const discordUrl = process.env['DISCORD_URL'] || 'https://discord.com';
-const gamesDealsApiUrl = process.env['GAMES_DEALS_API_URL'] || 'http://localhost:3000';
+const gamesDealsApiUrl = process.env['GAMES_DEALS_API_URL'] || 'http://127.0.0.1:3000';
 const redditUrl = process.env['REDDIT_URL'] || 'https://reddit.com';
 
 const logger = pino({

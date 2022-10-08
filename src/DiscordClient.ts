@@ -31,7 +31,6 @@ export default class DiscordClient {
         content,
       }),
     });
-
     return response;
   };
 }

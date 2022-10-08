@@ -87,6 +87,7 @@ export default class Notifier {
         } else if (response.statusCode === 429) {
           rateLimitedWebhooks.push(webhook);
         } else if (response.statusCode === 400) {
+          this.logger.warn(response.body, 'Discord returned 400');
           badRequestWebhooks.push(webhook);
         }
       }),
