@@ -79,15 +79,16 @@ export default class Notifier {
     await Promise.allSettled(
       webhooksToExecute.map(async (webhook) => {
         const response = await this.discordClient.executeWebhook(webhook, message);
+        const body = await response.body.text();
         if (response.statusCode === 404 || response.statusCode === 401) {
           webhooksToRemove.push(webhook);
         } else if (response.statusCode >= 500 && response.statusCode < 600) {
-          this.logger.warn(response.body, 'Discord returned 5xx');
+          this.logger.warn(body, 'Discord returned 5xx');
           failedWebhooks.push(webhook);
         } else if (response.statusCode === 429) {
           rateLimitedWebhooks.push(webhook);
         } else if (response.statusCode === 400) {
-          this.logger.warn(response.body, 'Discord returned 400');
+          this.logger.warn(body, 'Discord returned 400');
           badRequestWebhooks.push(webhook);
         }
       }),
