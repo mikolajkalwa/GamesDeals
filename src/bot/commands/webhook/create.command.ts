@@ -1,5 +1,5 @@
 import {
-  BaseGuildTextChannel, ChatInputCommandInteraction, DiscordAPIError, RESTJSONErrorCodes,
+  BaseGuildTextChannel, ChannelType, ChatInputCommandInteraction, DiscordAPIError, RESTJSONErrorCodes,
 } from 'discord.js';
 import fs from 'fs';
 import path from 'path';
@@ -11,6 +11,11 @@ const image = fs.readFileSync(path.resolve(__dirname, '..', '..', '..', '..', 'a
 const run = async (interaction: ChatInputCommandInteraction) => {
   try {
     const targetChannel = interaction.options.getChannel('channel') as BaseGuildTextChannel;
+
+    if (targetChannel?.type !== ChannelType.GuildText) {
+      return await interaction.reply({ content: 'Choosen channel type is not supported. Currently only guild text channels are supported.', ephemeral: true });
+    }
+
     const channelWebhooks = await targetChannel.fetchWebhooks();
     if (channelWebhooks.size === 10) {
       return await interaction.reply({ content: 'Choosen channel reached Discord webhooks limit', ephemeral: true });

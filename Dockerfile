@@ -8,7 +8,7 @@ RUN npm run build
 FROM node:18.10.0-alpine as install-deps
 WORKDIR /usr/src/app
 COPY package*.json ./
-RUN apk add --no-cache python3 make g++ && npm ci --ignore-scripts --only=production
+RUN apk add --no-cache python3 make g++ && npm ci --ignore-scripts --omit=dev
 
 
 FROM node:18.10.0-alpine
