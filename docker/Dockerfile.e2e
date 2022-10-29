@@ -1,6 +1,6 @@
-FROM node:18.10.0-alpine
+FROM node:18.12.0-bullseye-slim
 WORKDIR /usr/src/app
 COPY package*.json ./
 RUN npm install
 COPY . .
-CMD ["ash", "-c", "npx prisma migrate reset --force && npx jest --runInBand --config=./jest-e2e.config.json"]
+CMD ["bash", "-c", "npx prisma migrate reset --force && npx jest --runInBand --config=./jest-e2e.config.json"]

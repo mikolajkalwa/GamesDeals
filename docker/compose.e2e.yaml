@@ -1,9 +1,15 @@
 version: "3.8"
 services:
   db:
-    image: postgres:alpine
+    image: postgres:15-alpine
     environment:
       POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: games_deals
+    healthcheck:
+      test: pg_isready -q -U postgres -d games_deals
+      interval: 5s
+      timeout: 10s
+      retries: 5
 
   e2e-runner:
     build:
@@ -14,4 +20,5 @@ services:
       DATABASE_URL: postgresql://postgres:postgres@db:5432/games_deals
       NODE_ENV: test
     depends_on:
-      - db
+      db:
+        condition: service_healthy
