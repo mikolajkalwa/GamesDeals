@@ -1,21 +1,15 @@
-FROM node:18.10.0-alpine as tsc-build
+FROM node:18.12.0-bullseye-slim as build
 WORKDIR /usr/src/app
 COPY package*.json ./
-RUN apk add --no-cache python3 make g++ && npm ci --ignore-scripts
+RUN npm ci --ignore-scripts
 COPY . .
 RUN npm run build
 
-FROM node:18.10.0-alpine as install-deps
+FROM node:18.12.0-bullseye-slim 
 WORKDIR /usr/src/app
-COPY package*.json ./
-RUN apk add --no-cache python3 make g++ && npm ci --ignore-scripts --omit=dev
-
-
-FROM node:18.10.0-alpine
-WORKDIR /usr/src/app
-COPY --chown=node:node --from=tsc-build /usr/src/app/package*.json ./
-COPY --chown=node:node --from=tsc-build /usr/src/app/assets/avatar.png ./assets/avatar.png
-COPY --chown=node:node --from=install-deps /usr/src/app/node_modules ./node_modules
-COPY --chown=node:node --from=tsc-build /usr/src/app/dist ./dist
+COPY --chown=node:node --from=build /usr/src/app/package*.json ./
+COPY --chown=node:node --from=build /usr/src/app/assets/avatar.png ./assets/avatar.png
+RUN npm ci --ignore-scripts --omit=dev
+COPY --chown=node:node --from=build /usr/src/app/dist ./dist
 USER node
 CMD ["node", "./dist/index.js"]
