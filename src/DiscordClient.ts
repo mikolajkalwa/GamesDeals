@@ -29,10 +29,6 @@ export default class DiscordClient {
       },
       body: JSON.stringify({
         content,
-        allowed_mentions: {
-          parse: ['roles', 'everyone'],
-          roles: webhook.mention ? [webhook.mention] : undefined,
-        },
       }),
     });
     return response;
