@@ -1,9 +1,9 @@
 import { request } from 'undici';
 
-import type { Deal } from './types/GamesDealsApi';
-import { RedditResponse, RedditResponseSchema } from './types/Reddit';
+import type { Deal } from '../types/games-deal-api.type';
+import { RedditResponse, RedditResponseSchema } from '../types/reddit.type';
 
-export default class RedditClient {
+export class RedditClient {
   constructor(private readonly baseUrl: string) { }
 
   public getTrendingDeals = async (): Promise<Deal[]> => {

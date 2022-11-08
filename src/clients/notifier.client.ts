@@ -1,15 +1,15 @@
 import type { Logger } from 'pino';
 import { request } from 'undici';
-import type DiscordClient from './DiscordClient';
-import type GamesDealsAPIClient from './GamesDealsAPIClient';
-import type { Deal, Webhook } from './types/GamesDealsApi';
-import type { ExecutionResult } from './types/Notifier';
-import isFree from './utils/isFree';
+import type { Deal, Webhook } from '../types/games-deal-api.type';
+import type { ExecutionResult } from '../types/notifier.type';
+import isFree from '../utils/isFree';
+import type { DiscordClient } from './discord.client';
+import type { GamesDealsApiClient } from './games-deals-api.client';
 
-export default class Notifier {
+export class NotifierClient {
   constructor(
     private readonly logger: Logger,
-    private readonly gdApiClient: GamesDealsAPIClient,
+    private readonly gdApiClient: GamesDealsApiClient,
     private readonly discordClient: DiscordClient,
   ) { }
 
@@ -71,7 +71,7 @@ export default class Notifier {
     const failedWebhooks: Webhook[] = [];
     const badRequestWebhooks: Webhook[] = [];
 
-    const message = Notifier.createMessageContent(deal);
+    const message = NotifierClient.createMessageContent(deal);
     const webhooksToExecute = this.getWebhooksToExecute(deal, allWebhooks);
 
     this.logger.info(`Webhooks to execute ${webhooksToExecute.length}`);

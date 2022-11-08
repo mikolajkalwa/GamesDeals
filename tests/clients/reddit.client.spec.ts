@@ -2,7 +2,7 @@ import fs from 'fs/promises';
 import path from 'path';
 import { MockAgent, setGlobalDispatcher } from 'undici';
 import { ZodError } from 'zod';
-import RedditClient from '../src/RedditClient';
+import { RedditClient } from '../../src/clients';
 
 const redditClient = new RedditClient('https://reddit.com');
 
@@ -20,7 +20,7 @@ test('getTrendingDeals should throw an error if reddit api response does not ful
 });
 
 test('getTrendingDeals should strip extra properties and resolve to defined object', async () => {
-  const fixture = await fs.readFile(path.resolve(__dirname, 'RedditClient.fixture.json'), { encoding: 'utf-8' });
+  const fixture = await fs.readFile(path.resolve(__dirname, '../fixtures/reddit-client.fixture.json'), { encoding: 'utf-8' });
 
   mockPool.intercept({
     path: '/r/GameDeals/hot/.json?limit=3',

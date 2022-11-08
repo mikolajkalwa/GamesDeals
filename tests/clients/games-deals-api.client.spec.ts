@@ -1,7 +1,7 @@
 import { MockAgent, setGlobalDispatcher } from 'undici';
-import GamesDealsAPIClient from '../src/GamesDealsAPIClient';
+import { GamesDealsApiClient } from '../../src/clients';
 
-const gamesDealsAPIClient = new GamesDealsAPIClient('http://localhost');
+const gamesDealsAPIClient = new GamesDealsApiClient('http://localhost');
 
 const mockAgent = new MockAgent();
 setGlobalDispatcher(mockAgent);

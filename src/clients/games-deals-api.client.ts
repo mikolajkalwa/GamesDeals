@@ -1,16 +1,12 @@
 import { request } from 'undici';
-import type { Deal, Webhook } from './types/GamesDealsApi';
+import type { Deal, Webhook } from '../types/games-deal-api.type';
 
-export default class GamesDealsAPIClient {
+export class GamesDealsApiClient {
   constructor(private readonly baseUrl: string) { }
 
   async isNewDeal(redditThreadIdentifier: string) {
     const response = await request(`${this.baseUrl}/deals/reddit/${redditThreadIdentifier}`);
-
-    if (response.statusCode === 404) {
-      return true;
-    }
-    return false;
+    return response.statusCode === 404;
   }
 
   async insertNewDeal(deal: Omit<Deal, 'author' | 'over18'>) {
@@ -37,11 +33,7 @@ export default class GamesDealsAPIClient {
       method: 'DELETE',
     });
 
-    if (response.statusCode === 204) {
-      return true;
-    }
-
-    return false;
+    return response.statusCode === 204;
   }
 
   async getAllWebhooks() {

@@ -1,4 +1,4 @@
-import type { Deal, Webhook } from '../src/types/GamesDealsApi';
+import type { Deal, Webhook } from '../../src/types/games-deal-api.type';
 
 export const indiegala: Deal = {
   author: '',

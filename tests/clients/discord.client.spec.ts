@@ -1,4 +1,4 @@
-import DiscordClient from '../src/DiscordClient';
+import { DiscordClient } from '../../src/clients';
 
 const discordClient = new DiscordClient('https://discord.com');
 
@@ -9,8 +9,8 @@ describe('executeWebhook', () => {
       blacklist: [],
       keywords: [],
       guild: '',
-      id: process.env['TEST_WEBHOOK_ID'] as string,
-      token: process.env['TEST_WEBHOOK_TOKEN'] as string,
+      id: process.env['TEST_WEBHOOK_ID']!,
+      token: process.env['TEST_WEBHOOK_TOKEN']!,
     }, `Notifier - Execute webhook test, ${new Date()}`)
 
     await expect(webhookExecute).resolves.toMatchObject({ statusCode: 200 });

@@ -1,17 +1,15 @@
 import pino from 'pino';
-import DiscordClient from '../src/DiscordClient';
-import GamesDealsAPIClient from '../src/GamesDealsAPIClient';
-import Notifier from '../src/Notifier';
-import { epic, gog, indiegala, itchio, steam, webhooks } from './Notifier.fixture';
+import { DiscordClient, GamesDealsApiClient, NotifierClient } from '../../src/clients';
+import { epic, gog, indiegala, itchio, steam, webhooks } from '../fixtures/notifier-client.fixture';
 
-jest.mock('../src/GamesDealsAPIClient');
-const gdApiMock = jest.mocked(new GamesDealsAPIClient('http://localhost'), { shallow: true });
+jest.mock('../../src/clients/games-deals-api.client.ts');
+const gdApiMock = jest.mocked(new GamesDealsApiClient('http://localhost'), { shallow: true });
 
-let notifier: Notifier;
+let notifier: NotifierClient;
 
 beforeEach(() => {
   jest.clearAllMocks();
-  notifier = new Notifier(pino(), gdApiMock, new DiscordClient('http://localhost'));
+  notifier = new NotifierClient(pino(), gdApiMock, new DiscordClient('http://localhost'));
 });
 
 describe('getWebhooksToExecute', () => {
@@ -252,7 +250,7 @@ describe('getWebhooksToExecute', () => {
 
 describe('createMessageContent', () => {
   it('should create correct message content', () => {
-    expect(Notifier.createMessageContent({ author: 'me', id: 'some-id', over18: false, title: 'Cool game', url: 'redeem.here' })).toBe(
+    expect(NotifierClient.createMessageContent({ author: 'me', id: 'some-id', over18: false, title: 'Cool game', url: 'redeem.here' })).toBe(
       '**Cool game**\n<redeem.here>\nPosted by: *me*\nhttps://reddit.com/some-id\n'
     )
   })
