@@ -1,17 +1,26 @@
 import { request } from 'undici';
-
 import type { Deal } from '../types/games-deal-api.type';
 import { RedditResponse, RedditResponseSchema } from '../types/reddit.type';
 
 export class RedditClient {
-  constructor(private readonly baseUrl: string) { }
+  private readonly gameDealsUrl: string;
+  private readonly maxRedirections = 4;
 
-  public getTrendingDeals = async (): Promise<Deal[]> => {
-    const response = await request(`${this.baseUrl}/r/GameDeals/hot/.json?limit=3`, { maxRedirections: 4 });
-    const data = await response.body.json() as unknown;
-    const redditData: RedditResponse = RedditResponseSchema.parse(data);
+  constructor(baseUrl: string) { 
+    this.gameDealsUrl = `${baseUrl}/r/GameDeals/hot/.json?limit=3`
+  }
 
-    return redditData.data.children.map((children) => ({
+  private async fetchTrendingDeals() {
+    const response = await request(this.gameDealsUrl, { maxRedirections: this.maxRedirections });
+    const data = await response.body.json();
+
+    return RedditResponseSchema.parse(data);
+  }
+
+  public async getTrendingDeals(): Promise<Deal[]> {
+    const redditResponse: RedditResponse = await this.fetchTrendingDeals();
+
+    return redditResponse.data.children.map((children) => ({
       id: children.data.id,
       url: children.data.url,
       title: children.data.title,
