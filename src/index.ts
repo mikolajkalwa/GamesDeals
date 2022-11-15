@@ -1,6 +1,8 @@
 import pino from 'pino';
 import { setTimeout } from 'timers/promises';
-import { RedditClient, GamesDealsApiClient, DiscordClient, NotifierClient } from './clients';
+import {
+  DiscordClient, GamesDealsApiClient, NotifierClient, RedditClient,
+} from './clients';
 import { config } from './config';
 
 const webhookUrl = config.urls.webhook;

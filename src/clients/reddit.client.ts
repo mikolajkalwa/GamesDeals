@@ -6,13 +6,13 @@ export class RedditClient {
   private readonly gameDealsUrl: string;
   private readonly maxRedirections = 4;
 
-  constructor(baseUrl: string) { 
-    this.gameDealsUrl = `${baseUrl}/r/GameDeals/hot/.json?limit=3`
+  constructor(baseUrl: string) {
+    this.gameDealsUrl = `${baseUrl}/r/GameDeals/hot/.json?limit=3`;
   }
 
   private async fetchTrendingDeals() {
     const response = await request(this.gameDealsUrl, { maxRedirections: this.maxRedirections });
-    const data = await response.body.json();
+    const data = await response.body.json() as unknown;
 
     return RedditResponseSchema.parse(data);
   }
@@ -27,5 +27,5 @@ export class RedditClient {
       author: children.data.author,
       over18: children.data.over_18,
     }));
-  };
+  }
 }
