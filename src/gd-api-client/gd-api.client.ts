@@ -30,6 +30,10 @@ export default class GamesDealsApiClient {
   }
 
   public async patchWebhook(webhookId: string, webhookPatch: PatchWebhook): Promise<ReadWebhook> {
+    if (Object.values(webhookPatch).every((item) => item === undefined)) {
+      throw new Error('No fields were provided to patch');
+    }
+
     return await this.request.patch(`webhooks/${webhookId}`, {
       json: webhookPatch,
     }).json();

@@ -1,6 +1,6 @@
 {
   "name": "games-deals-bot",
-  "version": "2.0.5",
+  "version": "2.0.6",
   "main": "dist/index.js",
   "repository": "git@github.com:mikolajkalwa/GamesDealsBot.git",
   "author": "Mikolaj Kalwa",
@@ -37,6 +37,6 @@
     "eslint-plugin-import": "^2.26.0",
     "husky": "^8.0.2",
     "npm-check-updates": "^16.4.1",
-    "typescript": "^4.8.4"
+    "typescript": "^4.9.3"
   }
 }
