@@ -7,12 +7,16 @@ const setPropertiesSubCommand = async (interaction: ChatInputCommandInteraction,
   const blacklist = parseArgs(interaction.options.getString('ignore'));
   const role = interaction.options.getRole('role');
 
+  if (!blacklist && !keywords && !role) {
+    return await interaction.reply({ content: 'No fields to update', ephemeral: true });
+  }
+
   const updatedWebhook = await gdapi.patchWebhook(webhookId, {
     keywords: keywords || undefined,
     blacklist: blacklist || undefined,
     mention: role?.id,
   });
-  await interaction.reply(`Webhook updated succesfully\n${printWebhookDetails(updatedWebhook)}`);
+  return await interaction.reply(`Webhook updated succesfully\n${printWebhookDetails(updatedWebhook)}`);
 };
 
 export default setPropertiesSubCommand;
