@@ -1,5 +1,4 @@
-import { ChannelType } from 'discord-api-types/v10';
-import { SlashCommandBuilder } from 'discord.js';
+import { ChannelType, SlashCommandBuilder } from 'discord.js';
 
 const webhookDefinition = new SlashCommandBuilder()
   .setName('webhook')
@@ -11,6 +10,7 @@ const webhookDefinition = new SlashCommandBuilder()
       .setName('channel')
       .setDescription('Select channel')
       .addChannelTypes(ChannelType.GuildText)
+      .addChannelTypes(ChannelType.GuildForum)
       .setRequired(true))
     .addRoleOption((option) => option
       .setName('role')

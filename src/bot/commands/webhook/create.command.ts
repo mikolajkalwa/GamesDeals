@@ -1,5 +1,5 @@
 import {
-  BaseGuildTextChannel, ChannelType, ChatInputCommandInteraction, DiscordAPIError, RESTJSONErrorCodes,
+  ChannelType, ChatInputCommandInteraction, DiscordAPIError, RESTJSONErrorCodes,
 } from 'discord.js';
 import fs from 'fs';
 import path from 'path';
@@ -10,10 +10,17 @@ const image = fs.readFileSync(path.resolve(__dirname, '..', '..', '..', '..', 'a
 
 const run = async (interaction: ChatInputCommandInteraction) => {
   try {
-    const targetChannel = interaction.options.getChannel('channel') as BaseGuildTextChannel;
+    if (!interaction.inCachedGuild()) {
+      return await interaction.reply({ content: 'Guild doesn\'t exist in cache', ephemeral: true });
+    }
+    const targetChannel = interaction.options.getChannel('channel');
 
-    if (targetChannel?.type !== ChannelType.GuildText) {
-      return await interaction.reply({ content: 'Choosen channel type is not supported. Currently only guild text channels are supported.', ephemeral: true });
+    if (!targetChannel) {
+      return await interaction.reply({ content: 'No channel selected', ephemeral: true });
+    }
+
+    if (!(targetChannel.type === ChannelType.GuildText || targetChannel.type === ChannelType.GuildForum)) {
+      return await interaction.reply({ content: 'Choosen channel type is not supported. Currently guild text and guild forum channels are supported.', ephemeral: true });
     }
 
     const channelWebhooks = await targetChannel.fetchWebhooks();
@@ -34,6 +41,7 @@ const run = async (interaction: ChatInputCommandInteraction) => {
       id: webhook.id,
       guild: webhook.guildId,
       token: webhook.token as string,
+      channelType: targetChannel.type === ChannelType.GuildText ? 'GUILD_TEXT' : 'GUILD_FORUM',
       mention: role?.id,
       channel: webhook.channelId,
       keywords: keywords || undefined,
