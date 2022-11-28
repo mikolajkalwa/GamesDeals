@@ -13,4 +13,5 @@ export interface Webhook {
   mention?: string;
   keywords: string[];
   blacklist: string[];
+  channelType: 'GUILD_TEXT' | 'GUILD_FORUM'
 }

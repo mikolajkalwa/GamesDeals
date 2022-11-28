@@ -29,8 +29,6 @@ export class NotifierClient {
       return null;
     }))).filter(Boolean) as Deal[];
 
-  public static createMessageContent = (deal: Deal) => `**${deal.title}**\n<${deal.url}>\nPosted by: *${deal.author}*\nhttps://reddit.com/${deal.id}\n`;
-
   // eslint-disable-next-line class-methods-use-this
   public getWebhooksToExecute = (deal: Deal, allWebhooks: Webhook[]) => {
     const title = deal.title.toLowerCase();
@@ -71,14 +69,13 @@ export class NotifierClient {
     const failedWebhooks: Webhook[] = [];
     const badRequestWebhooks: Webhook[] = [];
 
-    const message = NotifierClient.createMessageContent(deal);
     const webhooksToExecute = this.getWebhooksToExecute(deal, allWebhooks);
 
     this.logger.info(`Webhooks to execute ${webhooksToExecute.length}`);
 
     await Promise.allSettled(
       webhooksToExecute.map(async (webhook) => {
-        const response = await this.discordClient.executeWebhook(webhook, message);
+        const response = await this.discordClient.sendNotification(webhook, deal);
         const body = await response.body.text();
         if (response.statusCode === 404 || response.statusCode === 401) {
           webhooksToRemove.push(webhook);

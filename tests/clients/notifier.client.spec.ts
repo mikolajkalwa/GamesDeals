@@ -22,6 +22,7 @@ describe('getWebhooksToExecute', () => {
         guild: '',
         id: '',
         token: '',
+        channelType: 'GUILD_TEXT'
       },
       {
         blacklist: ['indiegala'],
@@ -29,6 +30,7 @@ describe('getWebhooksToExecute', () => {
         guild: '',
         id: '',
         token: '',
+        channelType: 'GUILD_TEXT'
       },
       {
         blacklist: ['INDIEGALA'],
@@ -36,6 +38,7 @@ describe('getWebhooksToExecute', () => {
         guild: '',
         id: '',
         token: '',
+        channelType: 'GUILD_TEXT'
       },
       {
         blacklist: ['indiegala', 'itch.io'],
@@ -43,6 +46,7 @@ describe('getWebhooksToExecute', () => {
         guild: '',
         id: '',
         token: '',
+        channelType: 'GUILD_TEXT'
       },
       {
         blacklist: ['indiegala', 'itch.io'],
@@ -50,6 +54,7 @@ describe('getWebhooksToExecute', () => {
         guild: '',
         id: '',
         token: '',
+        channelType: 'GUILD_TEXT'
       },
       {
         blacklist: ['indiegala', 'itch.io'],
@@ -57,6 +62,7 @@ describe('getWebhooksToExecute', () => {
         guild: '',
         id: '',
         token: '',
+        channelType: 'GUILD_TEXT'
       },
       {
         blacklist: [],
@@ -64,6 +70,7 @@ describe('getWebhooksToExecute', () => {
         guild: '',
         id: '',
         token: '',
+        channelType: 'GUILD_TEXT'
       },
       {
         blacklist: [],
@@ -71,6 +78,7 @@ describe('getWebhooksToExecute', () => {
         guild: '',
         id: '',
         token: '',
+        channelType: 'GUILD_TEXT'
       },
       {
         blacklist: [],
@@ -78,6 +86,7 @@ describe('getWebhooksToExecute', () => {
         guild: '',
         id: '',
         token: '',
+        channelType: 'GUILD_TEXT'
       },
       {
         blacklist: [],
@@ -85,6 +94,7 @@ describe('getWebhooksToExecute', () => {
         guild: '',
         id: '',
         token: '',
+        channelType: 'GUILD_TEXT'
       },
       {
         blacklist: ['gog', 'epic'],
@@ -92,6 +102,7 @@ describe('getWebhooksToExecute', () => {
         guild: '',
         id: '',
         token: '',
+        channelType: 'GUILD_TEXT'
       },
       {
         blacklist: [],
@@ -99,6 +110,7 @@ describe('getWebhooksToExecute', () => {
         guild: '',
         id: '',
         token: '',
+        channelType: 'GUILD_TEXT'
       },
     ]);
   });
@@ -112,6 +124,7 @@ describe('getWebhooksToExecute', () => {
         guild: '',
         id: '',
         token: '',
+        channelType: 'GUILD_TEXT'
       },
     ]);
   });
@@ -125,6 +138,7 @@ describe('getWebhooksToExecute', () => {
         guild: '',
         id: '',
         token: '',
+        channelType: 'GUILD_TEXT'
       },
       {
         blacklist: ['indiegala'],
@@ -132,6 +146,7 @@ describe('getWebhooksToExecute', () => {
         guild: '',
         id: '',
         token: '',
+        channelType: 'GUILD_TEXT'
       },
       {
         blacklist: ['INDIEGALA'],
@@ -139,6 +154,7 @@ describe('getWebhooksToExecute', () => {
         guild: '',
         id: '',
         token: '',
+        channelType: 'GUILD_TEXT'
       },
       {
         blacklist: ['indiegala', 'itch.io'],
@@ -146,6 +162,7 @@ describe('getWebhooksToExecute', () => {
         guild: '',
         id: '',
         token: '',
+        channelType: 'GUILD_TEXT'
       },
       {
         blacklist: ['indiegala', 'itch.io'],
@@ -153,6 +170,7 @@ describe('getWebhooksToExecute', () => {
         guild: '',
         id: '',
         token: '',
+        channelType: 'GUILD_TEXT'
       },
       {
         blacklist: [],
@@ -160,6 +178,7 @@ describe('getWebhooksToExecute', () => {
         guild: '',
         id: '',
         token: '',
+        channelType: 'GUILD_TEXT'
       },
       {
         blacklist: [],
@@ -167,6 +186,7 @@ describe('getWebhooksToExecute', () => {
         guild: '',
         id: '',
         token: '',
+        channelType: 'GUILD_TEXT'
       },
       {
         blacklist: [],
@@ -174,6 +194,7 @@ describe('getWebhooksToExecute', () => {
         guild: '',
         id: '',
         token: '',
+        channelType: 'GUILD_TEXT'
       },
     ]);
   });
@@ -187,6 +208,7 @@ describe('getWebhooksToExecute', () => {
         guild: '',
         id: '',
         token: '',
+        channelType: 'GUILD_TEXT'
       },
       {
         blacklist: ['indiegala'],
@@ -194,6 +216,7 @@ describe('getWebhooksToExecute', () => {
         guild: '',
         id: '',
         token: '',
+        channelType: 'GUILD_TEXT'
       },
       {
         blacklist: ['INDIEGALA'],
@@ -201,6 +224,7 @@ describe('getWebhooksToExecute', () => {
         guild: '',
         id: '',
         token: '',
+        channelType: 'GUILD_TEXT'
       },
     ]);
   });
@@ -214,6 +238,7 @@ describe('getWebhooksToExecute', () => {
         guild: '',
         id: '',
         token: '',
+        channelType: 'GUILD_TEXT'
       },
       {
         blacklist: ['indiegala'],
@@ -221,6 +246,7 @@ describe('getWebhooksToExecute', () => {
         guild: '',
         id: '',
         token: '',
+        channelType: 'GUILD_TEXT'
       },
       {
         blacklist: ['INDIEGALA'],
@@ -228,6 +254,7 @@ describe('getWebhooksToExecute', () => {
         guild: '',
         id: '',
         token: '',
+        channelType: 'GUILD_TEXT'
       },
       {
         blacklist: ['indiegala', 'itch.io'],
@@ -235,6 +262,7 @@ describe('getWebhooksToExecute', () => {
         guild: '',
         id: '',
         token: '',
+        channelType: 'GUILD_TEXT'
       },
       {
         blacklist: [],
@@ -242,19 +270,12 @@ describe('getWebhooksToExecute', () => {
         guild: '',
         id: '',
         token: '',
+        channelType: 'GUILD_TEXT'
       },
     ]);
   });
 
 });
-
-describe('createMessageContent', () => {
-  it('should create correct message content', () => {
-    expect(NotifierClient.createMessageContent({ author: 'me', id: 'some-id', over18: false, title: 'Cool game', url: 'redeem.here' })).toBe(
-      '**Cool game**\n<redeem.here>\nPosted by: *me*\nhttps://reddit.com/some-id\n'
-    )
-  })
-})
 
 describe('getDealsToAnnounce', () => {
   it('over18 deals should be ignored', async () => {

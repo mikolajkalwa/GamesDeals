@@ -47,6 +47,7 @@ export const webhooks: Webhook[] = [
     guild: '',
     id: '',
     token: '',
+    channelType: 'GUILD_TEXT'
   },
   {
     blacklist: ['indiegala'],
@@ -54,6 +55,7 @@ export const webhooks: Webhook[] = [
     guild: '',
     id: '',
     token: '',
+    channelType: 'GUILD_TEXT'
   },
   {
     blacklist: ['INDIEGALA'],
@@ -61,6 +63,7 @@ export const webhooks: Webhook[] = [
     guild: '',
     id: '',
     token: '',
+    channelType: 'GUILD_TEXT'
   },
   {
     blacklist: ['indiegala', 'itch.io'],
@@ -68,6 +71,7 @@ export const webhooks: Webhook[] = [
     guild: '',
     id: '',
     token: '',
+    channelType: 'GUILD_TEXT'
   },
   {
     blacklist: ['indiegala', 'itch.io'],
@@ -75,6 +79,7 @@ export const webhooks: Webhook[] = [
     guild: '',
     id: '',
     token: '',
+    channelType: 'GUILD_TEXT'
   },
   {
     blacklist: ['indiegala', 'itch.io'],
@@ -82,6 +87,7 @@ export const webhooks: Webhook[] = [
     guild: '',
     id: '',
     token: '',
+    channelType: 'GUILD_TEXT'
   },
   {
     blacklist: ['indiegala', 'itch.io'],
@@ -89,6 +95,7 @@ export const webhooks: Webhook[] = [
     guild: '',
     id: '',
     token: '',
+    channelType: 'GUILD_TEXT'
   },
   {
     blacklist: [],
@@ -96,6 +103,7 @@ export const webhooks: Webhook[] = [
     guild: '',
     id: '',
     token: '',
+    channelType: 'GUILD_TEXT'
   },
   {
     blacklist: [],
@@ -103,6 +111,7 @@ export const webhooks: Webhook[] = [
     guild: '',
     id: '',
     token: '',
+    channelType: 'GUILD_TEXT'
   },
   {
     blacklist: [],
@@ -110,6 +119,7 @@ export const webhooks: Webhook[] = [
     guild: '',
     id: '',
     token: '',
+    channelType: 'GUILD_TEXT'
   },
   {
     blacklist: [],
@@ -117,6 +127,7 @@ export const webhooks: Webhook[] = [
     guild: '',
     id: '',
     token: '',
+    channelType: 'GUILD_TEXT'
   },
   {
     blacklist: [],
@@ -124,6 +135,7 @@ export const webhooks: Webhook[] = [
     guild: '',
     id: '',
     token: '',
+    channelType: 'GUILD_TEXT'
   },
   {
     blacklist: ['gog', 'epic'],
@@ -131,6 +143,7 @@ export const webhooks: Webhook[] = [
     guild: '',
     id: '',
     token: '',
+    channelType: 'GUILD_TEXT'
   },
   {
     blacklist: [],
@@ -138,5 +151,6 @@ export const webhooks: Webhook[] = [
     guild: '',
     id: '',
     token: '',
+    channelType: 'GUILD_TEXT'
   },
 ];
