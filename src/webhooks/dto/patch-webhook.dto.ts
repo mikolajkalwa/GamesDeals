@@ -1,5 +1,10 @@
 import {
-  IsString, IsOptional, Length, ArrayMaxSize, ArrayUnique, IsNotEmpty,
+  ArrayMaxSize,
+  ArrayUnique,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  Length,
 } from 'class-validator';
 
 export default class PatchWebhookDto {

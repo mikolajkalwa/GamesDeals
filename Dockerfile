@@ -10,7 +10,7 @@ ENV NODE_ENV production
 EXPOSE 3000/tcp
 WORKDIR /usr/src/app
 COPY --chown=node:node --from=build /usr/src/app/package*.json ./
-RUN npm ci --ignore-scripts --only=production && npm cache clean --force
+RUN npm ci --ignore-scripts --omit=dev && npm cache clean --force
 COPY --chown=node:node --from=build /usr/src/app/scripts ./scripts
 COPY --chown=node:node --from=build /usr/src/app/prisma/schema.prisma ./prisma/schema.prisma
 COPY --chown=node:node --from=build /usr/src/app/prisma/migrations ./prisma/migrations

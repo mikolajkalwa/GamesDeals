@@ -19,7 +19,7 @@ test:
 	npm run test
 
 db-run:
-	docker run --name games-deals-postgres -e POSTGRES_PASSWORD=postgres -p 5432:5432 -d postgres:alpine
+	docker run --name games-deals-postgres -e POSTGRES_PASSWORD=postgres -p 5432:5432 -d postgres:14-alpine
 
 db-setup:
 	npx prisma migrate dev

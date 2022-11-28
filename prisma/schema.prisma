@@ -11,15 +11,16 @@ datasource db {
 }
 
 model Webhook {
-  id        BigInt   @id @unique
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-  token     String
-  mention   BigInt?
-  guild     BigInt
-  channel   BigInt
-  blacklist String[]
-  keywords  String[]
+  id          BigInt   @id @unique
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+  token       String
+  mention     BigInt?
+  guild       BigInt
+  channel     BigInt
+  blacklist   String[]
+  keywords    String[]
+  channelType Channel  @default(GUILD_TEXT) @map("channel_type")
 
   @@index([guild])
   @@map("webhooks")
@@ -34,4 +35,9 @@ model Deal {
   gameUrl     String   @map("game_url")
 
   @@map("deals")
+}
+
+enum Channel {
+  GUILD_TEXT
+  GUILD_FORUM
 }

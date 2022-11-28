@@ -74,6 +74,7 @@ describe('Webhooks', () => {
         id: '13',
         mention: null,
         token: '',
+        channelType: 'GUILD_TEXT',
         createdAt: '2018-05-14T18:20:33.000Z',
         updatedAt: '2018-05-14T18:20:33.000Z',
       });

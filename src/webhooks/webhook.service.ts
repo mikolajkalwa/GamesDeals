@@ -30,6 +30,7 @@ export default class WebhookService {
         mention: webhook.mention ? BigInt(webhook.mention) : null,
         blacklist: webhook.blacklist ?? [],
         keywords: webhook.keywords ?? [],
+        channelType: webhook.channelType,
       },
     });
   }
