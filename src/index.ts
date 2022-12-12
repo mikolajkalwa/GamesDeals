@@ -5,7 +5,7 @@ import { collectDefaultMetrics, Pushgateway, Registry } from 'prom-client';
 import config from './config';
 
 const logger = pino({
-  level: config.LOG_LEVEL,
+  level: config.LOG_LEVEL ?? 'info',
 });
 
 const manager = new ShardingManager(path.resolve(__dirname, 'bot', 'bot.js'), {
