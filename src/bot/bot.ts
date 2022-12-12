@@ -8,7 +8,7 @@ import config from '../config';
 import commands from './commands';
 
 const logger = pino({
-  level: 'info',
+  level: config.LOG_LEVEL ?? 'info',
 });
 
 const client = new Client({
