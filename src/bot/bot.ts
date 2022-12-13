@@ -38,6 +38,7 @@ client.on('debug', (m) => logger.debug(m, 'Debug event occured in Discord Client
 client.on('interactionCreate', async (interaction) => {
   try {
     if (!interaction.isCommand()) return;
+    logger.info(interaction, 'Executing interaction');
 
     const command = commands.get(interaction.commandName);
 

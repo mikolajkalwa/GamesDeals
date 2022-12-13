@@ -10,6 +10,8 @@ const logger = pino({
 
 const manager = new ShardingManager(path.resolve(__dirname, 'bot', 'bot.js'), {
   token: config.BOT_TOKEN,
+  respawn: true,
+  mode: 'worker',
 });
 
 manager.on('shardCreate', (shard) => {
