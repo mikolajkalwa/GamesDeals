@@ -15,5 +15,5 @@ RUN npm ci --ignore-scripts --omit=dev
 COPY --chown=node:node --from=build /usr/src/app/dist ./dist
 USER node
 # CMD ["dumb-init", "node", "./dist/index.js"]
-CMD ["node", "./dist/index.js"]
+CMD ["node", "--max-old-space-size=6144", "./dist/index.js"]
 
