@@ -1,10 +1,13 @@
 import type { CommandInteraction } from 'discord.js';
+import type { Logger } from 'pino';
 import gdapi from '../../../gd-api-client';
 import type CommandHandler from '../command-handler.type';
 
 const latestDeal: CommandHandler = {
 
-  generator: async (interaction: CommandInteraction) => {
+  generator: async (interaction: CommandInteraction, logger: Logger) => {
+    logger.info(interaction, 'Executing command: latest');
+
     const deal = await gdapi.getLastDeal();
     if (!deal) {
       return await interaction.reply({ content: 'No deals found yet.', ephemeral: true });

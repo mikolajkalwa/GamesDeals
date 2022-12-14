@@ -5,12 +5,15 @@ import type CommandHandler from '../command-handler.type';
 
 const statistics: CommandHandler = {
   generator: async (interaction: CommandInteraction, logger: Logger) => {
+    logger.info(interaction, 'Executing command: statistics');
+
     const dealsStatistics = await gdapi.getStatistics()
       .catch((e) => {
         logger.error(e, 'Unable to get statistics');
       });
 
     if (!dealsStatistics) {
+      logger.warn(dealsStatistics, 'Statistics were not found');
       return await interaction.reply({
         content: ':exclamation: Unable to fetch deal statistics',
         ephemeral: true,

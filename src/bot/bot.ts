@@ -49,6 +49,7 @@ client.on('interactionCreate', async (interaction) => {
 
     if (command.handler.guildOnly && !interaction.guildId) {
       await interaction.reply({ content: 'This command can be used only within a guild server', ephemeral: true });
+      logger.warn('Guild only command was used in non guild channel');
       return;
     }
 
