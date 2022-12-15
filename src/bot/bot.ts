@@ -3,7 +3,6 @@ import {
 } from 'discord.js';
 import got from 'got';
 import pino from 'pino';
-import { collectDefaultMetrics, Pushgateway, Registry } from 'prom-client';
 import config from '../config';
 import commands from './commands';
 
@@ -50,6 +49,7 @@ client.on('interactionCreate', async (interaction) => {
 
     if (command.handler.guildOnly && !interaction.guildId) {
       await interaction.reply({ content: 'This command can be used only within a guild server', ephemeral: true });
+      logger.warn('Guild only command was used in non guild channel');
       return;
     }
 
@@ -76,18 +76,3 @@ client.login(config.BOT_TOKEN).catch((e) => {
   logger.error(e, 'Shard failed to login');
   process.exit(1);
 });
-
-if (config.PROMETHEUS_GATEWAY) {
-  const shardId = client.shard?.ids[0] ?? -1;
-
-  const register = new Registry();
-  register.setDefaultLabels({ serviceName: `games-deals-shard-${shardId}` });
-  collectDefaultMetrics({ register });
-  const gateway = new Pushgateway(config.PROMETHEUS_GATEWAY, {}, register);
-
-  setInterval(() => {
-    gateway.push({ jobName: `games-deals-cluster-${shardId}` })
-      .then(() => logger.debug('Metrics pushed'))
-      .catch((e) => logger.error(e, 'Failed to push cluster metrics'));
-  }, 5 * 1000);
-}

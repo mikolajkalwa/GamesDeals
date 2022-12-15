@@ -22,6 +22,7 @@ const webhookHandler: CommandHandler = {
 
   generator: async (interaction: ChatInputCommandInteraction, logger: Logger): Promise<unknown> => {
     const subcommand = interaction.options.getSubcommand();
+    logger.info({ interaction, subcommand }, 'Executing command: webhook');
     const strategy = subcommands.get(subcommand);
 
     if (!strategy) {
