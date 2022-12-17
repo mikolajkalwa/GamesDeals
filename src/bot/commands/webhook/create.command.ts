@@ -27,11 +27,12 @@ const run = async (interaction: ChatInputCommandInteraction, logger: Logger) => 
       logger.warn(targetChannel, 'User attempted to create webhook in not supported channel type');
       return await interaction.reply({ content: 'Choosen channel type is not supported. Currently guild text and guild forum channels are supported.', ephemeral: true });
     }
+    await interaction.deferReply({ ephemeral: true });
 
     const channelWebhooks = await targetChannel.fetchWebhooks();
     if (channelWebhooks.size === 10) {
       logger.info('Channel reached maximum amount of webhooks');
-      return await interaction.reply({ content: 'Choosen channel reached Discord webhooks limit', ephemeral: true });
+      return await interaction.editReply({ content: 'Choosen channel reached Discord webhooks limit' });
     }
 
     const webhook = await targetChannel.createWebhook({
@@ -59,12 +60,12 @@ const run = async (interaction: ChatInputCommandInteraction, logger: Logger) => 
     });
 
     logger.info({ keywords, blacklist, role }, 'Webhook created in games-deals API');
-    return await interaction.reply(`Webhook created succesfully\n${printWebhookDetails(savedWebhook)}`);
+    return await interaction.editReply({ content: `Webhook created succesfully\n${printWebhookDetails(savedWebhook)}` });
   } catch (err) {
     if (err instanceof DiscordAPIError) {
       if (err.code === RESTJSONErrorCodes.MissingPermissions) {
         logger.warn('Bot has no sufficient permissions to create webhook');
-        return await interaction.reply({ content: 'Please verify whether bot can manage webhooks in selected channel.', ephemeral: true });
+        return await interaction.editReply({ content: 'Please verify whether bot can manage webhooks in selected channel.' });
       }
     }
     logger.error(err, 'Error occured in create webhook command');
