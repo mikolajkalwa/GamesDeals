@@ -1,11 +1,11 @@
-FROM node:18.12.1-bullseye-slim as build
+FROM node:18.13.0-bullseye-slim as build
 WORKDIR /usr/src/app
 COPY package*.json ./
 RUN npm ci
 COPY . .
 RUN npx prisma generate && npm run build:prod
 
-FROM node:18.12.1-bullseye-slim
+FROM node:18.13.0-bullseye-slim
 ENV NODE_ENV production
 EXPOSE 3000/tcp
 WORKDIR /usr/src/app

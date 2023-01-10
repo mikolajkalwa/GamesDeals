@@ -169,7 +169,7 @@ describe('Deals', () => {
         'redditId must be a string',
         'redditTitle should not be empty',
         'redditTitle must be a string',
-        'gameUrl must be an URL address',
+        'gameUrl must be a URL address',
       ]));
     });
   });
