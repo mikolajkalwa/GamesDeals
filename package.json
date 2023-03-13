@@ -1,6 +1,6 @@
 {
   "name": "games-deals-notifier",
-  "version": "3.2.1",
+  "version": "3.2.2",
   "main": "index.js",
   "scripts": {
     "start": "node dist/index.js",
@@ -15,25 +15,25 @@
   "license": "MIT",
   "dependencies": {
     "dotenv": "^16.0.3",
-    "pino": "^8.8.0",
-    "undici": "^5.14.0",
-    "zod": "^3.20.2"
+    "pino": "^8.11.0",
+    "undici": "^5.21.0",
+    "zod": "^3.21.4"
   },
   "devDependencies": {
-    "@commitlint/cli": "17.4.1",
-    "@commitlint/config-conventional": "17.4.0",
-    "@types/jest": "29.2.5",
-    "@typescript-eslint/eslint-plugin": "5.48.1",
-    "@typescript-eslint/parser": "5.48.1",
-    "eslint": "8.31.0",
+    "@commitlint/cli": "17.4.4",
+    "@commitlint/config-conventional": "17.4.4",
+    "@types/jest": "29.4.1",
+    "@typescript-eslint/eslint-plugin": "5.55.0",
+    "@typescript-eslint/parser": "5.55.0",
+    "eslint": "8.36.0",
     "eslint-config-airbnb-typescript": "17.0.0",
-    "eslint-plugin-import": "2.26.0",
+    "eslint-plugin-import": "2.27.5",
     "eslint-plugin-jest": "27.2.1",
     "husky": "8.0.3",
-    "jest": "29.3.1",
-    "npm-check-updates": "16.6.2",
-    "rimraf": "^3.0.2",
-    "ts-jest": "29.0.3",
-    "typescript": "4.9.4"
+    "jest": "29.5.0",
+    "npm-check-updates": "16.7.12",
+    "rimraf": "^4.4.0",
+    "ts-jest": "29.0.5",
+    "typescript": "4.9.5"
   }
 }
