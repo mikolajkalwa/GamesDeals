@@ -1,4 +1,4 @@
-FROM node:18.13.0-bullseye-slim as build
+FROM node:18.15.0-bullseye-slim as build
 RUN apt-get update && apt-get install -y --no-install-recommends dumb-init=1.2.5-1
 WORKDIR /usr/src/app
 COPY package*.json ./
@@ -6,7 +6,7 @@ RUN npm ci --ignore-scripts
 COPY . .
 RUN npm run build
 
-FROM node:18.13.0-bullseye-slim
+FROM node:18.15.0-bullseye-slim
 COPY --from=build /usr/bin/dumb-init /usr/bin/dumb-init
 WORKDIR /usr/src/app
 COPY --chown=node:node --from=build /usr/src/app/package*.json ./
