@@ -1,6 +1,6 @@
 {
   "name": "games-deals-bot",
-  "version": "2.1.4",
+  "version": "2.1.5",
   "main": "dist/index.js",
   "repository": "git@github.com:mikolajkalwa/GamesDealsBot.git",
   "author": "Mikolaj Kalwa",
@@ -13,23 +13,23 @@
     "lint": "eslint src/**"
   },
   "dependencies": {
-    "discord.js": "^14.7.1",
+    "discord.js": "^14.8.0",
     "dotenv": "^16.0.3",
     "got": "^11.8.6",
-    "pino": "^8.8.0",
-    "zod": "^3.20.2"
+    "pino": "^8.11.0",
+    "zod": "^3.21.4"
   },
   "devDependencies": {
-    "@commitlint/cli": "^17.4.1",
-    "@commitlint/config-conventional": "^17.4.0",
-    "@types/node": "^18.11.18",
-    "@typescript-eslint/eslint-plugin": "^5.48.1",
-    "@typescript-eslint/parser": "^5.48.1",
-    "eslint": "^8.31.0",
+    "@commitlint/cli": "^17.4.4",
+    "@commitlint/config-conventional": "^17.4.4",
+    "@types/node": "^18.15.2",
+    "@typescript-eslint/eslint-plugin": "^5.55.0",
+    "@typescript-eslint/parser": "^5.55.0",
+    "eslint": "^8.36.0",
     "eslint-config-airbnb-typescript": "^17.0.0",
-    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-import": "^2.27.5",
     "husky": "^8.0.3",
-    "npm-check-updates": "^16.6.2",
-    "typescript": "^4.9.4"
+    "npm-check-updates": "^16.7.12",
+    "typescript": "^4.9.5"
   }
 }
