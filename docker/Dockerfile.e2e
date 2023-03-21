@@ -1,0 +1,6 @@
+FROM node:18.15.0-bullseye-slim
+WORKDIR /usr/src/app
+COPY package*.json ./
+RUN npm install
+COPY . .
+CMD ["bash", "-c", "npx prisma migrate reset --force && npx jest --runInBand --config=./jest-e2e.config.json"]
