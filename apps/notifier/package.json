@@ -2,6 +2,7 @@
   "name": "notifier",
   "version": "3.2.2",
   "main": "index.js",
+  "private": true,
   "scripts": {
     "start": "node dist/index.js",
     "test": "jest",
@@ -9,8 +10,6 @@
     "build": "tsc -p tsconfig.prod.json",
     "lint": "eslint src/**"
   },
-  "author": "Mikołaj Kalwa",
-  "license": "MIT",
   "dependencies": {
     "dotenv": "^16.0.3",
     "pino": "^8.11.0",

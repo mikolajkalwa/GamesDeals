@@ -2,9 +2,6 @@
   "name": "api",
   "version": "2.1.2",
   "main": "dist/main.js",
-  "repository": "https://github.com/mikolajkalwa/GamesDealsAPI",
-  "author": "Mikolaj Kalwa",
-  "license": "MIT",
   "private": true,
   "devDependencies": {
     "@nestjs/cli": "^9.2.0",

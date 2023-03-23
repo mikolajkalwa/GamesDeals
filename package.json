@@ -4,6 +4,9 @@
   "repository": "git@github.com:mikolajkalwa/GamesDeals.git",
   "author": "Mikołaj Kalwa",
   "license": "MIT",
+  "scripts": {
+    "prepare": "husky install"
+  },
   "devDependencies": {
     "@commitlint/cli": "^17.5.0",
     "@commitlint/config-conventional": "^17.4.4",
