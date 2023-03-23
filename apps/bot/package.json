@@ -1,5 +1,5 @@
 {
-  "name": "games-deals-bot",
+  "name": "bot",
   "version": "2.1.5",
   "main": "dist/index.js",
   "repository": "git@github.com:mikolajkalwa/GamesDealsBot.git",
@@ -8,8 +8,6 @@
   "scripts": {
     "build": "tsc -p tsconfig.prod.json",
     "start:prod": "node dist/index.js",
-    "prepare": "husky install",
-    "check-updates": "npm-check-updates -e 2 -t minor --stdin",
     "lint": "eslint src/**"
   },
   "dependencies": {
@@ -20,16 +18,8 @@
     "zod": "^3.21.4"
   },
   "devDependencies": {
-    "@commitlint/cli": "^17.4.4",
-    "@commitlint/config-conventional": "^17.4.4",
     "@types/node": "^18.15.2",
-    "@typescript-eslint/eslint-plugin": "^5.55.0",
-    "@typescript-eslint/parser": "^5.55.0",
-    "eslint": "^8.36.0",
-    "eslint-config-airbnb-typescript": "^17.0.0",
-    "eslint-plugin-import": "^2.27.5",
-    "husky": "^8.0.3",
-    "npm-check-updates": "^16.7.12",
-    "typescript": "^4.9.5"
+    "typescript": "^4.9.5",
+    "eslint-config-games-deals": "workspace:*"
   }
 }
