@@ -1,5 +1,5 @@
 {
-  "name": "api",
+  "name": "internal-api",
   "version": "2.1.2",
   "main": "dist/main.js",
   "private": true,
@@ -45,7 +45,8 @@
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "test": "jest",
     "test:e2e": "jest --runInBand --config ./jest-e2e.config.json",
-    "db:generate": "prisma generate"
+    "db:generate": "prisma generate",
+    "db:migrate": "prisma migrate deploy"
   },
   "prisma": {
     "seed": "ts-node prisma/seed.ts"

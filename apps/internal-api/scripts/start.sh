@@ -1,4 +1,4 @@
 #!/bin/sh
 set -ex
-npx prisma migrate deploy
-node ./dist/main.js
+pnpm turbo db:migrate
+dumb-init node ./dist/main.js

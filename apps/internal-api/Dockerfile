@@ -1,20 +1,28 @@
-FROM node:18.15.0-bullseye-slim as build
-WORKDIR /usr/src/app
-COPY package*.json ./
-RUN npm ci
-COPY . .
-RUN npx prisma generate && npm run build:prod
+FROM node:18.15.0-bullseye-slim as base
+RUN corepack enable && corepack prepare pnpm@7.30.3 --activate
 
-FROM node:18.15.0-bullseye-slim
-ENV NODE_ENV production
-EXPOSE 3000/tcp
+FROM node:18.15.0-bullseye-slim as extractor
+RUN npm install -g turbo@1.8.5
 WORKDIR /usr/src/app
-COPY --chown=node:node --from=build /usr/src/app/package*.json ./
-RUN npm ci --ignore-scripts --omit=dev && npm cache clean --force
-COPY --chown=node:node --from=build /usr/src/app/scripts ./scripts
-COPY --chown=node:node --from=build /usr/src/app/prisma/schema.prisma ./prisma/schema.prisma
-COPY --chown=node:node --from=build /usr/src/app/prisma/migrations ./prisma/migrations
-COPY --chown=node:node --from=build /usr/src/app/dist ./dist
-RUN npx prisma generate
+COPY . .
+RUN turbo prune --scope=internal-api --docker
+
+FROM base AS builder
+WORKDIR /usr/src/app
+RUN apt-get update && apt-get install -y --no-install-recommends dumb-init=1.2.5-1
+COPY .gitignore .gitignore
+COPY --from=extractor /usr/src/app/out/json/ .
+COPY --from=extractor /usr/src/app/out/pnpm-lock.yaml ./pnpm-lock.yaml
+RUN pnpm install
+COPY --from=extractor /usr/src/app/out/full/ .
+COPY turbo.json turbo.json
+RUN pnpm turbo run build --filter=internal-api
+
+FROM base as final
+WORKDIR /usr/src/app
+COPY --from=builder /usr/bin/dumb-init /usr/bin/dumb-init
+COPY --from=builder /usr/src/app/ .
+RUN pnpm install --prod --frozen-lockfile
 USER node
-CMD ["/bin/sh", "/usr/src/app/scripts/start.sh"]
+ENTRYPOINT ["pnpm", "turbo", "db:migrate", "&&", "dumb-init", "node", "./apps/internal-api/dist/main.js"]
+# ENTRYPOINT ["tail", "-f", "/dev/null"]
