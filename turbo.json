@@ -6,6 +6,7 @@
         "dist/**"
       ],
       "dependsOn": [
+        "db:generate",
         "^build"
       ]
     },
@@ -18,6 +19,9 @@
         "test/**/*.ts"
       ]
     },
-    "lint": {}
+    "lint": {},
+    "db:generate": {
+      "cache": false
+    }
   }
 }
