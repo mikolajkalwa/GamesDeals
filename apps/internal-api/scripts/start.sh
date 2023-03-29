@@ -1,4 +1,4 @@
 #!/bin/sh
 set -ex
-pnpm turbo db:migrate
-dumb-init node ./dist/main.js
+pnpm prisma migrate deploy --schema=./apps/internal-api/prisma/schema.prisma
+dumb-init node ./apps/internal-api/dist/main.js

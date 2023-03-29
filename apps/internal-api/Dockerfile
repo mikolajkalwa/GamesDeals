@@ -24,5 +24,4 @@ COPY --from=builder /usr/bin/dumb-init /usr/bin/dumb-init
 COPY --from=builder /usr/src/app/ .
 RUN pnpm install --prod --frozen-lockfile
 USER node
-ENTRYPOINT ["pnpm", "turbo", "db:migrate", "&&", "dumb-init", "node", "./apps/internal-api/dist/main.js"]
-# ENTRYPOINT ["tail", "-f", "/dev/null"]
+ENTRYPOINT ["sh", "./apps/internal-api/scripts/start.sh"]
