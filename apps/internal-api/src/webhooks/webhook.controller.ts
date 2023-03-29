@@ -12,32 +12,32 @@ export default class WebhooksController {
 
   @Post()
   async create(@Body() webhook: CreateWebhookDto): Promise<Webhook> {
-    return this.webhooksService.create(webhook);
+    return await this.webhooksService.create(webhook);
   }
 
   @Get()
   async find(): Promise<Webhook[]> {
-    return this.webhooksService.findMany();
+    return await this.webhooksService.findMany();
   }
 
   @Get('guild/:guild_id')
   async findByGuild(@Param('guild_id') guildId: string): Promise<Webhook[]> {
-    return this.webhooksService.findByGuild(guildId);
+    return await this.webhooksService.findByGuild(guildId);
   }
 
   @Get(':webhook_id')
   async findByWebhookId(@Param('webhook_id') webhookId: string): Promise<Webhook> {
-    return this.webhooksService.findByWebhookId(webhookId);
+    return await this.webhooksService.findByWebhookId(webhookId);
   }
 
   @Patch(':webhook_id')
   async patch(@Param('webhook_id') webhookId: string, @Body() webhook: PatchWebhookDto): Promise<Webhook> {
-    return this.webhooksService.patch(webhookId, webhook);
+    return await this.webhooksService.patch(webhookId, webhook);
   }
 
   @HttpCode(204)
   @Delete(':webhook_id')
   async delete(@Param('webhook_id') webhookId: string): Promise<null> {
-    return this.webhooksService.delete(webhookId);
+    return await this.webhooksService.delete(webhookId);
   }
 }

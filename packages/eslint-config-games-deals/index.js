@@ -11,6 +11,8 @@ module.exports = {
     "linebreak-style": 0,
     "max-len": 0,
     "no-return-await": 0,
+    "import/prefer-default-export": 0,
+    "@typescript-eslint/lines-between-class-members": 0,
     "@typescript-eslint/return-await": [
       "error",
       "always"

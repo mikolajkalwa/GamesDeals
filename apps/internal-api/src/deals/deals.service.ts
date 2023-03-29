@@ -10,7 +10,7 @@ export default class DealsService {
   ) { }
 
   async create(creatDealDto: CreateDealDto): Promise<Deal> {
-    return this.prisma.deal.create({
+    return await this.prisma.deal.create({
       data: {
         gameUrl: creatDealDto.gameUrl,
         redditId: creatDealDto.redditId,
@@ -32,7 +32,7 @@ export default class DealsService {
   }
 
   async findLatest(limit = 1): Promise<Deal[]> {
-    return this.prisma.deal.findMany({
+    return await this.prisma.deal.findMany({
       orderBy: {
         createdAt: 'desc',
       },
@@ -41,6 +41,6 @@ export default class DealsService {
   }
 
   async count(): Promise<number> {
-    return this.prisma.deal.count();
+    return await this.prisma.deal.count();
   }
 }

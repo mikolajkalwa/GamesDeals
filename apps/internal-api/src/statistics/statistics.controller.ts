@@ -9,6 +9,6 @@ export default class StatisticsController {
 
   @Get()
   async getStatistics() {
-    return this.statisticsService.getStatistics();
+    return await this.statisticsService.getStatistics();
   }
 }

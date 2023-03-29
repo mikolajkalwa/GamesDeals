@@ -21,7 +21,7 @@ export default class WebhookService {
       throw new ConflictException('webhook with provided id already exists');
     }
 
-    return this.prisma.webhook.create({
+    return await this.prisma.webhook.create({
       data: {
         channel: BigInt(webhook.channel),
         guild: BigInt(webhook.guild),
@@ -36,11 +36,11 @@ export default class WebhookService {
   }
 
   async count(): Promise<number> {
-    return this.prisma.webhook.count();
+    return await this.prisma.webhook.count();
   }
 
   async findMany(): Promise<Webhook[]> {
-    return this.prisma.webhook.findMany();
+    return await this.prisma.webhook.findMany();
   }
 
   async findByWebhookId(webhookId: string): Promise<Webhook> {
@@ -57,7 +57,7 @@ export default class WebhookService {
 
   // an array is returned because in the future there might be many webhooks per guild
   async findByGuild(guildId: string): Promise<Webhook[]> {
-    return this.prisma.webhook.findMany({
+    return await this.prisma.webhook.findMany({
       where: {
         guild: BigInt(guildId),
       },

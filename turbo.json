@@ -19,7 +19,9 @@
         "test/**/*.ts"
       ]
     },
-    "lint": {},
+    "lint": {
+      "dependsOn": [ "db:generate" ]
+    },
     "db:generate": {
       "cache": false
     }

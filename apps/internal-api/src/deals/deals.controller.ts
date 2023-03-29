@@ -11,16 +11,16 @@ export default class DealsController {
 
   @Post()
   async create(@Body() deal: CreateDealDto): Promise<Deal> {
-    return this.dealsService.create(deal);
+    return await this.dealsService.create(deal);
   }
 
   @Get('reddit/:reddit_id')
   async find(@Param('reddit_id') redditId: string): Promise<Deal> {
-    return this.dealsService.find(redditId);
+    return await this.dealsService.find(redditId);
   }
 
   @Get('latest')
   async findLatest(@Query('limit', new DefaultValuePipe(1), ParseIntPipe) limit = 1): Promise<Deal[]> {
-    return this.dealsService.findLatest(limit);
+    return await this.dealsService.findLatest(limit);
   }
 }
