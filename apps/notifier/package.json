@@ -22,6 +22,7 @@
     "rimraf": "^4.4.0",
     "ts-jest": "29.0.5",
     "typescript": "4.9.5",
+    "tsconfig": "workspace:*",
     "eslint": "^8.36.0",
     "eslint-config-games-deals": "workspace:*"
   }
