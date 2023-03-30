@@ -1,0 +1,52 @@
+name: Publish Docker image
+
+on:
+  workflow_call:
+    inputs:
+      registry:
+        default: "ghcr.io"
+        required: false
+        type: string
+      image-name:
+        required: true
+        type: string
+      dockerfile-path:
+        required: true
+        type: string
+      tag-prefix:
+        required: true
+        type: string
+
+jobs:
+  publish-docker-image:
+    runs-on: self-hosted
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@v2
+        with:
+          registry: ${{ inputs.registry }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: ${{ inputs.registry }}/${{ inputs.image-name }}
+          tags: type=match,pattern=${{ inputs.tag-prefix }}/v(\d.\d.\d),group=1
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          file: ${{ inputs.dockerfile-path }}
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}

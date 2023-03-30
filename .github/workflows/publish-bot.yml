@@ -1,46 +1,16 @@
-name: Publish Games Deals Bot docker image
+name: Publish Games Deals Bot
 
 on:
   push:
     tags:
       - bot/v*.*.*
 
-env:
-  REGISTRY: ghcr.io
-  IMAGE_NAME: mikolajkalwa/gamesdeals/bot
-  DOCKERFILE_PATH: ./apps/bot/Dockerfile
-  TAG_PREFIX: bot
-
 jobs:
   publish-bot:
-    runs-on: self-hosted
-    permissions:
-      contents: read
-      packages: write
+    uses: ./.github/workflows/publish-docker-image.yml
+    with:
+      image-name: mikolajkalwa/gamesdeals/bot
+      dockerfile-path: ./apps/bot/Dockerfile
+      tag-prefix: bot
+    secrets: inherit
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Log in to the Container registry
-        uses: docker/login-action@v2
-        with:
-          registry: ${{ env.REGISTRY }}
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Extract metadata (tags, labels) for Docker
-        id: meta
-        uses: docker/metadata-action@v4
-        with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-          tags: type=match,pattern=${{ env.TAG_PREFIX }}/v(\d.\d.\d),group=1
-
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v3
-        with:
-          context: .
-          file: ${{ env.DOCKERFILE_PATH }}
-          push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}

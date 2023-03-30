@@ -1,46 +1,15 @@
-name: Publish Games Deals API docker image
+name: Publish Games Deals API
 
 on:
   push:
     tags:
       - api/v*.*.*
 
-env:
-  REGISTRY: ghcr.io
-  IMAGE_NAME: mikolajkalwa/gamesdeals/api
-  DOCKERFILE_PATH: ./apps/internal-api/Dockerfile
-  TAG_PREFIX: api
-
 jobs:
   publish-api:
-    runs-on: self-hosted
-    permissions:
-      contents: read
-      packages: write
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Log in to the Container registry
-        uses: docker/login-action@v2
-        with:
-          registry: ${{ env.REGISTRY }}
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Extract metadata (tags, labels) for Docker
-        id: meta
-        uses: docker/metadata-action@v4
-        with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-          tags: type=match,pattern=${{ env.TAG_PREFIX }}/v(\d.\d.\d),group=1
-
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v3
-        with:
-          context: .
-          file: ${{ env.DOCKERFILE_PATH }}
-          push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+    uses: ./.github/workflows/publish-docker-image.yml
+    with:
+      image-name: mikolajkalwa/gamesdeals/api
+      dockerfile-path: ./apps/internal-api/Dockerfile
+      tag-prefix: api
+    secrets: inherit
