@@ -1,18 +1,18 @@
-name: Publish Games Deals Bot docker image
+name: Publish Games Deals API docker image
 
 on:
   push:
     tags:
-      - bot/v*.*.*
+      - api/v*.*.*
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: mikolajkalwa/gamesdeals/bot
-  DOCKERFILE_PATH: ./apps/bot/Dockerfile
-  TAG_PREFIX: bot
+  IMAGE_NAME: mikolajkalwa/gamesdeals/api
+  DOCKERFILE_PATH: ./apps/internal-api/Dockerfile
+  TAG_PREFIX: api
 
 jobs:
-  publish-bot:
+  publish-api:
     runs-on: self-hosted
     permissions:
       contents: read

@@ -1,5 +1,5 @@
 FROM node:18.15.0-bullseye-slim as base
-RUN corepack enable && corepack prepare pnpm@7.30.3 --activate
+RUN corepack enable && corepack prepare pnpm@8.1.0 --activate
 
 FROM node:18.15.0-bullseye-slim as extractor
 RUN npm install -g turbo@1.8.5
@@ -10,7 +10,6 @@ RUN turbo prune --scope=internal-api --docker
 FROM base AS builder
 WORKDIR /usr/src/app
 RUN apt-get update && apt-get install -y --no-install-recommends dumb-init=1.2.5-1
-COPY .gitignore .gitignore
 COPY --from=extractor /usr/src/app/out/json/ .
 COPY --from=extractor /usr/src/app/out/pnpm-lock.yaml ./pnpm-lock.yaml
 RUN pnpm install

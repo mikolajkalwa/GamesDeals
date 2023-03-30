@@ -10,7 +10,6 @@ RUN turbo prune --scope=bot --docker
 FROM base AS builder
 WORKDIR /usr/src/app
 RUN apt-get update && apt-get install -y --no-install-recommends dumb-init=1.2.5-1
-COPY .gitignore .gitignore
 COPY --from=extractor /usr/src/app/out/json/ .
 COPY --from=extractor /usr/src/app/out/pnpm-lock.yaml ./pnpm-lock.yaml
 RUN pnpm install

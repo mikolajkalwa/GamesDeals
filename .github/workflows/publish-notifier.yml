@@ -1,18 +1,18 @@
-name: Publish Games Deals Bot docker image
+name: Publish Games Deals Notifier docker image
 
 on:
   push:
     tags:
-      - bot/v*.*.*
+      - notifier/v*.*.*
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: mikolajkalwa/gamesdeals/bot
-  DOCKERFILE_PATH: ./apps/bot/Dockerfile
-  TAG_PREFIX: bot
+  IMAGE_NAME: mikolajkalwa/gamesdeals/notifier
+  DOCKERFILE_PATH: ./apps/notifier/Dockerfile
+  TAG_PREFIX: notifier
 
 jobs:
-  publish-bot:
+  publish-notifier:
     runs-on: self-hosted
     permissions:
       contents: read
