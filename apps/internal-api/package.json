@@ -48,9 +48,7 @@
     "test": "jest",
     "test:e2e": "jest --runInBand --config ./jest-e2e.config.json",
     "db:generate": "prisma generate",
-    "db:migrate": "prisma migrate deploy"
-  },
-  "prisma": {
-    "seed": "ts-node prisma/seed.ts"
+    "db:migrate": "prisma migrate deploy",
+    "db:seed": "ts-node prisma/seed.ts"
   }
 }

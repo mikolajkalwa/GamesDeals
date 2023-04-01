@@ -1,0 +1,45 @@
+name: Unit tests all components
+
+on:
+  pull_request:
+    branches: [master, main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        id: pnpm-install
+        with:
+          version: 8
+          run_install: false
+
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+      - name: Setup pnpm cache
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Run tests
+        run: pnpm turbo test
+        env:
+          TEST_TEXT_CHANNEL_WEBHOOK_ID: ${{ secrets.TEST_TEXT_CHANNEL_WEBHOOK_ID }}
+          TEST_TEXT_CHANNEL_WEBHOOK_TOKEN: ${{ secrets.TEST_TEXT_CHANNEL_WEBHOOK_TOKEN }}
+          TEST_FORUM_CHANNEL_WEBHOOK_ID: ${{ secrets.TEST_FORUM_CHANNEL_WEBHOOK_ID }}
+          TEST_FORUM_CHANNEL_WEBHOOK_TOKEN: ${{ secrets.TEST_FORUM_CHANNEL_WEBHOOK_TOKEN }}

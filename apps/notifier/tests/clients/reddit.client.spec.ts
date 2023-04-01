@@ -1,4 +1,5 @@
-import redditClientFixture from '../fixtures/reddit-client.fixture.json';
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
 import { MockAgent, setGlobalDispatcher } from 'undici';
 import { ZodError } from 'zod';
 import { RedditClient } from '../../src/clients';
@@ -13,7 +14,11 @@ setGlobalDispatcher(mockAgent);
 
 describe('RedditClient', () => {
   let redditClient: RedditClient;
+  let redditClientFixture: Record<string, any>;
   
+  beforeAll(() => {
+    redditClientFixture = readFileSync(resolve(__dirname, '..', 'fixtures', 'reddit-client.fixture.json'))
+  })
   beforeEach(() => {
     redditClient = new RedditClient(REDDIT_BASE_URL);
   })
@@ -28,7 +33,7 @@ describe('RedditClient', () => {
       await expect(redditClient.getTrendingDeals()).rejects.toThrowError(ZodError);
     });
     
-    test('should map reddit response to defined object', async () => {    
+    test('should map reddit response to defined object', async () => {
       mockPool.intercept({
         path: FULL_URL,
         method: 'GET'
