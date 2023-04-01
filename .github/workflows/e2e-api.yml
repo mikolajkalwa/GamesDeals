@@ -1,0 +1,65 @@
+name: Internal API end to end tests
+
+on:
+  pull_request:
+    branches: [master, main]
+    paths: ["apps/internal-api/**"]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    container: node:18.15.0-bullseye-slim
+
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_PASSWORD: postgres
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        id: pnpm-install
+        with:
+          version: 8
+          run_install: false
+
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+      - name: Setup pnpm cache
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Migrate database
+        run: pnpm prisma migrate reset --force --schema=./apps/internal-api/prisma/schema.prisma
+        env:
+          DATABASE_URL: postgresql://postgres:postgres@postgres:5432/games_deals
+
+      - name: Seed database
+        run: pnpm --filter internal-api db:seed
+        env:
+          DATABASE_URL: postgresql://postgres:postgres@postgres:5432/games_deals
+
+      - name: Run tests
+        run: pnpm --filter internal-api test:e2e
+        env:
+          DATABASE_URL: postgresql://postgres:postgres@postgres:5432/games_deals

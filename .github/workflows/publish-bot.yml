@@ -13,4 +13,3 @@ jobs:
       dockerfile-path: ./apps/bot/Dockerfile
       tag-prefix: bot
     secrets: inherit
-
