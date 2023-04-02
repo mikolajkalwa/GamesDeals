@@ -1,6 +1,16 @@
-FROM node:18.15.0-bullseye-slim
+FROM node:18.15.0-bullseye-slim as base
+RUN corepack enable && corepack prepare pnpm@8.1.0 --activate
+
+FROM node:18.15.0-bullseye-slim as extractor
+RUN npm install -g turbo@1.8.5
 WORKDIR /usr/src/app
-COPY package*.json ./
-RUN npm install
 COPY . .
-CMD ["bash", "-c", "npx prisma migrate reset --force && npx jest --runInBand --config=./jest-e2e.config.json"]
+RUN turbo prune --scope=internal-api --docker
+
+FROM base AS builder
+WORKDIR /usr/src/app
+COPY --from=extractor /usr/src/app/out/json/ .
+COPY --from=extractor /usr/src/app/out/pnpm-lock.yaml ./pnpm-lock.yaml
+RUN pnpm install
+COPY --from=extractor /usr/src/app/out/full/ .
+CMD ["bash", "-c", "pnpm prisma migrate reset --schema=./apps/internal-api/prisma/schema.prisma --force && pnpm --filter internal-api db:seed && pnpm --filter internal-api test:e2e"]

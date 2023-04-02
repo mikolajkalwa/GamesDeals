@@ -1,7 +1,7 @@
 version: "3.8"
 services:
   db:
-    image: postgres:15-alpine
+    image: postgres:15
     environment:
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: games_deals
@@ -13,8 +13,8 @@ services:
 
   e2e-runner:
     build:
-      context: ..
-      dockerfile: ./docker/Dockerfile.e2e
+      context: ../../../
+      dockerfile: ./apps/internal-api/docker/Dockerfile.e2e
     environment:
       PORT: 3000
       DATABASE_URL: postgresql://postgres:postgres@db:5432/games_deals
