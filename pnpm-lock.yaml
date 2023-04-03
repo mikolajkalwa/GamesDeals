@@ -89,6 +89,9 @@ importers:
       pino-http:
         specifier: ^8.3.3
         version: 8.3.3
+      prisma:
+        specifier: ^4.12.0
+        version: 4.12.0
       prom-client:
         specifier: ^14.2.0
         version: 14.2.0
@@ -126,9 +129,6 @@ importers:
       jest:
         specifier: ^29.5.0
         version: 29.5.0(@types/node@18.15.11)(ts-node@10.9.1)
-      prisma:
-        specifier: ^4.12.0
-        version: 4.12.0
       supertest:
         specifier: ^6.3.3
         version: 6.3.3
@@ -1427,6 +1427,7 @@ packages:
   /@prisma/engines@4.12.0:
     resolution: {integrity: sha512-0alKtnxhNB5hYU+ymESBlGI4b9XrGGSdv7Ud+8TE/fBNOEhIud0XQsAR+TrvUZgS4na5czubiMsODw0TUrgkIA==}
     requiresBuild: true
+    dev: false
 
   /@sapphire/async-queue@1.5.0:
     resolution: {integrity: sha512-JkLdIsP8fPAdh9ZZjrbHWR/+mZj0wvKS5ICibcLrRI1j84UmLMshx5n9QmL8b95d4onJ2xxiyugTgSAX7AalmA==}
@@ -4265,7 +4266,7 @@ packages:
       pretty-format: 29.5.0
       slash: 3.0.0
       strip-json-comments: 3.1.1
-      ts-node: 10.9.1(@types/node@18.15.11)(typescript@4.9.5)
+      ts-node: 10.9.1(@types/node@18.15.11)(typescript@5.0.3)
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -5358,6 +5359,7 @@ packages:
     requiresBuild: true
     dependencies:
       '@prisma/engines': 4.12.0
+    dev: false
 
   /process-nextick-args@2.0.1:
     resolution: {integrity: sha512-3ouUOpQhtgrbOa17J7+uxOTpITYWaGP7/AhoR3+A+/1e9skrzelGi/dXzEYyvbxubEF6Wn2ypscTKiKJFFn1ag==}
