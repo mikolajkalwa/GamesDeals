@@ -1,0 +1,5 @@
+**/.eslintrc.js
+**/dist
+apps/internal-api/prisma
+**/*.config.js
+**/test

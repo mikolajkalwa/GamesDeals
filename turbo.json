@@ -6,7 +6,6 @@
         "dist/**"
       ],
       "dependsOn": [
-        "db:generate",
         "^build"
       ]
     },
@@ -20,10 +19,7 @@
       ]
     },
     "lint": {
-      "dependsOn": [ "db:generate" ]
-    },
-    "db:generate": {
-      "cache": false
+      "dependsOn": []
     }
   }
 }

@@ -1,8 +1,0 @@
-{
-  "parserOptions": {
-    "project": "./tsconfig.json"
-  },
-  "extends": [
-    "eslint-config-games-deals"
-  ]
-}

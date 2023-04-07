@@ -2,7 +2,7 @@ name: Internal API end to end tests
 
 on:
   pull_request:
-    branches: [master, main]
+    branches: [main]
     paths: ["apps/internal-api/**"]
 
 jobs:

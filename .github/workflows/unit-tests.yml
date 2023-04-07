@@ -2,7 +2,7 @@ name: Unit tests all components
 
 on:
   pull_request:
-    branches: [master, main]
+    branches: [main]
 
 jobs:
   test:

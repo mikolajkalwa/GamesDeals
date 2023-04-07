@@ -1,6 +1,0 @@
-*.config.js
-.eslintrc.js
-dist
-tests
-node_modules
-.devcontainer
