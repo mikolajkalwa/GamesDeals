@@ -1,5 +1,5 @@
 import {
-  Body, Controller, Delete, Get, HttpCode, Param, Patch, Post,
+  Body, Controller, Delete, Get, HttpCode, Param, Patch, Post, Query,
 } from '@nestjs/common';
 import type { Webhook } from '@prisma/client';
 import CreateWebhookDto from './dto/create-webhook.dto';
@@ -16,8 +16,8 @@ export default class WebhooksController {
   }
 
   @Get()
-  async find(): Promise<Webhook[]> {
-    return await this.webhooksService.findMany();
+  async find(@Query('thread_title') threadTitle: string | undefined): Promise<Webhook[]> {
+    return await this.webhooksService.findMany(threadTitle);
   }
 
   @Get('guild/:guild_id')

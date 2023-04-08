@@ -17,7 +17,7 @@
   },
   "devDependencies": {
     "@types/node": "^18.15.11",
-    "eslint": "^8.37.0",
+    "eslint": "^8.38.0",
     "eslint-config-games-deals": "workspace:*",
     "tsconfig": "workspace:*",
     "typescript": "^4.9.5"

@@ -40,6 +40,27 @@ describe('Webhooks', () => {
       expect(response.body.length).toEqual(18);
     });
 
+    it('webhooks for specific thread should return status code 200 and specific webhooks', async () => {
+      const response = await request(app.getHttpServer())
+        .get('/webhooks?thread_title=[Indiegala] Survival (free/100% off) | ends April 20)')
+        .expect(200);
+      expect(response.body.length).toEqual(5);
+    });
+
+    it('webhooks for specific thread should return status code 200 and specific webhooks', async () => {
+      const response = await request(app.getHttpServer())
+        .get('/webhooks?thread_title=Steam Survival (free/100% off) | ends April 20)')
+        .expect(200);
+      expect(response.body.length).toEqual(16);
+    });
+
+    it('webhooks for specific thread should return status code 200 and specific webhooks', async () => {
+      const response = await request(app.getHttpServer())
+        .get('/webhooks?thread_title=[Gog] Survival (free/100% off) | ends April 20)')
+        .expect(200);
+      expect(response.body.length).toEqual(9);
+    });
+
     it('webhooks for specific guild should return status code 200 and all webhooks from specified guild', async () => {
       const response = await request(app.getHttpServer())
         .get('/webhooks/guild/1337')

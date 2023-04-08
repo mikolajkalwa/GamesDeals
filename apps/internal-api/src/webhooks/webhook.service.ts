@@ -39,8 +39,18 @@ export default class WebhookService {
     return await this.prisma.webhook.count();
   }
 
-  async findMany(): Promise<Webhook[]> {
-    return await this.prisma.webhook.findMany();
+  async findMany(threadTitle: string | undefined): Promise<Webhook[]> {
+    if (!threadTitle) {
+      return await this.prisma.webhook.findMany();
+    }
+
+    return await this.prisma.$queryRaw`
+      SELECT *
+      FROM webhooks
+      WHERE (COALESCE(cardinality(blacklist), 0) = 0 AND COALESCE(cardinality(keywords), 0) = 0)
+        OR (${threadTitle} ILIKE ANY (SELECT '%' || unnest(keywords) || '%')
+          AND NOT ${threadTitle} ILIKE ANY (SELECT '%' || unnest(blacklist) || '%'))
+        OR (COALESCE(cardinality(keywords), 0) = 0 AND NOT ${threadTitle} ILIKE ANY (SELECT '%' || unnest(blacklist) || '%'));`;
   }
 
   async findByWebhookId(webhookId: string): Promise<Webhook> {
