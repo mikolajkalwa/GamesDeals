@@ -1,8 +1,11 @@
 import { Test } from '@nestjs/testing';
+import { MockFunctionMetadata, ModuleMocker } from 'jest-mock';
 import PrismaModule from '../prisma/prisma.module';
 import PrismaService from '../prisma/prisma.service';
 import DealsController from './deals.controller';
 import DealsService from './deals.service';
+
+const moduleMocker = new ModuleMocker(global);
 
 describe('DealsController', () => {
   let dealsController: DealsController;
@@ -16,6 +19,16 @@ describe('DealsController', () => {
     })
       .overrideProvider(PrismaService)
       .useValue(null)
+      .useMocker((token) => {
+        if (token === 'BullQueue_notifications') {
+          return { addBulk: jest.fn() };
+        }
+        if (typeof token === 'function') {
+          const mockMetadata = moduleMocker.getMetadata(token) as MockFunctionMetadata<any, any>;
+          const Mock = moduleMocker.generateFromMetadata(mockMetadata);
+          return new Mock();
+        }
+      })
       .compile();
 
     dealsService = moduleRef.get<DealsService>(DealsService);

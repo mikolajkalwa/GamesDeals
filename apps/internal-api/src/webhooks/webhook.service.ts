@@ -1,5 +1,5 @@
 import {
-  BadRequestException, ConflictException, Injectable, NotFoundException,
+  BadRequestException, ConflictException, Injectable, NotFoundException
 } from '@nestjs/common';
 import { Prisma, Webhook } from '@prisma/client';
 import PrismaService from '../prisma/prisma.service';
@@ -65,7 +65,6 @@ export default class WebhookService {
     return webhook;
   }
 
-  // an array is returned because in the future there might be many webhooks per guild
   async findByGuild(guildId: string): Promise<Webhook[]> {
     return await this.prisma.webhook.findMany({
       where: {

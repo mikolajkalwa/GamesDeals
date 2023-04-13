@@ -138,6 +138,9 @@ importers:
       jest:
         specifier: ^29.5.0
         version: 29.5.0(@types/node@18.15.11)(ts-node@10.9.1)
+      jest-mock:
+        specifier: ^29.5.0
+        version: 29.5.0
       supertest:
         specifier: ^6.3.3
         version: 6.3.3
