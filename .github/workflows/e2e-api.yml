@@ -21,6 +21,14 @@ jobs:
           --health-timeout 5s
           --health-retries 5
 
+      redis:
+        image: redis:7.0.10
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
     steps:
       - name: Check out repository code
         uses: actions/checkout@v3
@@ -63,3 +71,5 @@ jobs:
         run: pnpm --filter internal-api test:e2e
         env:
           DATABASE_URL: postgresql://postgres:postgres@postgres:5432/games_deals
+          REDIS_HOST: redis
+

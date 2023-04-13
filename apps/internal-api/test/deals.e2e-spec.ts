@@ -4,6 +4,16 @@ import { Test } from '@nestjs/testing';
 import request from 'supertest';
 import AppModule from '../src/app.module';
 
+// add missing prototype to serialize BigInt
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+// eslint-disable-next-line no-extend-native, func-names
+BigInt.prototype.toJSON = function () {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
+  return this.toString();
+};
+
+
 describe('Deals', () => {
   let app: INestApplication;
 
@@ -171,6 +181,32 @@ describe('Deals', () => {
         'redditTitle must be a string',
         'gameUrl must be a URL address',
       ]));
+    });
+  });
+
+  describe('announce deal', () => {
+    it('should return conflict when attempting to announce already existing deal ', async () => {
+      await request(app.getHttpServer())
+        .post('/deals/announce')
+        .send({
+          author: 'me',
+          redditId: '8ir0hr',
+          redditTitle: '[Steam] Stories: The Path of Destinies (Free/100% off to keep forever)',
+          gameUrl: 'https://store.steampowered.com/app/439190/Stories_The_Path_of_Destinies/',
+        })
+        .expect(409);
+    });
+
+    it('should return no-content response when attempting to announce new deal ', async () => {
+      await request(app.getHttpServer())
+        .post('/deals/announce')
+        .send({
+          author: 'me',
+          redditId: 'newgme',
+          redditTitle: '[Steam] Stories: The Path of Destinies (Free/100% off to keep forever)',
+          gameUrl: 'https://store.steampowered.com/app/439190/Stories_The_Path_of_Destinies/',
+        })
+        .expect(202);
     });
   });
 });

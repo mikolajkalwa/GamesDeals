@@ -7,5 +7,6 @@ import WebhookService from './webhook.service';
   imports: [PrismaModule],
   controllers: [WebhookController],
   providers: [WebhookService],
+  exports: [WebhookService],
 })
-export default class DealsModule { }
+export default class WebhookModule { }

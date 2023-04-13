@@ -4,7 +4,7 @@
   "main": "dist/main.js",
   "private": true,
   "devDependencies": {
-    "@nestjs/cli": "^9.3.0",
+    "@nestjs/cli": "^9.4.0",
     "@nestjs/testing": "^9.4.0",
     "@types/jest": "^29.5.0",
     "@types/node": "^18.15.11",
@@ -20,6 +20,7 @@
     "typescript": "^4.9.5"
   },
   "dependencies": {
+    "@nestjs/bullmq": "^1.1.0",
     "@nestjs/common": "^9.4.0",
     "@nestjs/config": "^2.3.1",
     "@nestjs/core": "^9.4.0",
@@ -27,6 +28,7 @@
     "@nestjs/terminus": "^9.2.2",
     "@prisma/client": "^4.12.0",
     "@willsoto/nestjs-prometheus": "^5.1.1",
+    "bullmq": "^3.10.4",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.0",
     "joi": "^17.9.1",

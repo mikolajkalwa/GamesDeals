@@ -1,6 +1,6 @@
+import { BullModule } from '@nestjs/bullmq';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { PrometheusModule } from '@willsoto/nestjs-prometheus';
 import * as Joi from 'joi';
 import { LoggerModule } from 'nestjs-pino';
 import DealsModule from './deals/deals.module';
@@ -21,9 +21,16 @@ import WebhookModule from './webhooks/webhook.module';
         NODE_ENV: Joi.string().valid('development', 'production', 'test').default('development'),
         BASE_ADDRESS: Joi.string().ip().default('0.0.0.0'),
         PORT: Joi.number().default(3000),
+        REDIS_HOST: Joi.string().default('0.0.0.0'),
+        REDIS_PORT: Joi.number().default(6379),
       }),
     }),
-    PrometheusModule.register(),
+    BullModule.forRoot({
+      connection: {
+        host: process.env['REDIS_HOST'] || '0.0.0.0',
+        port: Number(process.env['REDIS_PORT']) || 6379,
+      },
+    }),
     DealsModule,
     WebhookModule,
     StatisticsModule,

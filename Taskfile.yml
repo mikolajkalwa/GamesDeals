@@ -4,4 +4,4 @@ tasks:
   e2e:
     cmds:
       - docker compose -f ./apps/internal-api/docker/compose.e2e.yaml up --build --force-recreate --attach e2e-runner --exit-code-from e2e-runner
-      - defer: docker compose -f ./apps/internal-api/docker/compose.e2e.yaml rm --force --volumes
+      - defer: docker compose -f ./apps/internal-api/docker/compose.e2e.yaml down --timeout 0 --volumes

@@ -7,10 +7,15 @@ services:
       POSTGRES_DB: games_deals
     healthcheck:
       test: pg_isready -q -U postgres -d games_deals
-      interval: 5s
-      timeout: 10s
-      retries: 5
+      interval: 1s
+      retries: 10
 
+  redis:
+    image: redis:7.0.10
+    healthcheck:
+      test: redis-cli ping
+      interval: 1s
+      retries: 10
   e2e-runner:
     build:
       context: ../../../
@@ -19,6 +24,9 @@ services:
       PORT: 3000
       DATABASE_URL: postgresql://postgres:postgres@db:5432/games_deals
       NODE_ENV: test
+      REDIS_HOST: redis
     depends_on:
       db:
+        condition: service_healthy
+      redis:
         condition: service_healthy
