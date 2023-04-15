@@ -13,6 +13,7 @@ export default class DealsService {
     @InjectQueue('notifications') private readonly notificationsQueue: Queue,
   ) { }
 
+  // eslint-disable-next-line class-methods-use-this
   #getMention(webhook: Webhook): string | null {
     if (Object.prototype.hasOwnProperty.call(webhook, 'mention') && webhook.mention) {
       if (webhook.mention === webhook.guild) {
@@ -24,28 +25,30 @@ export default class DealsService {
   }
 
   async announce(deal: AnnounceDealDto, webhooksToExecute: Webhook[]) {
-    const jobs = webhooksToExecute.map(webhook => {
+    const jobs = webhooksToExecute.map((webhook) => {
       const mention = this.#getMention(webhook);
 
       if (webhook.channelType === 'GUILD_FORUM') {
-        const message = mention ?
-          `<${deal.gameUrl}>\nPosted by: *${deal.author}*\nhttps://reddit.com/${deal.redditId}\n${mention}` :
-          `<${deal.gameUrl}>\nPosted by: *${deal.author}*\nhttps://reddit.com/${deal.redditId}`;
+        const message = mention
+          ? `<${deal.gameUrl}>\nPosted by: *${deal.author}*\nhttps://reddit.com/${deal.redditId}\n${mention}`
+          : `<${deal.gameUrl}>\nPosted by: *${deal.author}*\nhttps://reddit.com/${deal.redditId}`;
 
         return {
           name: 'send-notification',
           data: {
-            id: webhook.id,
-            token: webhook.token,
+            webhook: {
+              id: webhook.id,
+              token: webhook.token,
+            },
             content: message,
-            threadName: deal.redditTitle
-          }
-        }
+            threadName: deal.redditTitle,
+          },
+        };
       }
 
-      const message = mention ?
-        `**${deal.redditTitle}**\n<${deal.gameUrl}>\nPosted by: *${deal.author}*\nhttps://reddit.com/${deal.redditId}\n${mention}` :
-        `**${deal.redditTitle}**\n<${deal.gameUrl}>\nPosted by: *${deal.author}*\nhttps://reddit.com/${deal.redditId}\n`;
+      const message = mention
+        ? `**${deal.redditTitle}**\n<${deal.gameUrl}>\nPosted by: *${deal.author}*\nhttps://reddit.com/${deal.redditId}\n${mention}`
+        : `**${deal.redditTitle}**\n<${deal.gameUrl}>\nPosted by: *${deal.author}*\nhttps://reddit.com/${deal.redditId}\n`;
 
       return {
         name: 'send-notification',
@@ -53,11 +56,11 @@ export default class DealsService {
           id: webhook.id,
           token: webhook.token,
           content: message,
-        }
-      }
-    })
-    
-    await this.notificationsQueue.addBulk(jobs)
+        },
+      };
+    });
+
+    await this.notificationsQueue.addBulk(jobs);
   }
 
   async create(creatDealDto: CreateDealDto): Promise<Deal> {

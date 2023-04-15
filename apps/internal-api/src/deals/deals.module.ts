@@ -11,6 +11,13 @@ import DealsService from './deals.service';
     WebhookModule,
     BullModule.registerQueue({
       name: 'notifications',
+      defaultJobOptions: {
+        attempts: 5,
+        backoff: {
+          type: 'exponential',
+          delay: 10000,
+        },
+      },
     }),
   ],
   controllers: [DealsController],
