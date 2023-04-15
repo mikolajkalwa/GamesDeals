@@ -28,7 +28,6 @@
     "@nestjs/platform-express": "^9.4.0",
     "@nestjs/terminus": "^9.2.2",
     "@prisma/client": "^4.12.0",
-    "@willsoto/nestjs-prometheus": "^5.1.1",
     "bullmq": "^3.10.4",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.0",
@@ -36,9 +35,7 @@
     "nestjs-pino": "^3.1.2",
     "pino-http": "^8.3.3",
     "prisma": "^4.12.0",
-    "prom-client": "^14.2.0",
-    "reflect-metadata": "^0.1.13",
-    "rxjs": "^7.8.0"
+    "reflect-metadata": "^0.1.13"
   },
   "scripts": {
     "build": "nest build",

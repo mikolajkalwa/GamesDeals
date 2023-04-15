@@ -77,9 +77,6 @@ importers:
       '@prisma/client':
         specifier: ^4.12.0
         version: 4.12.0(prisma@4.12.0)
-      '@willsoto/nestjs-prometheus':
-        specifier: ^5.1.1
-        version: 5.1.1(@nestjs/common@9.4.0)(prom-client@14.2.0)
       bullmq:
         specifier: ^3.10.4
         version: 3.10.4
@@ -101,15 +98,9 @@ importers:
       prisma:
         specifier: ^4.12.0
         version: 4.12.0
-      prom-client:
-        specifier: ^14.2.0
-        version: 14.2.0
       reflect-metadata:
         specifier: ^0.1.13
         version: 0.1.13
-      rxjs:
-        specifier: ^7.8.0
-        version: 7.8.0
     devDependencies:
       '@nestjs/cli':
         specifier: ^9.4.0
@@ -2046,16 +2037,6 @@ packages:
       '@xtuc/long': 4.2.2
     dev: true
 
-  /@willsoto/nestjs-prometheus@5.1.1(@nestjs/common@9.4.0)(prom-client@14.2.0):
-    resolution: {integrity: sha512-cLwxhn99TLiuFxSyIXesMpEQk8pLPn2hX72Jm4J83UaI+uX9K6QdXgYMc+6HzehWAcG3WyDJICziOzJfDi3mEw==}
-    peerDependencies:
-      '@nestjs/common': ^7.0.0 || ^8.0.0 || ^9.0.0
-      prom-client: ^13.0.0 || ^14.0.0
-    dependencies:
-      '@nestjs/common': 9.4.0(class-transformer@0.5.1)(class-validator@0.14.0)(reflect-metadata@0.1.13)(rxjs@7.8.0)
-      prom-client: 14.2.0
-    dev: false
-
   /@xtuc/ieee754@1.2.0:
     resolution: {integrity: sha512-DX8nKgqcGwsc0eJSqYt5lwP4DH5FlHnmuWWBRy7X0NcaGR0ZtuyeESgMwTYVEtxmsNGY+qit4QYT/MIYTOTPeA==}
     dev: true
@@ -2366,10 +2347,6 @@ packages:
     resolution: {integrity: sha512-jDctJ/IVQbZoJykoeHbhXpOlNBqGNcwXJKJog42E5HDPUwQTSdjCHdihjj0DlnheQ7blbT6dHOafNAiS8ooQKA==}
     engines: {node: '>=8'}
     dev: true
-
-  /bintrees@1.0.2:
-    resolution: {integrity: sha512-VOMgTMwjAaUG580SXn3LacVgjurrbMme7ZZNYGSSV7mmtY6QQRh0Eg3pwIcntQ77DErK1L0NxkbetjcoXzVwKw==}
-    dev: false
 
   /bl@4.1.0:
     resolution: {integrity: sha512-1W07cM9gS6DcLperZfFSj+bWLtaPGSOHWhPiGzXmvVJbRLdG82sH/Kn8EtW1VqWVA54AKf2h5k5BbnIbwF3h6w==}
@@ -5608,13 +5585,6 @@ packages:
     engines: {node: '>= 0.6.0'}
     dev: false
 
-  /prom-client@14.2.0:
-    resolution: {integrity: sha512-sF308EhTenb/pDRPakm+WgiN+VdM/T1RaHj1x+MvAuT8UiQP8JmOEbxVqtkbfR4LrvOg5n7ic01kRBDGXjYikA==}
-    engines: {node: '>=10'}
-    dependencies:
-      tdigest: 0.1.2
-    dev: false
-
   /prompts@2.4.2:
     resolution: {integrity: sha512-NxNv/kLguCA7p3jE8oL2aEBsrJWgAakBpgmgK6lpPWV+WuOmY6r2/zbAVnP+T8bQlA0nzHXSJSJW0Hq7ylaD2Q==}
     engines: {node: '>= 6'}
@@ -6292,12 +6262,6 @@ packages:
     resolution: {integrity: sha512-GNzQvQTOIP6RyTfE2Qxb8ZVlNmw0n88vp1szwWRimP02mnTsx3Wtn5qRdqY9w2XduFNUgvOwhNnQsjwCp+kqaQ==}
     engines: {node: '>=6'}
     dev: true
-
-  /tdigest@0.1.2:
-    resolution: {integrity: sha512-+G0LLgjjo9BZX2MfdvPfH+MKLCrxlXSYec5DaPYP1fe6Iyhf0/fSmJ0bFiZ1F8BT6cGXl2LpltQptzjXKWEkKA==}
-    dependencies:
-      bintrees: 1.0.2
-    dev: false
 
   /terser-webpack-plugin@5.3.7(webpack@5.79.0):
     resolution: {integrity: sha512-AfKwIktyP7Cu50xNjXF/6Qb5lBNzYaWpU6YfoX3uZicTx0zTy0stDDCsvjDapKsSDvOeWo5MEq4TmdBy2cNoHw==}
