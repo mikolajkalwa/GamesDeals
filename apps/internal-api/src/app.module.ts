@@ -21,13 +21,13 @@ import WebhookModule from './webhooks/webhook.module';
         NODE_ENV: Joi.string().valid('development', 'production', 'test').default('development'),
         BASE_ADDRESS: Joi.string().ip().default('0.0.0.0'),
         PORT: Joi.number().default(3000),
-        REDIS_HOST: Joi.string().default('0.0.0.0'),
+        REDIS_HOST: Joi.string().default('localhost'),
         REDIS_PORT: Joi.number().default(6379),
       }),
     }),
     BullModule.forRoot({
       connection: {
-        host: process.env['REDIS_HOST'] || '0.0.0.0',
+        host: process.env['REDIS_HOST'] || 'localhost',
         port: Number(process.env['REDIS_PORT']) || 6379,
       },
     }),

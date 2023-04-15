@@ -1,12 +1,4 @@
-export interface Deal {
-  id: string;
-  url: string;
-  title: string;
-  author: string;
-  over18: boolean;
-}
-
-export interface Webhook {
+export type Webhook = {
   id: string;
   token: string;
   guild: string;
@@ -14,4 +6,4 @@ export interface Webhook {
   keywords: string[];
   blacklist: string[];
   channelType: 'GUILD_TEXT' | 'GUILD_FORUM'
-}
+};

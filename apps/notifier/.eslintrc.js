@@ -1,10 +1,13 @@
 const path = require('node:path');
 
 module.exports = {
-  "parserOptions": {
-    project: path.join(__dirname, "tsconfig.json")
+  parserOptions: {
+    project: path.join(__dirname, "tsconfig.json"),
   },
-  "extends": [
-    "eslint-config-games-deals"
-  ]
+  extends: [
+    "eslint-config-games-deals",
+  ],
+  env: {
+    jest: true
+  },
 }

@@ -159,6 +159,9 @@ importers:
 
   apps/notifier:
     dependencies:
+      bullmq:
+        specifier: ^3.10.4
+        version: 3.10.4
       dotenv:
         specifier: ^16.0.3
         version: 16.0.3
