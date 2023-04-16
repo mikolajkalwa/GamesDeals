@@ -1,0 +1,1 @@
+export { GamesDealsApiClient } from './client';

@@ -1,5 +1,5 @@
 import {
-  Body, ConflictException, Controller, DefaultValuePipe, Get, HttpCode, NotFoundException, Param, ParseIntPipe, Post, Query
+  Body, ConflictException, Controller, DefaultValuePipe, Get, HttpCode, NotFoundException, Param, ParseIntPipe, Post, Query,
 } from '@nestjs/common';
 import type { Deal } from '@prisma/client';
 import WebhookService from '../webhooks/webhook.service';
@@ -11,7 +11,7 @@ import CreateDealDto from './dto/create-deal.dto';
 export default class DealsController {
   constructor(
     private readonly dealsService: DealsService,
-    private readonly webhooksService: WebhookService
+    private readonly webhooksService: WebhookService,
   ) { }
 
   @Post()
@@ -24,7 +24,7 @@ export default class DealsController {
   async announce(@Body() deal: AnnounceDealDto) {
     const existingDeal = await this.dealsService.find(deal.redditId);
     if (existingDeal) {
-      throw new ConflictException('Deal was already announced.')
+      throw new ConflictException('Deal was already announced.');
     }
 
     const webhooksToExecute = await this.webhooksService.findMany(deal.redditTitle);

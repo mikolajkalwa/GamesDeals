@@ -1,0 +1,23 @@
+{
+  "private": true,
+  "name": "gd-api-client",
+  "main": "./dist/index.js",
+  "scripts": {
+    "test": "jest",
+    "prebuild": "rimraf dist",
+    "build": "tsc -p tsconfig.prod.json"
+  },
+  "dependencies": {
+    "undici": "^5.21.2"
+  },
+  "devDependencies": {
+    "typescript": "^4.9.5",
+    "eslint": "^8.38.0",
+    "eslint-config-games-deals": "workspace:*",
+    "jest": "29.5.0",
+    "rimraf": "^4.4.1",
+    "ts-jest": "29.0.5",
+    "tsconfig": "workspace:*",
+    "@types/jest": "29.4.1"
+  }
+}
