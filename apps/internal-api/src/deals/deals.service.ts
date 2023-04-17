@@ -2,6 +2,7 @@ import { InjectQueue } from '@nestjs/bullmq';
 import { Injectable } from '@nestjs/common';
 import type { Deal, Webhook } from '@prisma/client';
 import { Queue } from 'bullmq';
+import { PinoLogger } from 'nestjs-pino';
 import PrismaService from '../prisma/prisma.service';
 import AnnounceDealDto from './dto/announce-deal.dto';
 import type CreateDealDto from './dto/create-deal.dto';
@@ -10,8 +11,11 @@ import type CreateDealDto from './dto/create-deal.dto';
 export default class DealsService {
   constructor(
     private readonly prisma: PrismaService,
+    private readonly logger: PinoLogger,
     @InjectQueue('notifications') private readonly notificationsQueue: Queue,
-  ) { }
+  ) {
+    this.logger.setContext(DealsService.name);
+  }
 
   // eslint-disable-next-line class-methods-use-this
   #getMention(webhook: Webhook): string | null {
@@ -25,6 +29,7 @@ export default class DealsService {
   }
 
   async announce(deal: AnnounceDealDto, webhooksToExecute: Webhook[]) {
+    this.logger.info(deal, `Announcing deal to ${webhooksToExecute.length} webhooks.`);
     const jobs = webhooksToExecute.map((webhook) => {
       const mention = this.#getMention(webhook);
 
@@ -53,8 +58,10 @@ export default class DealsService {
       return {
         name: 'send-notification',
         data: {
-          id: webhook.id,
-          token: webhook.token,
+          webhook: {
+            id: webhook.id,
+            token: webhook.token,
+          },
           content: message,
         },
       };

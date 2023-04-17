@@ -12,7 +12,7 @@ const logger = pino({
 const redditClient = new RedditClient(config.urls.reddit);
 const gamesDeals = new GamesDealsApiClient(config.urls.gamesDeals);
 
-const detector = new Detector(gamesDeals, redditClient);
+const detector = new Detector(gamesDeals, redditClient, logger);
 
 async function main() {
   // eslint-disable-next-line no-restricted-syntax, @typescript-eslint/no-unused-vars, @typescript-eslint/naming-convention, no-underscore-dangle
@@ -21,6 +21,7 @@ async function main() {
       await detector.detect();
     } catch (e) {
       logger.error(e, 'Game detection failed');
+      process.exit(1);
     }
   }
 }

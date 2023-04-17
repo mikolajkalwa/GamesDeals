@@ -11,7 +11,7 @@ export default class GamesDealsApiClient {
 
   constructor() {
     this.request = got.extend({
-      prefixUrl: config.API_URL,
+      prefixUrl: config.GAMES_DEALS_API_URL,
       timeout: 2500, // we have 3 seconds to respond to an interaction
     });
   }

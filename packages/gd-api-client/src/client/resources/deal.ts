@@ -11,8 +11,11 @@ export class DealResource {
 
   async announce(deal: AnnounceDeal) {
     const response = await request(`${this.baseUrl}/deals/announce`, {
-      body: JSON.stringify(deal),
       method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(deal),
     });
     return response.statusCode === 202;
   }
