@@ -1,0 +1,15 @@
+name: Publish Games Deals Detector
+
+on:
+  push:
+    tags:
+      - detector/v*.*.*
+
+jobs:
+  publish-detector:
+    uses: ./.github/workflows/publish-docker-image.yml
+    with:
+      image-name: mikolajkalwa/gamesdeals/detector
+      dockerfile-path: ./apps/detector/Dockerfile
+      tag-prefix: detector
+    secrets: inherit
