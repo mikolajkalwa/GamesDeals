@@ -9,7 +9,7 @@
     "@types/jest": "^29.5.0",
     "@types/node": "^18.15.11",
     "@types/supertest": "^2.0.12",
-    "@types/validator": "^13.7.14",
+    "@types/validator": "^13.7.15",
     "eslint": "^8.38.0",
     "eslint-config-games-deals": "workspace:*",
     "jest": "^29.5.0",

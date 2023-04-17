@@ -8,8 +8,8 @@
     "prepare": "node -e \"try { require('husky').install() } catch (e) {if (e.code !== 'MODULE_NOT_FOUND') throw e}\""
   },
   "devDependencies": {
-    "@commitlint/cli": "^17.6.0",
-    "@commitlint/config-conventional": "^17.6.0",
+    "@commitlint/cli": "^17.6.1",
+    "@commitlint/config-conventional": "^17.6.1",
     "husky": "^8.0.3",
     "turbo": "^1.9.1",
     "typescript": "^4.9.5"

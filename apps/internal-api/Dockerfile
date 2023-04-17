@@ -1,7 +1,7 @@
-FROM node:18.15.0-bullseye-slim as base
+FROM node:18.16.0-bullseye-slim as base
 RUN corepack enable && corepack prepare pnpm@8.2.0 --activate
 
-FROM node:18.15.0-bullseye-slim as extractor
+FROM node:18.16.0-bullseye-slim as extractor
 RUN npm install -g turbo@1.8.7
 WORKDIR /usr/src/app
 COPY . .
@@ -15,7 +15,7 @@ COPY --from=extractor /usr/src/app/out/json/ .
 COPY --from=extractor /usr/src/app/out/pnpm-lock.yaml ./pnpm-lock.yaml
 RUN pnpm install
 COPY --from=extractor /usr/src/app/out/full/ .
-RUN pnpm turbo run build --filter=internal-api
+RUN pnpm -C apps/internal-api exec prisma generate && pnpm turbo run build --filter=internal-api
 
 FROM base as final
 COPY --from=builder /usr/bin/dumb-init /usr/bin/dumb-init

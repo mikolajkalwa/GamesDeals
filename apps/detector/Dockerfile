@@ -1,7 +1,7 @@
-FROM node:18.15.0-bullseye-slim as base
+FROM node:18.16.0-bullseye-slim as base
 RUN corepack enable && corepack prepare pnpm@8.2.0 --activate
 
-FROM node:18.15.0-bullseye-slim as extractor
+FROM node:18.16.0-bullseye-slim as extractor
 RUN npm install -g turbo@1.9.1
 WORKDIR /usr/src/app
 COPY . .
@@ -22,6 +22,7 @@ COPY --from=builder /usr/bin/dumb-init /usr/bin/dumb-init
 USER node
 WORKDIR /usr/src/app
 COPY --from=builder --chown=node:node /usr/src/app/package.json /usr/src/app/pnpm-*.yaml ./
+COPY --from=builder --chown=node:node /usr/src/app/packages/gd-api-client ./packages/gd-api-client
 COPY --from=builder --chown=node:node /usr/src/app/apps/detector/package.json ./apps/detector/
 RUN pnpm install --prod --frozen-lockfile
 COPY --from=builder --chown=node:node /usr/src/app/apps/detector/dist ./apps/detector/dist

@@ -8,7 +8,7 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    container: node:18.15.0-bullseye-slim
+    container: node:18.16.0-bullseye-slim
 
     services:
       postgres:
