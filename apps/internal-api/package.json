@@ -27,14 +27,14 @@
     "@nestjs/core": "^9.4.0",
     "@nestjs/platform-express": "^9.4.0",
     "@nestjs/terminus": "^9.2.2",
-    "@prisma/client": "^4.12.0",
-    "bullmq": "^3.10.4",
+    "@prisma/client": "^4.13.0",
+    "bullmq": "^3.11.0",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.0",
     "joi": "^17.9.1",
     "nestjs-pino": "^3.1.2",
     "pino-http": "^8.3.3",
-    "prisma": "^4.12.0",
+    "prisma": "^4.13.0",
     "reflect-metadata": "^0.1.13"
   },
   "scripts": {
