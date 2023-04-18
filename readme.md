@@ -39,6 +39,20 @@ Join the [support server](https://discord.gg/ZkjqCmM) if you're having trouble c
 - Both:
   - /webhook create `channel:`#cool-channel `role:`@coolPeople `keywords:` steam,gog
 
+## Technical overview
+The application contains four components:
+* Bot - allows end users to configure their servers to receive notifications.
+* Detector - periodically checks the GameDeals subreddit and detects deals to announce.
+* API - provided access to webhooks and deals data, publishes notification requests to redis queue.
+* Notifier - executes discord webhooks.
+
+### Relationship between components:
+![Relationship between components][overview-diagram]
+
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+
+[overview-diagram]: /assets/overview.png
