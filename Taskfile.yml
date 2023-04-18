@@ -1,7 +1,12 @@
-version: '3'
+version: "3"
+
+dotenv: ['apps/bot/.env']
 
 tasks:
-  e2e:
+  test:api:
     cmds:
       - docker compose -f ./apps/internal-api/docker/compose.e2e.yaml up --build --force-recreate --attach e2e-runner --exit-code-from e2e-runner
       - defer: docker compose -f ./apps/internal-api/docker/compose.e2e.yaml down --timeout 0 --volumes
+
+  run:dev:
+      - docker compose -f compose.yaml -f compose.dev.yaml up --build --force-recreate --detach

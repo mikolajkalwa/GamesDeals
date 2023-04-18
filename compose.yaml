@@ -1,0 +1,88 @@
+version: "3.9"
+services:
+  postgres:
+    image: postgres:15.2
+    container_name: gd-postgres
+    restart: unless-stopped
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - pggamesdeals:/var/lib/postgresql/data
+    healthcheck:
+      test: pg_isready -q -U postgres -d postgres
+      interval: 1s
+      retries: 10
+
+  redis:
+    image: redis:7.0.10
+    command: redis-server --maxmemory-policy noeviction
+    restart: unless-stopped
+    ports:
+      - 6379:6379
+    volumes:
+        - redisgamesdeals:/data
+    healthcheck:
+      test: redis-cli ping
+      interval: 1s
+      retries: 10
+
+  api:
+    build:
+      dockerfile: apps/internal-api/Dockerfile
+    container_name: gd-api
+    restart: unless-stopped
+    ports:
+      - 3000:3000
+    environment:
+      - NODE_ENV=production
+      - REDIS_HOST=redis
+      - DATABASE_URL=postgresql://postgres:postgres@postgres/games_deals
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  bot:
+    build:
+      dockerfile: ./apps/bot/Dockerfile
+    container_name: gd-bot
+    restart: unless-stopped
+    environment:
+      - GAMES_DEALS_API_URL=http://api:3000
+      - BOT_TOKEN
+    depends_on:
+      - api
+
+  notifier:
+    build:
+      dockerfile: ./apps/notifier/Dockerfile
+    container_name: gd-notifier
+    restart: unless-stopped
+    environment:
+      - GAMES_DEALS_API_URL=http://api:3000
+      - REDIS_HOST=redis
+    depends_on:
+      - api
+
+  detector:
+    build:
+      dockerfile: ./apps/detector/Dockerfile
+    container_name: gd-detector
+    restart: unless-stopped
+    environment:
+      - GAMES_DEALS_API_URL=http://api:3000
+    depends_on:
+      - api
+
+volumes:
+  pggamesdeals:
+    external: false
+  redisgamesdeals:
+    external: false
+
+networks:
+  default:
+    name: gamesdeals-network
