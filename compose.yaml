@@ -4,8 +4,6 @@ services:
     image: postgres:15.2
     container_name: gd-postgres
     restart: unless-stopped
-    ports:
-      - 5432:5432
     environment:
       - POSTGRES_PASSWORD=postgres
     volumes:
@@ -19,8 +17,6 @@ services:
     image: redis:7.0.10
     command: redis-server --maxmemory-policy noeviction
     restart: unless-stopped
-    ports:
-      - 6379:6379
     volumes:
         - redisgamesdeals:/data
     healthcheck:
@@ -33,8 +29,6 @@ services:
       dockerfile: apps/internal-api/Dockerfile
     container_name: gd-api
     restart: unless-stopped
-    ports:
-      - 3000:3000
     environment:
       - NODE_ENV=production
       - REDIS_HOST=redis
