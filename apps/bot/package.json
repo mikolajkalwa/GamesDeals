@@ -16,8 +16,8 @@
     "zod": "^3.21.4"
   },
   "devDependencies": {
-    "@types/node": "^18.15.11",
-    "eslint": "^8.38.0",
+    "@types/node": "^18.16.0",
+    "eslint": "^8.39.0",
     "eslint-config-games-deals": "workspace:*",
     "tsconfig": "workspace:*",
     "typescript": "^4.9.5"
