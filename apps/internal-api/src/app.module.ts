@@ -29,6 +29,7 @@ import WebhookModule from './webhooks/webhook.module';
       connection: {
         host: process.env['REDIS_HOST'] || 'localhost',
         port: Number(process.env['REDIS_PORT']) || 6379,
+        enableOfflineQueue: false,
       },
     }),
     DealsModule,

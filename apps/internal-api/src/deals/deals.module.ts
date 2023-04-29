@@ -12,10 +12,14 @@ import DealsService from './deals.service';
     BullModule.registerQueue({
       name: 'notifications',
       defaultJobOptions: {
-        attempts: 5,
+        attempts: 6,
         backoff: {
           type: 'exponential',
           delay: 10000,
+        },
+        removeOnComplete: true,
+        removeOnFail: {
+          count: 5000,
         },
       },
     }),
