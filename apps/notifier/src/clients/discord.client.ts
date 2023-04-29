@@ -1,5 +1,4 @@
 import { Pool } from 'undici';
-import type { Webhook } from '../types/games-deal-api.type';
 
 export class DiscordClient {
   private readonly client: Pool;
@@ -12,7 +11,7 @@ export class DiscordClient {
   }
 
   public executeWebhook = async (
-    webhook: Pick<Webhook, 'id' | 'token'>,
+    webhook: { id: string, token: string },
     content: string,
     threadName?: string,
   ) => await this.client.request({

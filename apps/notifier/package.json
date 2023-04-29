@@ -5,25 +5,23 @@
   "private": true,
   "scripts": {
     "start": "node dist/index.js",
-    "test": "jest",
     "prebuild": "rimraf dist",
     "build": "tsc -p tsconfig.prod.json",
     "lint": "eslint src/**"
   },
   "dependencies": {
     "bullmq": "^3.12.0",
+    "close-with-grace": "^1.2.0",
     "dotenv": "^16.0.3",
+    "gd-api-client": "workspace:*",
     "pino": "^8.11.0",
     "undici": "^5.22.0",
     "zod": "^3.21.4"
   },
   "devDependencies": {
-    "@types/jest": "29.4.1",
     "eslint": "^8.39.0",
     "eslint-config-games-deals": "workspace:*",
-    "jest": "29.5.0",
     "rimraf": "^4.4.1",
-    "ts-jest": "29.0.5",
     "tsconfig": "workspace:*",
     "typescript": "4.9.5"
   }
