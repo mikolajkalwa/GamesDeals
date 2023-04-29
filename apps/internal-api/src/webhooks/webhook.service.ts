@@ -1,5 +1,5 @@
 import {
-  BadRequestException, ConflictException, Injectable, NotFoundException
+  BadRequestException, ConflictException, Injectable, NotFoundException,
 } from '@nestjs/common';
 import { Prisma, Webhook } from '@prisma/client';
 import PrismaService from '../prisma/prisma.service';
@@ -45,7 +45,17 @@ export default class WebhookService {
     }
 
     return await this.prisma.$queryRaw`
-      SELECT *
+      SELECT
+        id,
+        token,
+        mention,
+        guild,
+        channel,
+        blacklist,
+        keywords,
+        channel_type AS "channelType",
+        created_at AS "createdAt",
+        updated_at AS "updatedAt"
       FROM webhooks
       WHERE (COALESCE(cardinality(blacklist), 0) = 0 AND COALESCE(cardinality(keywords), 0) = 0)
         OR (${threadTitle} ILIKE ANY (SELECT '%' || unnest(keywords) || '%')
