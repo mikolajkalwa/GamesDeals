@@ -10,7 +10,12 @@ export class RedditClient {
   }
 
   private async fetchTrendingDeals() {
-    const response = await request(this.gameDealsUrl, { maxRedirections: this.maxRedirections });
+    const response = await request(this.gameDealsUrl, {
+      maxRedirections: this.maxRedirections,
+      headers: {
+        'User-Agent': 'GamesDealsBot/0.0.1'
+      }
+    });
     const data = await response.body.json() as unknown;
 
     return RedditResponseSchema.parse(data);
