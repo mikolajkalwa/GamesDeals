@@ -10,16 +10,16 @@
     "lint": "eslint src/**"
   },
   "dependencies": {
-    "bullmq": "^3.12.0",
+    "bullmq": "^3.13.0",
     "close-with-grace": "^1.2.0",
     "dotenv": "^16.0.3",
     "gd-api-client": "workspace:*",
-    "pino": "^8.11.0",
+    "pino": "^8.12.1",
     "undici": "^5.22.0",
     "zod": "^3.21.4"
   },
   "devDependencies": {
-    "eslint": "^8.39.0",
+    "eslint": "^8.40.0",
     "eslint-config-games-deals": "workspace:*",
     "rimraf": "^4.4.1",
     "tsconfig": "workspace:*",
