@@ -1,8 +1,8 @@
 FROM node:18.16.0-bullseye-slim as base
-RUN corepack enable && corepack prepare pnpm@8.4.0 --activate
+RUN corepack enable && corepack prepare pnpm@8.6.1 --activate
 
 FROM node:18.16.0-bullseye-slim as extractor
-RUN npm install -g turbo@1.9.3
+RUN npm install -g turbo@1.10.2
 WORKDIR /usr/src/app
 COPY . .
 RUN turbo prune --scope=detector --docker

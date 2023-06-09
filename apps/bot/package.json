@@ -10,14 +10,14 @@
   },
   "dependencies": {
     "discord.js": "^14.11.0",
-    "dotenv": "^16.0.3",
+    "dotenv": "^16.1.4",
     "got": "^11.8.6",
-    "pino": "^8.12.1",
+    "pino": "^8.14.1",
     "zod": "^3.21.4"
   },
   "devDependencies": {
-    "@types/node": "^18.16.5",
-    "eslint": "^8.40.0",
+    "@types/node": "^18.16.16",
+    "eslint": "^8.42.0",
     "eslint-config-games-deals": "workspace:*",
     "tsconfig": "workspace:*",
     "typescript": "^4.9.5"

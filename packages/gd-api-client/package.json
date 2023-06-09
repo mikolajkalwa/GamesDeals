@@ -8,11 +8,11 @@
     "build": "tsc -p tsconfig.prod.json"
   },
   "dependencies": {
-    "undici": "^5.22.0"
+    "undici": "^5.22.1"
   },
   "devDependencies": {
     "@types/jest": "29.4.1",
-    "eslint": "^8.40.0",
+    "eslint": "^8.42.0",
     "eslint-config-games-deals": "workspace:*",
     "jest": "29.5.0",
     "rimraf": "^4.4.1",
