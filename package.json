@@ -11,6 +11,7 @@
     "@commitlint/cli": "^17.6.5",
     "@commitlint/config-conventional": "^17.6.5",
     "husky": "^8.0.3",
+    "lint-staged": "^13.2.2",
     "turbo": "^1.10.2",
     "typescript": "^5.1.3"
   },

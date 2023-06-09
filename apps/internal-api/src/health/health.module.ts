@@ -9,4 +9,4 @@ import PrismaHealthIndicator from './prisma.health';
   controllers: [HealthController],
   providers: [PrismaHealthIndicator],
 })
-export default class HealthModule { }
+export default class HealthModule {}

@@ -9,4 +9,4 @@ import WebhookService from './webhook.service';
   providers: [WebhookService],
   exports: [WebhookService],
 })
-export default class WebhookModule { }
+export default class WebhookModule {}

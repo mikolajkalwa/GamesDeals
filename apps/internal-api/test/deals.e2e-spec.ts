@@ -13,7 +13,6 @@ BigInt.prototype.toJSON = function () {
   return this.toString();
 };
 
-
 describe('Deals', () => {
   let app: INestApplication;
 
@@ -44,7 +43,8 @@ describe('Deals', () => {
           createdAt: '2021-12-30T16:15:08.177Z',
           updatedAt: '2021-12-30T16:15:08.177Z',
           redditId: 'rs51th',
-          redditTitle: '[Epic Games] Tomb Raider: Definitive Survivor Trilogy (Free/100% off)',
+          redditTitle:
+            '[Epic Games] Tomb Raider: Definitive Survivor Trilogy (Free/100% off)',
           gameUrl: 'https://www.epicgames.com/store/en-US/free-games',
         },
       ]);
@@ -60,7 +60,8 @@ describe('Deals', () => {
           createdAt: '2021-12-30T16:15:08.177Z',
           updatedAt: '2021-12-30T16:15:08.177Z',
           redditId: 'rs51th',
-          redditTitle: '[Epic Games] Tomb Raider: Definitive Survivor Trilogy (Free/100% off)',
+          redditTitle:
+            '[Epic Games] Tomb Raider: Definitive Survivor Trilogy (Free/100% off)',
           gameUrl: 'https://www.epicgames.com/store/en-US/free-games',
         },
         {
@@ -68,8 +69,10 @@ describe('Deals', () => {
           createdAt: '2018-05-17T17:45:13.000Z',
           updatedAt: '2018-05-17T17:45:13.000Z',
           redditId: '8k5uct',
-          redditTitle: '[Humble Store] Galactic Civilizations II: Ultimate Edition (Free)',
-          gameUrl: 'https://www.humblebundle.com/store/galactic-civilizations-ii-ultimate-edition',
+          redditTitle:
+            '[Humble Store] Galactic Civilizations II: Ultimate Edition (Free)',
+          gameUrl:
+            'https://www.humblebundle.com/store/galactic-civilizations-ii-ultimate-edition',
         },
         {
           id: 2,
@@ -127,11 +130,13 @@ describe('Deals', () => {
         })
         .expect(201);
 
-      expect(response.body).toEqual(expect.objectContaining({
-        redditId: '9rc66q',
-        redditTitle: '[Steam] Metro 2033 (Free/100% off)',
-        gameUrl: 'https://store.steampowered.com/app/43110/Metro_2033/',
-      }));
+      expect(response.body).toEqual(
+        expect.objectContaining({
+          redditId: '9rc66q',
+          redditTitle: '[Steam] Metro 2033 (Free/100% off)',
+          gameUrl: 'https://store.steampowered.com/app/43110/Metro_2033/',
+        }),
+      );
     });
 
     it('create new deal with empty reddit id should return status code 400 and error message', async () => {
@@ -144,9 +149,9 @@ describe('Deals', () => {
         })
         .expect(400);
 
-      expect(response.body.message).toEqual(expect.arrayContaining([
-        'redditId should not be empty',
-      ]));
+      expect(response.body.message).toEqual(
+        expect.arrayContaining(['redditId should not be empty']),
+      );
     });
 
     it('create new deal without reddit id should return status code 400 and error message', async () => {
@@ -158,10 +163,12 @@ describe('Deals', () => {
         })
         .expect(400);
 
-      expect(response.body.message).toEqual(expect.arrayContaining([
-        'redditId should not be empty',
-        'redditId must be a string',
-      ]));
+      expect(response.body.message).toEqual(
+        expect.arrayContaining([
+          'redditId should not be empty',
+          'redditId must be a string',
+        ]),
+      );
     });
 
     it('create new deal with invalid body should return status code 400 and error message', async () => {
@@ -174,13 +181,15 @@ describe('Deals', () => {
         })
         .expect(400);
 
-      expect(response.body.message).toEqual(expect.arrayContaining([
-        'redditId should not be empty',
-        'redditId must be a string',
-        'redditTitle should not be empty',
-        'redditTitle must be a string',
-        'gameUrl must be a URL address',
-      ]));
+      expect(response.body.message).toEqual(
+        expect.arrayContaining([
+          'redditId should not be empty',
+          'redditId must be a string',
+          'redditTitle should not be empty',
+          'redditTitle must be a string',
+          'gameUrl must be a URL address',
+        ]),
+      );
     });
   });
 
@@ -191,8 +200,10 @@ describe('Deals', () => {
         .send({
           author: 'me',
           redditId: '8ir0hr',
-          redditTitle: '[Steam] Stories: The Path of Destinies (Free/100% off to keep forever)',
-          gameUrl: 'https://store.steampowered.com/app/439190/Stories_The_Path_of_Destinies/',
+          redditTitle:
+            '[Steam] Stories: The Path of Destinies (Free/100% off to keep forever)',
+          gameUrl:
+            'https://store.steampowered.com/app/439190/Stories_The_Path_of_Destinies/',
         })
         .expect(409);
     });
@@ -203,8 +214,10 @@ describe('Deals', () => {
         .send({
           author: 'me',
           redditId: 'newgme',
-          redditTitle: '[Steam] Stories: The Path of Destinies (Free/100% off to keep forever)',
-          gameUrl: 'https://store.steampowered.com/app/439190/Stories_The_Path_of_Destinies/',
+          redditTitle:
+            '[Steam] Stories: The Path of Destinies (Free/100% off to keep forever)',
+          gameUrl:
+            'https://store.steampowered.com/app/439190/Stories_The_Path_of_Destinies/',
         })
         .expect(202);
     });

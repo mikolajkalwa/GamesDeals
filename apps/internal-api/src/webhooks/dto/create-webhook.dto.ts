@@ -1,10 +1,14 @@
 import {
-  IsIn, IsNotEmpty, IsNumberString, IsOptional, IsString,
+  IsIn,
+  IsNotEmpty,
+  IsNumberString,
+  IsOptional,
+  IsString,
 } from 'class-validator';
 import PatchWebhookDto from './patch-webhook.dto';
 
 const channelTypes = ['GUILD_TEXT', 'GUILD_FORUM'] as const;
-type ChannelType = typeof channelTypes[number];
+type ChannelType = (typeof channelTypes)[number];
 
 export default class CreateWebhookDto extends PatchWebhookDto {
   @IsNumberString()

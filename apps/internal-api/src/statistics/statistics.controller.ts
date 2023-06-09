@@ -3,9 +3,7 @@ import StatisticsService from './statistics.service';
 
 @Controller('statistics')
 export default class StatisticsController {
-  constructor(
-    private readonly statisticsService: StatisticsService,
-  ) { }
+  constructor(private readonly statisticsService: StatisticsService) {}
 
   @Get()
   async getStatistics() {

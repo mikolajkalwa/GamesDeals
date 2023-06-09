@@ -3,7 +3,7 @@ import PrismaService from '../prisma/prisma.service';
 
 @Injectable()
 export default class StatisticsService {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
 
   async getStatistics(): Promise<{ [k: string]: number }> {
     const dealsCount = await this.prisma.deal.count();

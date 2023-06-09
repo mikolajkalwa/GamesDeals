@@ -27,4 +27,4 @@ import DealsService from './deals.service';
   controllers: [DealsController],
   providers: [DealsService],
 })
-export default class DealsModule { }
+export default class DealsModule {}

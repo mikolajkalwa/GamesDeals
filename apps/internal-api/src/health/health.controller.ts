@@ -7,7 +7,7 @@ export default class HealthController {
   constructor(
     private readonly healthCheckService: HealthCheckService,
     private readonly prismaHealthIndicator: PrismaHealthIndicator,
-  ) { }
+  ) {}
 
   @Get()
   @HealthCheck()

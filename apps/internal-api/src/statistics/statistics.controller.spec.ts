@@ -19,7 +19,8 @@ describe('StatisticsController', () => {
       .compile();
 
     statisticsService = moduleRef.get<StatisticsService>(StatisticsService);
-    statisticsController = moduleRef.get<StatisticsController>(StatisticsController);
+    statisticsController =
+      moduleRef.get<StatisticsController>(StatisticsController);
   });
 
   it('should be defined', () => {
@@ -29,7 +30,9 @@ describe('StatisticsController', () => {
   describe('getStatistics', () => {
     it('should return deal count and webhook count', async () => {
       const result = { dealsCount: 100, webhooksCount: 3000 };
-      const spy = jest.spyOn(statisticsService, 'getStatistics').mockImplementation(() => Promise.resolve(result));
+      const spy = jest
+        .spyOn(statisticsService, 'getStatistics')
+        .mockImplementation(() => Promise.resolve(result));
 
       expect(await statisticsController.getStatistics()).toEqual(result);
       expect(spy).toBeCalledTimes(1);

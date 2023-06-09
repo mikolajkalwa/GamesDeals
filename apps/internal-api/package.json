@@ -12,8 +12,10 @@
     "@types/validator": "^13.7.17",
     "eslint": "^8.42.0",
     "eslint-config-games-deals": "workspace:*",
+    "prettier-config": "workspace:*",
     "jest": "^29.5.0",
     "jest-mock": "^29.5.0",
+    "prettier": "^2.8.8",
     "supertest": "^6.3.3",
     "ts-jest": "^29.1.0",
     "ts-node": "^10.9.1",
@@ -44,11 +46,18 @@
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
+    "format": "prettier --check \"src/**/*.ts\" \"test/**/*.ts\"",
+    "format:fix": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "lint": "eslint",
     "test": "jest",
     "test:e2e": "jest --runInBand --config ./jest-e2e.config.json",
     "db:migrate": "prisma migrate deploy",
     "db:seed": "ts-node prisma/seed.ts",
-    "postinstall": "prisma generate"
+    "postinstall": "prisma generate",
+    "prisma:generate": "prisma generate"
+  },
+  "prettier": "prettier-config",
+  "lint-staged": {
+    "*.ts": ["pnpm --filter insternal-api exec prettier --list-different", "pnpm --filter insternal-api exec eslint"]
   }
 }

@@ -8,4 +8,4 @@ import StatisticsService from './statistics.service';
   controllers: [StatisticsController],
   providers: [StatisticsService],
 })
-export default class StatisticsModule { }
+export default class StatisticsModule {}

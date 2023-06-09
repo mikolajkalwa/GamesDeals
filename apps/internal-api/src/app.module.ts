@@ -18,7 +18,9 @@ import WebhookModule from './webhooks/webhook.module';
     ConfigModule.forRoot({
       isGlobal: true,
       validationSchema: Joi.object({
-        NODE_ENV: Joi.string().valid('development', 'production', 'test').default('development'),
+        NODE_ENV: Joi.string()
+          .valid('development', 'production', 'test')
+          .default('development'),
         BASE_ADDRESS: Joi.string().ip().default('0.0.0.0'),
         PORT: Joi.number().default(3000),
         REDIS_HOST: Joi.string().default('localhost'),
@@ -39,4 +41,4 @@ import WebhookModule from './webhooks/webhook.module';
   ],
   providers: [],
 })
-export default class AppModule { }
+export default class AppModule {}

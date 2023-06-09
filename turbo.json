@@ -1,11 +1,13 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "pipeline": {
+    "prisma:generate": {},
     "build": {
       "outputs": [
         "dist/**"
       ],
       "dependsOn": [
+        "prisma:generate",
         "^build"
       ]
     },
@@ -18,8 +20,7 @@
         "test/**/*.ts"
       ]
     },
-    "lint": {
-      "dependsOn": []
-    }
+    "format": {},
+    "lint": {}
   }
 }

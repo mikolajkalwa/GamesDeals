@@ -19,7 +19,10 @@ export default class DealsService {
 
   // eslint-disable-next-line class-methods-use-this
   #getMention(webhook: Webhook): string | null {
-    if (Object.prototype.hasOwnProperty.call(webhook, 'mention') && webhook.mention) {
+    if (
+      Object.prototype.hasOwnProperty.call(webhook, 'mention') &&
+      webhook.mention
+    ) {
       if (webhook.mention === webhook.guild) {
         return '@everyone';
       }
@@ -29,7 +32,10 @@ export default class DealsService {
   }
 
   async announce(deal: AnnounceDealDto, webhooksToExecute: Webhook[]) {
-    this.logger.info(deal, `Announcing deal to ${webhooksToExecute.length} webhooks.`);
+    this.logger.info(
+      deal,
+      `Announcing deal to ${webhooksToExecute.length} webhooks.`,
+    );
     const jobs = webhooksToExecute.map((webhook) => {
       const mention = this.#getMention(webhook);
 

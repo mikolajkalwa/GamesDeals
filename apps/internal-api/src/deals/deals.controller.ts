@@ -1,5 +1,15 @@
 import {
-  Body, ConflictException, Controller, DefaultValuePipe, Get, HttpCode, NotFoundException, Param, ParseIntPipe, Post, Query,
+  Body,
+  ConflictException,
+  Controller,
+  DefaultValuePipe,
+  Get,
+  HttpCode,
+  NotFoundException,
+  Param,
+  ParseIntPipe,
+  Post,
+  Query,
 } from '@nestjs/common';
 import type { Deal } from '@prisma/client';
 import WebhookService from '../webhooks/webhook.service';
@@ -12,7 +22,7 @@ export default class DealsController {
   constructor(
     private readonly dealsService: DealsService,
     private readonly webhooksService: WebhookService,
-  ) { }
+  ) {}
 
   @Post()
   async create(@Body() deal: CreateDealDto): Promise<Deal> {
@@ -27,7 +37,9 @@ export default class DealsController {
       throw new ConflictException('Deal was already announced.');
     }
 
-    const webhooksToExecute = await this.webhooksService.findMany(deal.redditTitle);
+    const webhooksToExecute = await this.webhooksService.findMany(
+      deal.redditTitle,
+    );
     await this.dealsService.create(deal);
     await this.dealsService.announce(deal, webhooksToExecute);
   }
@@ -42,7 +54,9 @@ export default class DealsController {
   }
 
   @Get('latest')
-  async findLatest(@Query('limit', new DefaultValuePipe(1), ParseIntPipe) limit = 1): Promise<Deal[]> {
+  async findLatest(
+    @Query('limit', new DefaultValuePipe(1), ParseIntPipe) limit = 1,
+  ): Promise<Deal[]> {
     return await this.dealsService.findLatest(limit);
   }
 }

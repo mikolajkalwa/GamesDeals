@@ -42,21 +42,27 @@ describe('Webhooks', () => {
 
     it('webhooks for specific thread should return status code 200 and specific webhooks', async () => {
       const response = await request(app.getHttpServer())
-        .get('/webhooks?thread_title=[Indiegala] Survival (free/100% off) | ends April 20)')
+        .get(
+          '/webhooks?thread_title=[Indiegala] Survival (free/100% off) | ends April 20)',
+        )
         .expect(200);
       expect(response.body.length).toEqual(5);
     });
 
     it('webhooks for specific thread should return status code 200 and specific webhooks', async () => {
       const response = await request(app.getHttpServer())
-        .get('/webhooks?thread_title=Steam Survival (free/100% off) | ends April 20)')
+        .get(
+          '/webhooks?thread_title=Steam Survival (free/100% off) | ends April 20)',
+        )
         .expect(200);
       expect(response.body.length).toEqual(16);
     });
 
     it('webhooks for specific thread should return status code 200 and specific webhooks', async () => {
       const response = await request(app.getHttpServer())
-        .get('/webhooks?thread_title=[Gog] Survival (free/100% off) | ends April 20)')
+        .get(
+          '/webhooks?thread_title=[Gog] Survival (free/100% off) | ends April 20)',
+        )
         .expect(200);
       expect(response.body.length).toEqual(9);
     });
@@ -102,23 +108,17 @@ describe('Webhooks', () => {
     });
 
     it('non existing webhook by id should return status code 404', async () => {
-      await request(app.getHttpServer())
-        .get('/webhooks/999999')
-        .expect(404);
+      await request(app.getHttpServer()).get('/webhooks/999999').expect(404);
     });
   });
 
   describe('DELETE', () => {
     it('webhook by id should return status code 204', async () => {
-      await request(app.getHttpServer())
-        .delete('/webhooks/13')
-        .expect(204);
+      await request(app.getHttpServer()).delete('/webhooks/13').expect(204);
     });
 
     it('non existing webhook by id should return status code 204', async () => {
-      await request(app.getHttpServer())
-        .delete('/webhooks/999999')
-        .expect(204);
+      await request(app.getHttpServer()).delete('/webhooks/999999').expect(204);
     });
   });
 
@@ -134,15 +134,17 @@ describe('Webhooks', () => {
         })
         .expect(201);
 
-      expect(response.body).toEqual(expect.objectContaining({
-        id: '1000',
-        token: 'super-secret',
-        guild: '17',
-        channel: '1',
-        mention: null,
-        keywords: [],
-        blacklist: [],
-      }));
+      expect(response.body).toEqual(
+        expect.objectContaining({
+          id: '1000',
+          token: 'super-secret',
+          guild: '17',
+          channel: '1',
+          mention: null,
+          keywords: [],
+          blacklist: [],
+        }),
+      );
     });
 
     it('create webhook with mention should return created webhook and status code 201', async () => {
@@ -157,15 +159,17 @@ describe('Webhooks', () => {
         })
         .expect(201);
 
-      expect(response.body).toEqual(expect.objectContaining({
-        id: '1001',
-        token: 'super-secret',
-        guild: '17',
-        channel: '1',
-        mention: '123132',
-        keywords: [],
-        blacklist: [],
-      }));
+      expect(response.body).toEqual(
+        expect.objectContaining({
+          id: '1001',
+          token: 'super-secret',
+          guild: '17',
+          channel: '1',
+          mention: '123132',
+          keywords: [],
+          blacklist: [],
+        }),
+      );
     });
 
     it('create webhook with mention, keywords and blacklist should return created webhook and status code 201', async () => {
@@ -182,15 +186,17 @@ describe('Webhooks', () => {
         })
         .expect(201);
 
-      expect(response.body).toEqual(expect.objectContaining({
-        id: '1002',
-        token: 'super-secret',
-        guild: '17',
-        channel: '1',
-        mention: '12312344',
-        keywords: ['steam', 'epic'],
-        blacklist: ['indiegala', 'itch.io'],
-      }));
+      expect(response.body).toEqual(
+        expect.objectContaining({
+          id: '1002',
+          token: 'super-secret',
+          guild: '17',
+          channel: '1',
+          mention: '12312344',
+          keywords: ['steam', 'epic'],
+          blacklist: ['indiegala', 'itch.io'],
+        }),
+      );
     });
 
     it('create webhook with id alredy existing in the database should return status code 409', async () => {
@@ -219,15 +225,17 @@ describe('Webhooks', () => {
         })
         .expect(400);
 
-      expect(response.body.message).toEqual(expect.arrayContaining([
-        'id should not be empty',
-        'id must be a number string',
-        'token should not be empty',
-        'guild should not be empty',
-        'guild must be a number string',
-        'channel should not be empty',
-        'channel must be a number string',
-      ]));
+      expect(response.body.message).toEqual(
+        expect.arrayContaining([
+          'id should not be empty',
+          'id must be a number string',
+          'token should not be empty',
+          'guild should not be empty',
+          'guild must be a number string',
+          'channel should not be empty',
+          'channel must be a number string',
+        ]),
+      );
     });
 
     it('create webhook with empty body should return error message and status code 400', async () => {
@@ -236,16 +244,18 @@ describe('Webhooks', () => {
         .send({})
         .expect(400);
 
-      expect(response.body.message).toEqual(expect.arrayContaining([
-        'id should not be empty',
-        'id must be a number string',
-        'token should not be empty',
-        'token must be a string',
-        'guild should not be empty',
-        'guild must be a number string',
-        'channel should not be empty',
-        'channel must be a number string',
-      ]));
+      expect(response.body.message).toEqual(
+        expect.arrayContaining([
+          'id should not be empty',
+          'id must be a number string',
+          'token should not be empty',
+          'token must be a string',
+          'guild should not be empty',
+          'guild must be a number string',
+          'channel should not be empty',
+          'channel must be a number string',
+        ]),
+      );
     });
 
     it('create webhook with completly invalid keywords, blacklist and mention should return error message and status code 400', async () => {
@@ -257,18 +267,30 @@ describe('Webhooks', () => {
           guild: '12',
           channel: '1',
           mention: '',
-          keywords: ['', 'abc', 'abc', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas metus est, vestibulum at magna non, semper consectetur sapien. Suspendisse id finibus sapien. Integer ut lorem ac diam pharetra maximus non vel felis. Donec scelerisque rutrum rutrum. Aliquam eget neque in nibh condimentum condimentum. Praesent maximus laoreet lectus, non ultricies arcu blandit a. Nam tristique placerat felis, vitae mollis dui elementum eget. Cras convallis odio sapien, at rhoncus ipsum bibendum sit amet. Nunc vel ultricies leo. Nulla facilisi. Curabitur sed ante a leo efficitur posuere sit amet sed erat. Vestibulum vehicula porttitor quam, vitae convallis arcu dictum eu. Aliquam erat volutpat.'],
-          blacklist: ['', 'cba', 'cba', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin a tortor in enim scelerisque laoreet. Aliquam eget ornare sapien. Nunc eu congue urna. Donec facilisis ipsum quis quam tempor, sit amet imperdiet urna pretium. Donec euismod purus sed metus pretium, at ultricies augue efficitur. Donec pretium vel velit eu ullamcorper. Morbi non varius ipsum. Nunc in nisl volutpat, bibendum tellus sit amet, tincidunt diam. Ut tincidunt commodo ligula quis convallis. Sed sed pharetra massa. Praesent posuere dui at metus congue, tempus varius lectus elementum. Mauris lacinia id tortor quis ullamcorper. Maecenas blandit et turpis non ullamcorper. Praesent sit amet turpis.'],
+          keywords: [
+            '',
+            'abc',
+            'abc',
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas metus est, vestibulum at magna non, semper consectetur sapien. Suspendisse id finibus sapien. Integer ut lorem ac diam pharetra maximus non vel felis. Donec scelerisque rutrum rutrum. Aliquam eget neque in nibh condimentum condimentum. Praesent maximus laoreet lectus, non ultricies arcu blandit a. Nam tristique placerat felis, vitae mollis dui elementum eget. Cras convallis odio sapien, at rhoncus ipsum bibendum sit amet. Nunc vel ultricies leo. Nulla facilisi. Curabitur sed ante a leo efficitur posuere sit amet sed erat. Vestibulum vehicula porttitor quam, vitae convallis arcu dictum eu. Aliquam erat volutpat.',
+          ],
+          blacklist: [
+            '',
+            'cba',
+            'cba',
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin a tortor in enim scelerisque laoreet. Aliquam eget ornare sapien. Nunc eu congue urna. Donec facilisis ipsum quis quam tempor, sit amet imperdiet urna pretium. Donec euismod purus sed metus pretium, at ultricies augue efficitur. Donec pretium vel velit eu ullamcorper. Morbi non varius ipsum. Nunc in nisl volutpat, bibendum tellus sit amet, tincidunt diam. Ut tincidunt commodo ligula quis convallis. Sed sed pharetra massa. Praesent posuere dui at metus congue, tempus varius lectus elementum. Mauris lacinia id tortor quis ullamcorper. Maecenas blandit et turpis non ullamcorper. Praesent sit amet turpis.',
+          ],
         })
         .expect(400);
 
-      expect(response.body.message).toEqual(expect.arrayContaining([
-        "All keywords's elements must be unique",
-        'each value in keywords must be longer than or equal to 3 and shorter than or equal to 300 characters',
-        "All blacklist's elements must be unique",
-        'each value in blacklist must be longer than or equal to 3 and shorter than or equal to 300 characters',
-        'mention should not be empty',
-      ]));
+      expect(response.body.message).toEqual(
+        expect.arrayContaining([
+          "All keywords's elements must be unique",
+          'each value in keywords must be longer than or equal to 3 and shorter than or equal to 300 characters',
+          "All blacklist's elements must be unique",
+          'each value in blacklist must be longer than or equal to 3 and shorter than or equal to 300 characters',
+          'mention should not be empty',
+        ]),
+      );
     });
   });
 
@@ -296,18 +318,30 @@ describe('Webhooks', () => {
         .patch('/webhooks/1')
         .send({
           mention: '',
-          keywords: ['', 'abc', 'abc', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas metus est, vestibulum at magna non, semper consectetur sapien. Suspendisse id finibus sapien. Integer ut lorem ac diam pharetra maximus non vel felis. Donec scelerisque rutrum rutrum. Aliquam eget neque in nibh condimentum condimentum. Praesent maximus laoreet lectus, non ultricies arcu blandit a. Nam tristique placerat felis, vitae mollis dui elementum eget. Cras convallis odio sapien, at rhoncus ipsum bibendum sit amet. Nunc vel ultricies leo. Nulla facilisi. Curabitur sed ante a leo efficitur posuere sit amet sed erat. Vestibulum vehicula porttitor quam, vitae convallis arcu dictum eu. Aliquam erat volutpat.'],
-          blacklist: ['', 'cba', 'cba', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin a tortor in enim scelerisque laoreet. Aliquam eget ornare sapien. Nunc eu congue urna. Donec facilisis ipsum quis quam tempor, sit amet imperdiet urna pretium. Donec euismod purus sed metus pretium, at ultricies augue efficitur. Donec pretium vel velit eu ullamcorper. Morbi non varius ipsum. Nunc in nisl volutpat, bibendum tellus sit amet, tincidunt diam. Ut tincidunt commodo ligula quis convallis. Sed sed pharetra massa. Praesent posuere dui at metus congue, tempus varius lectus elementum. Mauris lacinia id tortor quis ullamcorper. Maecenas blandit et turpis non ullamcorper. Praesent sit amet turpis.'],
+          keywords: [
+            '',
+            'abc',
+            'abc',
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas metus est, vestibulum at magna non, semper consectetur sapien. Suspendisse id finibus sapien. Integer ut lorem ac diam pharetra maximus non vel felis. Donec scelerisque rutrum rutrum. Aliquam eget neque in nibh condimentum condimentum. Praesent maximus laoreet lectus, non ultricies arcu blandit a. Nam tristique placerat felis, vitae mollis dui elementum eget. Cras convallis odio sapien, at rhoncus ipsum bibendum sit amet. Nunc vel ultricies leo. Nulla facilisi. Curabitur sed ante a leo efficitur posuere sit amet sed erat. Vestibulum vehicula porttitor quam, vitae convallis arcu dictum eu. Aliquam erat volutpat.',
+          ],
+          blacklist: [
+            '',
+            'cba',
+            'cba',
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin a tortor in enim scelerisque laoreet. Aliquam eget ornare sapien. Nunc eu congue urna. Donec facilisis ipsum quis quam tempor, sit amet imperdiet urna pretium. Donec euismod purus sed metus pretium, at ultricies augue efficitur. Donec pretium vel velit eu ullamcorper. Morbi non varius ipsum. Nunc in nisl volutpat, bibendum tellus sit amet, tincidunt diam. Ut tincidunt commodo ligula quis convallis. Sed sed pharetra massa. Praesent posuere dui at metus congue, tempus varius lectus elementum. Mauris lacinia id tortor quis ullamcorper. Maecenas blandit et turpis non ullamcorper. Praesent sit amet turpis.',
+          ],
         })
         .expect(400);
 
-      expect(response.body.message).toEqual(expect.arrayContaining([
-        'mention should not be empty',
-        "All keywords's elements must be unique",
-        'each value in keywords must be longer than or equal to 3 and shorter than or equal to 300 characters',
-        "All blacklist's elements must be unique",
-        'each value in blacklist must be longer than or equal to 3 and shorter than or equal to 300 characters',
-      ]));
+      expect(response.body.message).toEqual(
+        expect.arrayContaining([
+          'mention should not be empty',
+          "All keywords's elements must be unique",
+          'each value in keywords must be longer than or equal to 3 and shorter than or equal to 300 characters',
+          "All blacklist's elements must be unique",
+          'each value in blacklist must be longer than or equal to 3 and shorter than or equal to 300 characters',
+        ]),
+      );
     });
 
     it('with empty body should return error message and status code 400', async () => {
@@ -329,12 +363,14 @@ describe('Webhooks', () => {
         })
         .expect(200);
 
-      expect(response.body).toEqual(expect.objectContaining({
-        id: '1',
-        mention: '123123123',
-        keywords: ['steam', 'epic games'],
-        blacklist: ['indiegala', 'itch.io'],
-      }));
+      expect(response.body).toEqual(
+        expect.objectContaining({
+          id: '1',
+          mention: '123123123',
+          keywords: ['steam', 'epic games'],
+          blacklist: ['indiegala', 'itch.io'],
+        }),
+      );
     });
 
     it('changing one property should not modify other properties', async () => {
@@ -345,12 +381,14 @@ describe('Webhooks', () => {
         })
         .expect(200);
 
-      expect(response.body).toEqual(expect.objectContaining({
-        id: '1',
-        mention: '123132',
-        keywords: ['steam', 'epic games'],
-        blacklist: ['indiegala', 'itch.io'],
-      }));
+      expect(response.body).toEqual(
+        expect.objectContaining({
+          id: '1',
+          mention: '123132',
+          keywords: ['steam', 'epic games'],
+          blacklist: ['indiegala', 'itch.io'],
+        }),
+      );
     });
 
     it('update mention role should return patched webhook and status code 200', async () => {
@@ -361,12 +399,14 @@ describe('Webhooks', () => {
         })
         .expect(200);
 
-      expect(response.body).toEqual(expect.objectContaining({
-        id: '1',
-        mention: '123321',
-        keywords: ['steam', 'epic games'],
-        blacklist: ['indiegala', 'itch.io'],
-      }));
+      expect(response.body).toEqual(
+        expect.objectContaining({
+          id: '1',
+          mention: '123321',
+          keywords: ['steam', 'epic games'],
+          blacklist: ['indiegala', 'itch.io'],
+        }),
+      );
     });
 
     it('remove mention role should return patched webhook and status code 200', async () => {
@@ -377,12 +417,14 @@ describe('Webhooks', () => {
         })
         .expect(200);
 
-      expect(response.body).toEqual(expect.objectContaining({
-        id: '1',
-        mention: null,
-        keywords: ['steam', 'epic games'],
-        blacklist: ['indiegala', 'itch.io'],
-      }));
+      expect(response.body).toEqual(
+        expect.objectContaining({
+          id: '1',
+          mention: null,
+          keywords: ['steam', 'epic games'],
+          blacklist: ['indiegala', 'itch.io'],
+        }),
+      );
     });
 
     it('update mention role and blacklist clear should return patched webhook and status code 200', async () => {
@@ -394,12 +436,14 @@ describe('Webhooks', () => {
         })
         .expect(200);
 
-      expect(response.body).toEqual(expect.objectContaining({
-        id: '1',
-        mention: '123132',
-        keywords: ['steam', 'epic games'],
-        blacklist: [],
-      }));
+      expect(response.body).toEqual(
+        expect.objectContaining({
+          id: '1',
+          mention: '123132',
+          keywords: ['steam', 'epic games'],
+          blacklist: [],
+        }),
+      );
     });
 
     it('keywords clear should return patched webhook and status code 200', async () => {
@@ -410,10 +454,12 @@ describe('Webhooks', () => {
         })
         .expect(200);
 
-      expect(response.body).toEqual(expect.objectContaining({
-        id: '1',
-        keywords: [],
-      }));
+      expect(response.body).toEqual(
+        expect.objectContaining({
+          id: '1',
+          keywords: [],
+        }),
+      );
     });
   });
 });

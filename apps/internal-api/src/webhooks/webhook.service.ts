@@ -1,5 +1,8 @@
 import {
-  BadRequestException, ConflictException, Injectable, NotFoundException,
+  BadRequestException,
+  ConflictException,
+  Injectable,
+  NotFoundException,
 } from '@nestjs/common';
 import { Prisma, Webhook } from '@prisma/client';
 import PrismaService from '../prisma/prisma.service';
@@ -8,7 +11,7 @@ import type PatchWebhookDto from './dto/patch-webhook.dto';
 
 @Injectable()
 export default class WebhookService {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
 
   async create(webhook: CreateWebhookDto): Promise<Webhook> {
     const existingWebhook = await this.prisma.webhook.findUnique({
@@ -101,25 +104,37 @@ export default class WebhookService {
     return null;
   }
 
-  async patch(webhookId: string, webhookPatchData: PatchWebhookDto): Promise<Webhook> {
+  async patch(
+    webhookId: string,
+    webhookPatchData: PatchWebhookDto,
+  ): Promise<Webhook> {
     if (
-      webhookPatchData.keywords === undefined
-      && webhookPatchData.blacklist === undefined
-      && webhookPatchData.mention === undefined) {
+      webhookPatchData.keywords === undefined &&
+      webhookPatchData.blacklist === undefined &&
+      webhookPatchData.mention === undefined
+    ) {
       throw new BadRequestException('No fields were provided to patch');
     }
 
     const patchObject: Prisma.WebhookUpdateInput = {};
 
     if (Object.prototype.hasOwnProperty.call(webhookPatchData, 'mention')) {
-      patchObject.mention = webhookPatchData.mention ? BigInt(webhookPatchData.mention) : null;
+      patchObject.mention = webhookPatchData.mention
+        ? BigInt(webhookPatchData.mention)
+        : null;
     }
 
-    if (Object.prototype.hasOwnProperty.call(webhookPatchData, 'blacklist') && webhookPatchData.blacklist) {
+    if (
+      Object.prototype.hasOwnProperty.call(webhookPatchData, 'blacklist') &&
+      webhookPatchData.blacklist
+    ) {
       patchObject.blacklist = webhookPatchData.blacklist;
     }
 
-    if (Object.prototype.hasOwnProperty.call(webhookPatchData, 'keywords') && webhookPatchData.keywords) {
+    if (
+      Object.prototype.hasOwnProperty.call(webhookPatchData, 'keywords') &&
+      webhookPatchData.keywords
+    ) {
       patchObject.keywords = webhookPatchData.keywords;
     }
 
@@ -133,7 +148,7 @@ export default class WebhookService {
     } catch (error: unknown) {
       if (error instanceof Prisma.PrismaClientKnownRequestError) {
         if (error.code === 'P2025') {
-          throw new NotFoundException('webhook with provided id doesn\'t exist');
+          throw new NotFoundException("webhook with provided id doesn't exist");
         }
       }
       throw error;
