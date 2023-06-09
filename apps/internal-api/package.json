@@ -7,7 +7,7 @@
     "@nestjs/cli": "^9.5.0",
     "@nestjs/testing": "^9.4.2",
     "@types/jest": "^29.5.2",
-    "@types/node": "^18.16.16",
+    "@types/node": "^20.2.5",
     "@types/supertest": "^2.0.12",
     "@types/validator": "^13.7.17",
     "eslint": "^8.42.0",
@@ -18,7 +18,7 @@
     "ts-jest": "^29.1.0",
     "ts-node": "^10.9.1",
     "tsconfig": "workspace:*",
-    "typescript": "^4.9.5"
+    "typescript": "^5.1.3"
   },
   "dependencies": {
     "@nestjs/bullmq": "^1.1.0",

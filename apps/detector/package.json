@@ -17,13 +17,13 @@
     "zod": "^3.21.4"
   },
   "devDependencies": {
-    "@types/jest": "29.4.1",
+    "@types/jest": "29.5.2",
     "eslint": "^8.42.0",
     "eslint-config-games-deals": "workspace:*",
     "jest": "29.5.0",
-    "rimraf": "^4.4.1",
-    "ts-jest": "29.0.5",
+    "rimraf": "^5.0.1",
+    "ts-jest": "29.1.0",
     "tsconfig": "workspace:*",
-    "typescript": "4.9.5"
+    "typescript": "5.1.3"
   }
 }
