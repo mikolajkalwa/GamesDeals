@@ -5,17 +5,17 @@
   "private": true,
   "devDependencies": {
     "@nestjs/cli": "^9.5.0",
-    "@nestjs/testing": "^9.4.2",
+    "@nestjs/testing": "^9.4.3",
     "@types/jest": "^29.5.2",
-    "@types/node": "^20.2.5",
+    "@types/node": "^20.3.1",
     "@types/supertest": "^2.0.12",
     "@types/validator": "^13.7.17",
-    "eslint": "^8.42.0",
+    "eslint": "^8.43.0",
     "eslint-config-games-deals": "workspace:*",
-    "prettier-config": "workspace:*",
     "jest": "^29.5.0",
     "jest-mock": "^29.5.0",
     "prettier": "^2.8.8",
+    "prettier-config": "workspace:*",
     "supertest": "^6.3.3",
     "ts-jest": "^29.1.0",
     "ts-node": "^10.9.1",
@@ -24,19 +24,19 @@
   },
   "dependencies": {
     "@nestjs/bullmq": "^1.1.0",
-    "@nestjs/common": "^9.4.2",
-    "@nestjs/config": "^2.3.2",
-    "@nestjs/core": "^9.4.2",
-    "@nestjs/platform-express": "^9.4.2",
+    "@nestjs/common": "^9.4.3",
+    "@nestjs/config": "^2.3.4",
+    "@nestjs/core": "^9.4.3",
+    "@nestjs/platform-express": "^9.4.3",
     "@nestjs/terminus": "^9.2.2",
-    "@prisma/client": "^4.15.0",
-    "bullmq": "^3.15.4",
+    "@prisma/client": "^4.16.1",
+    "bullmq": "^3.15.8",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.0",
     "joi": "^17.9.2",
-    "nestjs-pino": "^3.2.0",
+    "nestjs-pino": "^3.3.0",
     "pino-http": "^8.3.3",
-    "prisma": "^4.15.0",
+    "prisma": "^4.16.1",
     "reflect-metadata": "^0.1.13"
   },
   "scripts": {
@@ -58,6 +58,9 @@
   },
   "prettier": "prettier-config",
   "lint-staged": {
-    "*.ts": ["pnpm --filter insternal-api exec prettier --list-different", "pnpm --filter insternal-api exec eslint"]
+    "*.ts": [
+      "pnpm --filter insternal-api exec prettier --list-different",
+      "pnpm --filter insternal-api exec eslint"
+    ]
   }
 }
