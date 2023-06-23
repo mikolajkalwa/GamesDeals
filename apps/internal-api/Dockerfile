@@ -1,7 +1,7 @@
-FROM node:18.16.0-bullseye-slim as base
-RUN corepack enable && corepack prepare pnpm@8.6.1 --activate
+FROM node:18.16.1-bullseye-slim as base
+RUN corepack enable && corepack prepare pnpm@8.6.3 --activate
 
-FROM node:18.16.0-bullseye-slim as extractor
+FROM node:18.16.1-bullseye-slim as extractor
 RUN npm install -g turbo@1.8.7
 WORKDIR /usr/src/app
 COPY . .
