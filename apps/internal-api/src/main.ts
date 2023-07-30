@@ -5,12 +5,8 @@ import type { NestExpressApplication } from '@nestjs/platform-express';
 import { Logger } from 'nestjs-pino';
 import AppModule from './app.module';
 
-// add missing prototype to serialize BigInt
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-// eslint-disable-next-line no-extend-native, func-names
+// @ts-expect-error add missing prototype to serialize BigInt
 BigInt.prototype.toJSON = function () {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
   return this.toString();
 };
 
@@ -28,5 +24,4 @@ async function bootstrap() {
   await app.listen(port);
 }
 
-// eslint-disable-next-line @typescript-eslint/no-floating-promises
 bootstrap();

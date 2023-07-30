@@ -1,13 +1,17 @@
 export const isFree = (title: string) => {
-  title = title.toLowerCase(); // eslint-disable-line
-  title = title.replace(/\s{2,}/gi, ' ').replace('–', '-'); // eslint-disable-line
+  title = title.toLowerCase();
+  title = title.replace(/\s{2,}/gi, ' ').replace('–', '-');
 
-  if (!(/((?<!-)(\b(free)\b)|100%|\$0|€0|0\$|0€)/gi.test(title))) {
+  if (!/((?<!-)(\b(free)\b)|100%|\$0|€0|0\$|0€)/gi.test(title)) {
     return false;
   }
 
   // ignore threads which require users to buy something to get a free game
-  if ((/(\b(buy|purchase|twitch prime|ps plus|free weekend|vip deal|amazon prime)\b)|ps\+/gi.test(title))) {
+  if (
+    /(\b(buy|purchase|twitch prime|ps plus|free weekend|vip deal|amazon prime)\b)|ps\+/gi.test(
+      title,
+    )
+  ) {
     return false;
   }
 
@@ -21,7 +25,9 @@ export const isFree = (title: string) => {
   }
 
   // look for prices
-  const priceInTitle = title.match(/(USD|EUR|€|£|\$)\s?(\d{1,3}(?:[.,]\d{3})*(?:[.,]\d{2}))|(\d{1,3}(?:[.,]\d{3})*(?:[.,]\d{2})?)\s?(USD|EUR|€|£|\$)|(USD|EUR|€|£|\$)\s?(\d{1,3}(?:[.,]\d{3})*(?:[.,]\d{2})?)/gi);
+  const priceInTitle = title.match(
+    /(USD|EUR|€|£|\$)\s?(\d{1,3}(?:[.,]\d{3})*(?:[.,]\d{2}))|(\d{1,3}(?:[.,]\d{3})*(?:[.,]\d{2})?)\s?(USD|EUR|€|£|\$)|(USD|EUR|€|£|\$)\s?(\d{1,3}(?:[.,]\d{3})*(?:[.,]\d{2})?)/gi,
+  );
   if (priceInTitle) {
     // remove currency symbol, replace comma with dot, parse to float
     const pricesInTitle = priceInTitle

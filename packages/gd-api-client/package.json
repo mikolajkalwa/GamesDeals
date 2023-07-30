@@ -13,6 +13,7 @@
   },
   "devDependencies": {
     "@types/jest": "29.5.3",
+    "@typescript-eslint/eslint-plugin": "^6.2.0",
     "eslint": "^8.46.0",
     "eslint-config-games-deals": "workspace:*",
     "jest": "29.6.2",
@@ -26,7 +27,7 @@
   "prettier": "prettier-config",
   "lint-staged": {
     "*.ts": [
-      "pnpm --filter notifier exec prettier --list-different",
+      "pnpm --filter notifier exec prettier --check",
       "pnpm --filter notifier exec eslint"
     ]
   }

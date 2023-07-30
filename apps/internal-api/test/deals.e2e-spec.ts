@@ -1,15 +1,10 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
 import request from 'supertest';
 import AppModule from '../src/app.module';
 
-// add missing prototype to serialize BigInt
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-// eslint-disable-next-line no-extend-native, func-names
+// @ts-expect-error add missing prototype to serialize BigInt
 BigInt.prototype.toJSON = function () {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
   return this.toString();
 };
 

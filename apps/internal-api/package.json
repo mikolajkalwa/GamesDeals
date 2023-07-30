@@ -10,6 +10,7 @@
     "@types/node": "^20.4.5",
     "@types/supertest": "^2.0.12",
     "@types/validator": "^13.7.17",
+    "@typescript-eslint/eslint-plugin": "^6.2.0",
     "eslint": "^8.46.0",
     "eslint-config-games-deals": "workspace:*",
     "jest": "^29.6.2",
@@ -59,7 +60,7 @@
   "prettier": "prettier-config",
   "lint-staged": {
     "*.ts": [
-      "pnpm --filter insternal-api exec prettier --list-different",
+      "pnpm --filter insternal-api exec prettier --check",
       "pnpm --filter insternal-api exec eslint"
     ]
   }

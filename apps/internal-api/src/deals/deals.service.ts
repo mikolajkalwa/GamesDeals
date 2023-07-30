@@ -17,7 +17,6 @@ export default class DealsService {
     this.logger.setContext(DealsService.name);
   }
 
-  // eslint-disable-next-line class-methods-use-this
   #getMention(webhook: Webhook): string | null {
     if (
       Object.prototype.hasOwnProperty.call(webhook, 'mention') &&

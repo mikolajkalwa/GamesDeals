@@ -15,7 +15,7 @@ const gamesDeals = new GamesDealsApiClient(config.urls.gamesDeals);
 const detector = new Detector(gamesDeals, redditClient, logger);
 
 async function main() {
-  // eslint-disable-next-line no-restricted-syntax, @typescript-eslint/no-unused-vars, @typescript-eslint/naming-convention, no-underscore-dangle
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   for await (const _x of setInterval(config.interval)) {
     try {
       await detector.detect();
@@ -25,6 +25,6 @@ async function main() {
     }
   }
 }
-//
+
 // eslint-disable-next-line @typescript-eslint/no-floating-promises
 main();

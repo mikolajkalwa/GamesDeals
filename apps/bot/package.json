@@ -17,6 +17,7 @@
   },
   "devDependencies": {
     "@types/node": "^20.4.5",
+    "@typescript-eslint/eslint-plugin": "^6.2.0",
     "eslint": "^8.46.0",
     "eslint-config-games-deals": "workspace:*",
     "prettier": "^3.0.0",
@@ -27,7 +28,7 @@
   "prettier": "prettier-config",
   "lint-staged": {
     "*.ts": [
-      "pnpm --filter bot exec prettier --list-different",
+      "pnpm --filter bot exec prettier --check",
       "pnpm --filter bot exec eslint"
     ]
   }
