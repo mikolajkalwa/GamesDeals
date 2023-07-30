@@ -4,7 +4,6 @@ import { NestFactory } from '@nestjs/core';
 import type { NestExpressApplication } from '@nestjs/platform-express';
 import { Logger } from 'nestjs-pino';
 import AppModule from './app.module';
-import PrismaService from './prisma/prisma.service';
 
 // add missing prototype to serialize BigInt
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -22,9 +21,6 @@ async function bootstrap() {
 
   app.useLogger(app.get(Logger));
   app.useGlobalPipes(new ValidationPipe());
-
-  const prismaService = app.get(PrismaService);
-  await prismaService.enableShutdownHooks(app);
 
   const configService = app.get(ConfigService);
   const port = configService.get<string>('PORT') || 3000;
