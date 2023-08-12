@@ -9,18 +9,18 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "discord.js": "^14.11.0",
+    "discord.js": "^14.12.1",
     "dotenv": "^16.3.1",
-    "got": "11.8.3",
-    "pino": "^8.14.2",
+    "got": "^11.8.6",
+    "pino": "^8.15.0",
     "zod": "^3.21.4"
   },
   "devDependencies": {
-    "@types/node": "^20.4.5",
-    "@typescript-eslint/eslint-plugin": "^6.2.0",
-    "eslint": "^8.46.0",
+    "@types/node": "^20.4.10",
+    "@typescript-eslint/eslint-plugin": "^6.3.0",
+    "eslint": "^8.47.0",
     "eslint-config-games-deals": "workspace:*",
-    "prettier": "^3.0.0",
+    "prettier": "^3.0.1",
     "prettier-config": "workspace:*",
     "tsconfig": "workspace:*",
     "typescript": "^5.1.6"

@@ -2,11 +2,11 @@
   "private": true,
   "name": "eslint-config-games-deals",
   "peerDependencies": {
-    "eslint": ">= 8",
-    "@typescript-eslint/eslint-plugin": ">= 6"
+    "@typescript-eslint/eslint-plugin": ">= 6",
+    "eslint": ">= 8"
   },
   "dependencies": {
-    "@typescript-eslint/parser": "^6.2.0",
-    "eslint-config-prettier": "^8.9.0"
+    "@typescript-eslint/parser": "^6.3.0",
+    "eslint-config-prettier": "^8.10.0"
   }
 }

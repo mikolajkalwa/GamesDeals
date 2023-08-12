@@ -10,19 +10,19 @@
     "lint": "eslint src/**"
   },
   "dependencies": {
-    "bullmq": "^4.6.3",
+    "bullmq": "^4.7.2",
     "close-with-grace": "^1.2.0",
     "dotenv": "^16.3.1",
     "gd-api-client": "workspace:*",
-    "pino": "^8.14.2",
-    "undici": "^5.22.1",
+    "pino": "^8.15.0",
+    "undici": "^5.23.0",
     "zod": "^3.21.4"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^6.2.0",
-    "eslint": "^8.46.0",
+    "@typescript-eslint/eslint-plugin": "^6.3.0",
+    "eslint": "^8.47.0",
     "eslint-config-games-deals": "workspace:*",
-    "prettier": "^3.0.0",
+    "prettier": "^3.0.1",
     "prettier-config": "workspace:*",
     "rimraf": "^5.0.1",
     "tsconfig": "workspace:*",
