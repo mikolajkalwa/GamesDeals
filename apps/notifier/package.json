@@ -13,7 +13,7 @@
   "dependencies": {
     "dotenv": "^16.0.3",
     "pino": "^8.11.0",
-    "undici": "^5.21.0",
+    "undici": "^5.26.2",
     "zod": "^3.21.4"
   },
   "devDependencies": {
